@@ -495,3 +495,70 @@ def test_isolation_imputes_missing_entity_age_to_no_nans(tmp_path):
     # so 0 flags is the correct answer — no fabricated output).
     df = detect_isolation_outlier(db_path)
     assert df.columns == ["uei", "detector", "score", "details"]
+
+
+# ── Task 5 — Cross-detector contract ────────────────────────────────────
+
+
+def _seed_full_synthetic_db(db_path: str) -> None:
+    """Populate enough data that every detector returns at least one row."""
+    entities = [
+        _entity("FRESH0000001", registration_date=date(2024, 1, 1)),
+        _entity("OLD000000001", registration_date=date(2018, 1, 1)),
+    ]
+    _insert_entities(db_path, entities)
+
+    awards = []
+    # Benford ammo: 30 awards starting with 9.
+    for i in range(30):
+        awards.append(_award(f"BF_{i}", "OLD000000001", amount=9000.0 + i))
+    # Mod-growth ammo: parent with mods totalling 5x initial, plus peers.
+    awards.append(_award("MG_0", "OLD000000001", amount=100_000.0,
+                         parent_award_id="MGP", modification_number="0"))
+    awards.append(_award("MG_1", "OLD000000001", amount=400_000.0,
+                         parent_award_id="MGP", modification_number="P00001"))
+    for i in range(8):
+        peer = f"MGPEER{i:06d}"
+        awards.append(_award(f"MG_P_{i}_0", peer, amount=100_000.0,
+                             parent_award_id=f"MGPP_{i}", modification_number="0"))
+        awards.append(_award(f"MG_P_{i}_1", peer, amount=20_000.0,
+                             parent_award_id=f"MGPP_{i}", modification_number="P00001"))
+    # New-entity ammo: fresh registration + non-competed award.
+    awards.append(
+        _award("NE_0", "FRESH0000001", amount=1_000_000.0,
+               award_date=date(2024, 1, 31), competition_type="NOT COMPETED")
+    )
+    _insert_awards(db_path, awards)
+
+
+def test_all_detectors_share_contract(tmp_path):
+    """Every detector must return the same 4-column schema with scores in [0, 1]."""
+    from detectors.benford import detect_benford
+    from detectors.isolation import detect_isolation_outlier
+    from detectors.mod_growth import detect_mod_growth
+    from detectors.new_entity import detect_new_entity_sole_source
+
+    db_path = _fresh_db(tmp_path)
+    _seed_full_synthetic_db(db_path)
+
+    detectors = {
+        "benford": detect_benford,
+        "mod_growth": detect_mod_growth,
+        "new_entity": detect_new_entity_sole_source,
+        "isolation": detect_isolation_outlier,
+    }
+
+    for name, fn in detectors.items():
+        df = fn(db_path)
+        assert df.columns == ["uei", "detector", "score", "details"], (
+            f"{name} returned wrong columns: {df.columns}"
+        )
+        assert df.schema["uei"] == pl.Utf8
+        assert df.schema["detector"] == pl.Utf8
+        assert df.schema["score"] == pl.Float64
+        assert df.schema["details"] == pl.Utf8
+        if df.height > 0:
+            assert df["score"].min() >= 0.0, f"{name} produced score < 0"
+            assert df["score"].max() <= 1.0, f"{name} produced score > 1"
+            # Every row's `detector` column matches the registered name.
+            assert set(df["detector"].unique().to_list()) == {name}
