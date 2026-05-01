@@ -272,3 +272,99 @@ def test_mod_growth_returns_correct_schema(tmp_path):
     df = detect_mod_growth(db_path)
     assert df.columns == ["uei", "detector", "score", "details"]
     assert df.schema["score"] == pl.Float64
+
+
+# ── Task 3 — New entity sole-source ─────────────────────────────────────
+
+
+def test_new_entity_flags_recent_registration_with_sole_source(tmp_path):
+    """Entity registered 30 days before a $1M sole-source award scores high."""
+    from detectors.new_entity import detect_new_entity_sole_source
+
+    db_path = _fresh_db(tmp_path)
+    reg = date(2024, 1, 1)
+    award_dt = date(2024, 1, 31)  # 30-day gap
+    _insert_entities(db_path, [_entity("FRESH0000001", registration_date=reg)])
+    _insert_awards(
+        db_path,
+        [
+            _award(
+                "A1", "FRESH0000001", amount=1_000_000.0,
+                award_date=award_dt,
+                competition_type="NOT COMPETED",
+            )
+        ],
+    )
+
+    df = detect_new_entity_sole_source(db_path)
+    assert df.height == 1
+    row = df.row(0, named=True)
+    assert row["uei"] == "FRESH0000001"
+    assert row["detector"] == "new_entity"
+    assert row["score"] > 0.5
+    details = json.loads(row["details"])
+    assert details["days_gap"] == 30
+    assert details["competition_type"] == "NOT COMPETED"
+
+
+def test_new_entity_does_not_flag_competed_award(tmp_path):
+    """Full-and-open competition is exactly the opposite of the signal we want."""
+    from detectors.new_entity import detect_new_entity_sole_source
+
+    db_path = _fresh_db(tmp_path)
+    _insert_entities(db_path, [_entity("COMPED000001", registration_date=date(2024, 1, 1))])
+    _insert_awards(
+        db_path,
+        [
+            _award(
+                "A1", "COMPED000001", amount=1_000_000.0,
+                award_date=date(2024, 1, 31),
+                competition_type="FULL AND OPEN COMPETITION",
+            )
+        ],
+    )
+
+    df = detect_new_entity_sole_source(db_path)
+    assert df.height == 0
+
+
+def test_new_entity_does_not_flag_old_registration(tmp_path):
+    """Sole-source to a 5-year-old entity is normal procurement, not a flag."""
+    from detectors.new_entity import detect_new_entity_sole_source
+
+    db_path = _fresh_db(tmp_path)
+    _insert_entities(db_path, [_entity("OLD000000001", registration_date=date(2020, 1, 1))])
+    _insert_awards(
+        db_path,
+        [
+            _award(
+                "A1", "OLD000000001", amount=1_000_000.0,
+                award_date=date(2025, 6, 1),
+                competition_type="NOT COMPETED",
+            )
+        ],
+    )
+
+    df = detect_new_entity_sole_source(db_path)
+    assert df.height == 0
+
+
+def test_new_entity_returns_correct_schema(tmp_path):
+    from detectors.new_entity import detect_new_entity_sole_source
+
+    db_path = _fresh_db(tmp_path)
+    _insert_entities(db_path, [_entity("SCHEMA000002", registration_date=date(2024, 1, 1))])
+    _insert_awards(
+        db_path,
+        [
+            _award(
+                "A1", "SCHEMA000002", amount=500_000.0,
+                award_date=date(2024, 1, 15),
+                competition_type="NOT COMPETED",
+            )
+        ],
+    )
+
+    df = detect_new_entity_sole_source(db_path)
+    assert df.columns == ["uei", "detector", "score", "details"]
+    assert df.schema["score"] == pl.Float64
