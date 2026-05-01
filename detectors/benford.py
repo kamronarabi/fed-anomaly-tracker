@@ -5,6 +5,11 @@ distribution of leading digits in `total_obligation` against the theoretical
 Benford distribution using a Kolmogorov-Smirnov test. A low p-value means
 the observed distribution is unlikely under Benford -- score = 1 - p_value.
 
+Score interpretation: absolute, in [0, 1]. score ≈ 1 means the observed
+leading-digit distribution is overwhelmingly unlikely under Benford
+(strong fabrication signal). score ≈ 0 means the distribution is
+consistent with Benford. Comparable across runs and across entities.
+
 Implementation note on the KS statistic: rather than passing raw integer
 digit values (1-9) to scipy.stats.kstest (which is designed for continuous
 distributions and produces a spuriously large D-statistic on discrete data),

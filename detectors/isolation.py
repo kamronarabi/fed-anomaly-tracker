@@ -12,6 +12,15 @@ Features:
   5. competition_ratio      — fraction of awards with full-and-open competition
   6. modification_frequency — fraction of award rows that are modifications
   7. entity_age_days        — days since SAM registration; median-imputed if missing
+
+Score interpretation: BATCH-RELATIVE, not absolute. Scores are min-max
+normalized within the flagged batch, so the most-anomalous entity in any
+run is always exactly 1.0 and the least-anomalous emitted entity is always
+exactly 0.0 -- regardless of how anomalous the population actually is.
+Re-running on a different population shifts the scale. Cross-detector
+comparisons must account for this; the composite scorer should be aware
+that isolation scores rank within the batch but don't measure absolute
+anomaly intensity the way Benford and new_entity do.
 """
 
 from __future__ import annotations

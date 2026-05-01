@@ -9,6 +9,12 @@ Score = recency_factor * magnitude_factor, each in [0, 1]:
   - magnitude_factor = log10(total_obligation) / 7      [larger award = higher]
 
 7 is chosen so that a $10M award (log10=7) yields a full magnitude of 1.0.
+
+Score interpretation: absolute, in [0, 1]. Only entities matching the
+sole-source-within-window pattern are emitted -- entities not appearing
+have no signal (no competing award, or registration outside the window).
+The product structure means moderately-recent OR moderately-large alone
+yields modest scores; both attributes together saturate near 1.0.
 """
 
 from __future__ import annotations

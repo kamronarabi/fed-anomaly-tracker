@@ -462,6 +462,7 @@ def test_isolation_imputes_missing_entity_age_to_no_nans(tmp_path):
     `.otherwise(None)` branch produced polars-null which `fill_nan` skipped,
     silently feeding NaN to sklearn."""
     import numpy as np
+
     from detectors.isolation import _build_features, detect_isolation_outlier
 
     db_path = _fresh_db(tmp_path)
@@ -477,11 +478,7 @@ def test_isolation_imputes_missing_entity_age_to_no_nans(tmp_path):
     _insert_entities(db_path, entities)
     _insert_awards(db_path, awards)
 
-    # detect_isolation_outlier internally builds + imputes — assert that
-    # by reaching into _build_features and replicating the imputation
-    # the post-imputation column has zero nulls AND zero NaNs.
     feats = _build_features(db_path)
-    import polars as pl
     feats = feats.with_columns(
         pl.col("entity_age_days").fill_nan(
             pl.col("entity_age_days").median().fill_null(0.0)
@@ -562,3 +559,12 @@ def test_all_detectors_share_contract(tmp_path):
             assert df["score"].max() <= 1.0, f"{name} produced score > 1"
             # Every row's `detector` column matches the registered name.
             assert set(df["detector"].unique().to_list()) == {name}
+            # Phase 3 pivot assumes one row per UEI per detector — lock it in.
+            assert df["uei"].n_unique() == df.height, (
+                f"{name} emitted duplicate UEIs"
+            )
+            # `details` is typed Utf8 but the implicit contract is JSON dict.
+            for s in df["details"].to_list():
+                assert isinstance(json.loads(s), dict), (
+                    f"{name} produced non-dict details"
+                )

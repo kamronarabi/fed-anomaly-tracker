@@ -8,6 +8,12 @@ value) where:
 
 Z-score the growth ratio within each NAICS group. Entity score = sigmoid of
 the max z-score across that entity's contracts.
+
+Score interpretation: only entities whose worst contract has z > Z_THRESHOLD
+(default 2.0) are returned -- absence from the result set means "no signal,"
+not "low signal." Emitted scores live in (0.5, 1.0) by construction since
+sigmoid(z - 2) > 0.5 iff z > 2. The composite scorer should treat missing
+UEIs as 0, not as 0.5.
 """
 
 from __future__ import annotations
