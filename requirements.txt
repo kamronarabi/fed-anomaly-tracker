@@ -4,3 +4,5 @@ duckdb
 pyyaml
 python-dotenv
 tenacity
+scipy
+scikit-learn
