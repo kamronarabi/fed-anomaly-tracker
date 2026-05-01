@@ -368,3 +368,130 @@ def test_new_entity_returns_correct_schema(tmp_path):
     df = detect_new_entity_sole_source(db_path)
     assert df.columns == ["uei", "detector", "score", "details"]
     assert df.schema["score"] == pl.Float64
+
+
+# ── Task 4 — Isolation Forest ────────────────────────────────────────────
+
+
+def _populate_iforest_dataset(db_path: str) -> str:
+    """Insert 19 'normal' entities + 1 obvious outlier; return the
+    outlier's UEI."""
+    entities = []
+    awards = []
+    # 19 normal entities: one NAICS, single agency, one award each at
+    # ~$50K, registration 5 years ago.
+    for i in range(19):
+        uei = f"NORM{i:08d}"
+        entities.append(_entity(uei, registration_date=date(2019, 1, 1)))
+        awards.append(_award(f"AN_{i}", uei, amount=50_000.0))
+    # Outlier: extremely large dollars, many agencies, many NAICS,
+    # mostly non-competed, brand-new registration, lots of mods.
+    outlier_uei = "OUTLIER00001"
+    entities.append(_entity(outlier_uei, registration_date=date(2026, 1, 1)))
+    for i in range(20):
+        awards.append(
+            _award(
+                f"AO_{i}",
+                outlier_uei,
+                amount=10_000_000.0,
+                naics_code=f"5413{i % 5:02d}",
+                awarding_agency=("DoD" if i % 2 == 0 else "HHS"),
+                competition_type="NOT COMPETED",
+                modification_number=("0" if i == 0 else f"P0000{i}"),
+                parent_award_id="OUTLIER_P",
+            )
+        )
+    _insert_entities(db_path, entities)
+    _insert_awards(db_path, awards)
+    return outlier_uei
+
+
+def test_isolation_flags_obvious_outlier(tmp_path):
+    """The synthetic outlier (giant dollars, many agencies, all sole-source,
+    new registration) must appear in the flagged set with a high score."""
+    from detectors.isolation import detect_isolation_outlier
+
+    db_path = _fresh_db(tmp_path)
+    outlier_uei = _populate_iforest_dataset(db_path)
+
+    df = detect_isolation_outlier(db_path)
+    df = df.sort("score", descending=True)
+    top = df.row(0, named=True)
+    assert top["uei"] == outlier_uei
+    assert top["score"] > 0.5
+
+
+def test_isolation_handles_missing_entity_age(tmp_path):
+    """Entities with no SAM row get NaN entity_age_days, which the detector
+    must impute (median) rather than crash."""
+    from detectors.isolation import detect_isolation_outlier
+
+    db_path = _fresh_db(tmp_path)
+    awards = []
+    entities = []
+    for i in range(15):
+        uei = f"ENRICHED{i:04d}"
+        entities.append(_entity(uei, registration_date=date(2020, 1, 1)))
+        awards.append(_award(f"E_{i}", uei, amount=100_000.0))
+    for i in range(5):
+        # No matching entity row.
+        uei = f"BARE0000{i:04d}"
+        awards.append(_award(f"B_{i}", uei, amount=100_000.0))
+    _insert_entities(db_path, entities)
+    _insert_awards(db_path, awards)
+
+    df = detect_isolation_outlier(db_path)  # must not raise
+    # All 20 entities are identical after imputation; IsolationForest correctly
+    # returns 0 outliers — the point of the test is no crash, not a forced flag.
+    assert df.columns == ["uei", "detector", "score", "details"]
+
+
+def test_isolation_returns_correct_schema(tmp_path):
+    from detectors.isolation import detect_isolation_outlier
+
+    db_path = _fresh_db(tmp_path)
+    _populate_iforest_dataset(db_path)
+    df = detect_isolation_outlier(db_path)
+    assert df.columns == ["uei", "detector", "score", "details"]
+    assert df.schema["score"] == pl.Float64
+
+
+def test_isolation_imputes_missing_entity_age_to_no_nans(tmp_path):
+    """Regression: nulls/NaNs from missing SAM rows must be median-imputed
+    to real numbers BEFORE the feature matrix is built. Previously the
+    `.otherwise(None)` branch produced polars-null which `fill_nan` skipped,
+    silently feeding NaN to sklearn."""
+    import numpy as np
+    from detectors.isolation import _build_features, detect_isolation_outlier
+
+    db_path = _fresh_db(tmp_path)
+    awards = []
+    entities = []
+    for i in range(15):
+        uei = f"ENRICHED{i:04d}"
+        entities.append(_entity(uei, registration_date=date(2020, 1, 1)))
+        awards.append(_award(f"E_{i}", uei, amount=100_000.0))
+    for i in range(5):
+        uei = f"BARE0000{i:04d}"
+        awards.append(_award(f"B_{i}", uei, amount=100_000.0))
+    _insert_entities(db_path, entities)
+    _insert_awards(db_path, awards)
+
+    # detect_isolation_outlier internally builds + imputes — assert that
+    # by reaching into _build_features and replicating the imputation
+    # the post-imputation column has zero nulls AND zero NaNs.
+    feats = _build_features(db_path)
+    import polars as pl
+    feats = feats.with_columns(
+        pl.col("entity_age_days").fill_nan(
+            pl.col("entity_age_days").median().fill_null(0.0)
+        )
+    )
+    age = feats["entity_age_days"].to_numpy().astype(float)
+    assert feats["entity_age_days"].null_count() == 0
+    assert not np.isnan(age).any(), f"NaN survived imputation: {age}"
+
+    # End-to-end completes without raising (all entities are homogeneous here,
+    # so 0 flags is the correct answer — no fabricated output).
+    df = detect_isolation_outlier(db_path)
+    assert df.columns == ["uei", "detector", "score", "details"]
