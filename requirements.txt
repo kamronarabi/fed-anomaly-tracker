@@ -1,0 +1,6 @@
+httpx
+polars
+duckdb
+pyyaml
+python-dotenv
+tenacity

@@ -1,0 +1,34 @@
+agencies:
+  - code: "075"
+    name: "Department of Health and Human Services"
+    short: "HHS"
+    seed_strategy: "archive"     # public Award Data Archive at
+                                 # files.usaspending.gov (no API, no WAF,
+                                 # no queue). HHS Contracts FY ZIP is
+                                 # ~25 MB compressed at award-summary
+                                 # granularity — no filter needed.
+    # No award_types / award_amount_min — archive granularity already
+    # matches the build plan's 100-200K/yr volume estimate.
+
+  - code: "097"
+    name: "Department of Defense"
+    short: "DoD"
+    seed_strategy: "archive"     # ~1 GB Contracts FY ZIP. Filters below
+                                 # apply post-download in the puller.
+    award_types: ["C", "D"]      # delivery orders + definitive contracts only
+    award_amount_min: 25000      # FAR micro-purchase threshold
+
+fiscal_years: [2024, 2025, 2026]
+# FY2026 archive snapshots are partial-year (Oct 2025 → snapshot date)
+# and small (~5 MB HHS, ~230 MB DoD). The gap between the snapshot date
+# and "today" is filled by the weekly paginate-based incremental refresh.
+
+# Global defaults for any agency that doesn't override.
+award_types: ["A", "B", "C", "D"]   # all contract action types
+award_amount_min: 0
+seed_strategy: "paginate"           # incremental refreshes always paginate
+
+sam_api_base: "https://api.sam.gov/entity-information/v3/entities"
+usaspending_api_base: "https://api.usaspending.gov/api/v2"
+db_path: "data/anomaly_radar.duckdb"
+parquet_dir: "data/parquet"
