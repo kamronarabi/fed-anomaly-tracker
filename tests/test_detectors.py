@@ -185,3 +185,90 @@ def test_benford_returns_correct_schema(tmp_path):
     assert df.schema["detector"] == pl.Utf8
     assert df.schema["score"] == pl.Float64
     assert df.schema["details"] == pl.Utf8
+
+
+# ── Task 2 — Mod growth ──────────────────────────────────────────────────
+
+
+def test_mod_growth_flags_high_growth_outlier(tmp_path):
+    """One entity has a parent contract that grew 50x; 20 peer NAICS contracts
+    grew 1.2x. With the outlier z-score around 4.4 (using sample std), the
+    sigmoid(z - 2) score saturates above 0.9."""
+    from detectors.mod_growth import detect_mod_growth
+
+    db_path = _fresh_db(tmp_path)
+    rows = []
+
+    # Suspect: parent PX, initial $100K, three mods totalling $4.9M -> ratio 50.
+    rows.append(_award("PX_0", "SUSPECT00001", amount=100_000.0,
+                       parent_award_id="PX", modification_number="0"))
+    rows.append(_award("PX_1", "SUSPECT00001", amount=1_500_000.0,
+                       parent_award_id="PX", modification_number="P00001"))
+    rows.append(_award("PX_2", "SUSPECT00001", amount=1_700_000.0,
+                       parent_award_id="PX", modification_number="P00002"))
+    rows.append(_award("PX_3", "SUSPECT00001", amount=1_700_000.0,
+                       parent_award_id="PX", modification_number="P00003"))
+
+    # 20 peers in same NAICS, each with growth_ratio 1.2. With many peers,
+    # the suspect's outlier ratio doesn't pull the mean toward itself.
+    for i in range(20):
+        peer_uei = f"PEER{i:08d}"
+        parent = f"PEER_PARENT_{i}"
+        rows.append(_award(f"{parent}_0", peer_uei, amount=100_000.0,
+                           parent_award_id=parent, modification_number="0"))
+        rows.append(_award(f"{parent}_1", peer_uei, amount=20_000.0,
+                           parent_award_id=parent, modification_number="P00001"))
+
+    _insert_awards(db_path, rows)
+
+    df = detect_mod_growth(db_path)
+    df = df.sort("score", descending=True)
+    top = df.row(0, named=True)
+    assert top["uei"] == "SUSPECT00001"
+    assert top["score"] > 0.9
+    details = json.loads(top["details"])
+    assert details["worst_award_id"] == "PX"
+    assert details["growth_ratio"] == pytest.approx(50.0, rel=0.01)
+
+
+def test_mod_growth_does_not_flag_normal_growth(tmp_path):
+    """An entity whose growth ratio matches the NAICS mean should score low."""
+    from detectors.mod_growth import detect_mod_growth
+
+    db_path = _fresh_db(tmp_path)
+    rows = []
+    # 10 peers all growing 1.2x.
+    for i in range(10):
+        uei = f"NORMAL{i:06d}"
+        parent = f"NORM_P_{i}"
+        rows.append(_award(f"{parent}_0", uei, amount=100_000.0,
+                           parent_award_id=parent, modification_number="0"))
+        rows.append(_award(f"{parent}_1", uei, amount=20_000.0,
+                           parent_award_id=parent, modification_number="P00001"))
+    _insert_awards(db_path, rows)
+
+    df = detect_mod_growth(db_path)
+    # All scores should be well below the sigmoid midpoint at z=2.
+    if df.height > 0:
+        assert df["score"].max() < 0.5
+
+
+def test_mod_growth_returns_correct_schema(tmp_path):
+    from detectors.mod_growth import detect_mod_growth
+
+    db_path = _fresh_db(tmp_path)
+    rows = [
+        _award("S_0", "SCHEMA000001", amount=100_000.0,
+               parent_award_id="SP", modification_number="0"),
+        _award("S_1", "SCHEMA000001", amount=200_000.0,
+               parent_award_id="SP", modification_number="P00001"),
+        _award("S_2", "PEER00000001", amount=100_000.0,
+               parent_award_id="PP", modification_number="0"),
+        _award("S_3", "PEER00000001", amount=20_000.0,
+               parent_award_id="PP", modification_number="P00001"),
+    ]
+    _insert_awards(db_path, rows)
+
+    df = detect_mod_growth(db_path)
+    assert df.columns == ["uei", "detector", "score", "details"]
+    assert df.schema["score"] == pl.Float64
