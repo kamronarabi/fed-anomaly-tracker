@@ -1,0 +1,96 @@
+{
+  "uei": "QN1BCFY7JDJ5",
+  "name": "RTX CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "541715",
+  "naics_description": "RESEARCH AND DEVELOPMENT IN THE PHYSICAL, ENGINEERING, AND LIFE SCIENCES (EXCEPT NANOTECHNOLOGY AND BIOTECHNOLOGY)",
+  "lifetime_total": 47021922255.34999,
+  "lifetime_awards": 1904,
+  "score_date": "2026-05-29",
+  "composite_score": 0.48837471205546995,
+  "composite_score_delta": -0.242376,
+  "composite_percentile_rank": 0.9976232917409389,
+  "brief_text": "Three detectors fired for RTX Corporation. Benford's Law analysis found significant deviation in the leading-digit distribution of award amounts, with observed frequencies departing notably from expected natural patterns across all nine digits. Modification growth on contract SPE4AX20DR001 expanded at a rate far exceeding peers in the same industry code, suggesting unusually aggressive contract value escalation. Isolation Forest flagged the entity as a multivariate outlier based on its combined profile of total dollars, award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.094 with p-value 4.1e-15 across 1,904 transactions. The worst-performing contract showed a modification growth ratio of 7,504.6 compared to a NAICS average of 30.2, producing a z-score of 20.18. The Isolation Forest anomaly score was 0.934 on a scale where higher values indicate greater statistical deviation from typical peer behavior.\n\nThese signals reflect statistical anomalies rather than proof of misconduct. RTX is a major defense contractor with $47 billion in lifetime obligations and 1,904 awards, primarily from a single agency. The scale and concentration of activity, combined with the nature of large-scale defense R&D contracting involving frequent modifications, may naturally produce patterns that diverge from smaller-peer baselines. The Benford deviation warrants review but does not inherently indicate fraud in high-volume contract environments.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999999959,
+      "details": {
+        "observed_distribution": {
+          "1": 0.20745798319327732,
+          "2": 0.17542016806722688,
+          "3": 0.17489495798319327,
+          "4": 0.13130252100840337,
+          "5": 0.07983193277310924,
+          "6": 0.06827731092436974,
+          "7": 0.06985294117647059,
+          "8": 0.03939075630252101,
+          "9": 0.05357142857142857
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.09424310345915826,
+        "p_value": 4.096659094526833e-15,
+        "n_transactions": 1904
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999999873120636,
+      "details": {
+        "worst_award_id": "SPE4AX20DR001",
+        "growth_ratio": 7504.565425171119,
+        "naics_code": "332510",
+        "naics_avg_ratio": 30.22656711866116,
+        "z_score": 20.182614180112612
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9344375608493065,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.672300379102559,
+          "award_count": 1904.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 13.0,
+          "competition_ratio": 0.4023109243697479,
+          "modification_frequency": 0.5126050420168067
+        },
+        "raw_anomaly_score": -0.7622106105888561,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7307507283810928,
+      "rank": 4
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.48837471205546995,
+      "rank": 17
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE4AX20DR001",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX20DR001"
+    }
+  ]
+}

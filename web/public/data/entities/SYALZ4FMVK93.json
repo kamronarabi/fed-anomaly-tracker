@@ -1,0 +1,110 @@
+{
+  "uei": "SYALZ4FMVK93",
+  "name": "SIMMONDS PRECISION PRODUCTS INC",
+  "agency": "Department of Defense",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 167822410.04,
+  "lifetime_awards": 487,
+  "score_date": "2026-05-29",
+  "composite_score": 0.47200435399435636,
+  "composite_score_delta": -0.174946,
+  "composite_percentile_rank": 0.9965834818775996,
+  "brief_text": "Four detectors flagged Simmonds Precision Products. Benford's Law analysis found the distribution of leading digits in award amounts significantly deviates from expected patterns, with a p-value of 0.000015. Modification growth on contract SPE4AX18D9414 expanded at 476 times its initial value, vastly exceeding the 8.7x average for peer firms in the same industry code. The Isolation Forest algorithm identified the entity as a multivariate outlier with a score of 0.79, driven by concentration in a single agency and high modification frequency. Sole-source awards comprise 92 percent of the entity's portfolio, substantially above the 45 percent median for comparable manufacturers.\n\nThe Benford test produced a Kolmogorov-Smirnov statistic of 0.110 across 487 transactions. The modification growth z-score reached 12.0, indicating extreme deviation from peer norms. The entity received 447 sole-source awards out of 487 total, yielding a z-score of 1.20 on sole-source concentration. Lifetime obligated value totals 167.8 million dollars across all awards.\n\nThese statistical signals warrant scrutiny but do not establish fraud. Aircraft parts manufacturing involves specialized suppliers where sole-source awards and contract modifications are common practice. The entity's 487-award history and substantial lifetime value suggest an established vendor rather than a fly-by-night operator. The single-agency concentration reflects DoD's reliance on specialized precision manufacturers. Benford deviations may reflect industry-specific pricing structures or contract types not captured in peer comparisons.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999849805479436,
+      "details": {
+        "observed_distribution": {
+          "1": 0.19096509240246407,
+          "2": 0.2032854209445585,
+          "3": 0.2135523613963039,
+          "4": 0.10882956878850103,
+          "5": 0.10061601642710473,
+          "6": 0.07186858316221766,
+          "7": 0.045174537987679675,
+          "8": 0.03490759753593429,
+          "9": 0.030800821355236138
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.11006490326151713,
+        "p_value": 1.5019452056366774e-05,
+        "n_transactions": 487
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999545077022451,
+      "details": {
+        "worst_award_id": "SPE4AX18D9414",
+        "growth_ratio": 476.2283206251929,
+        "naics_code": "334519",
+        "naics_avg_ratio": 8.695268679821755,
+        "z_score": 11.997922033115605
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7895657571894918,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.22484995355387,
+          "award_count": 487.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 12.0,
+          "competition_ratio": 0.014373716632443531,
+          "modification_frequency": 0.5195071868583162
+        },
+        "raw_anomaly_score": -0.7009522847232709,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.5497189970132678,
+      "details": {
+        "total_awards": 487,
+        "sole_source_awards": 447,
+        "ss_frac": 0.917864476386037,
+        "primary_naics": "336413",
+        "naics_peer_count": 322,
+        "naics_median_ss": 0.45454545454545453,
+        "naics_std_ss": 0.38624872937147114,
+        "z_score": 1.1995353941863447
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.646950772108803,
+      "rank": 31
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.47200435399435636,
+      "rank": 24
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE4AX18D9414",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX18D9414"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "uei": "PMLZCBF9U569",
+  "name": "MITCHELL CONSULTING SERVICES GROUP INC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "561320",
+  "naics_description": "TEMPORARY HELP SERVICES",
+  "lifetime_total": 44394712.33,
+  "lifetime_awards": 505,
+  "score_date": "2026-05-29",
+  "composite_score": 0.44421593169517015,
+  "composite_score_delta": -0.031744,
+  "composite_percentile_rank": 0.9940582293523471,
+  "brief_text": "Three detectors fired for Mitchell Consulting Services Group Inc. Benford's law analysis found significant deviation in the leading-digit distribution of award amounts, with a Kolmogorov-Smirnov statistic of 0.21 and p-value near zero across 495 transactions. The isolation forest algorithm flagged the entity as a multivariate outlier with a score of 0.826, driven by concentration in a single agency, high modification frequency, and very low competition ratio. Sole-source concentration analysis showed the entity wins 91.5 percent of its awards without competition, substantially above the temporary help services peer median of zero percent.\n\nThe Benford detector observed digit 1 appearing in 21.2 percent of award amounts versus an expected 30.1 percent, while digits 4, 5, and 6 were overrepresented. The isolation forest feature vector shows all 495 awards came from one agency, with a competition ratio of 5.7 percent and modification frequency of 81.6 percent. For sole-source concentration, the z-score of 2.59 reflects a 91.5 percent sole-source rate against a peer standard deviation of 0.35 in a cohort of 155 temporary help firms.\n\nThese statistical anomalies warrant scrutiny but do not confirm fraud. Temporary help staffing contractors may legitimately operate under single-agency blanket purchase agreements with frequent modifications and minimal competition. The Benford deviation could reflect rounding practices or contract-value clustering common in staffing. The small peer group and industry-specific contracting patterns may explain the sole-source concentration signal. Verification of actual service delivery and pricing reasonableness would be necessary to assess risk.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.21212121212121213,
+          "2": 0.09696969696969697,
+          "3": 0.08282828282828283,
+          "4": 0.13535353535353536,
+          "5": 0.1414141414141414,
+          "6": 0.12525252525252525,
+          "7": 0.09292929292929293,
+          "8": 0.06464646464646465,
+          "9": 0.048484848484848485
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.2101407994087705,
+        "p_value": 2.0641116229657655e-19,
+        "n_transactions": 495
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8258780794143523,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.64733124618094,
+          "award_count": 495.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 16.0,
+          "competition_ratio": 0.05656565656565657,
+          "modification_frequency": 0.8161616161616162
+        },
+        "raw_anomaly_score": -0.7163067706314467,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8300251279926257,
+      "details": {
+        "total_awards": 495,
+        "sole_source_awards": 453,
+        "ss_frac": 0.9151515151515152,
+        "primary_naics": "561210",
+        "naics_peer_count": 155,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.35391353467245934,
+        "z_score": 2.5858053606185805
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4759601361205639,
+      "rank": 179
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.44421593169517015,
+      "rank": 41
+    }
+  ],
+  "flagged_contracts": []
+}

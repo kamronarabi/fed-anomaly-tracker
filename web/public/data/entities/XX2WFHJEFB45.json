@@ -1,0 +1,96 @@
+{
+  "uei": "XX2WFHJEFB45",
+  "name": "KAMPI COMPONENTS CO INC",
+  "agency": "Department of Defense",
+  "naics_code": "334290",
+  "naics_description": "OTHER COMMUNICATIONS EQUIPMENT MANUFACTURING",
+  "lifetime_total": 98245659.45000002,
+  "lifetime_awards": 559,
+  "score_date": "2026-05-29",
+  "composite_score": 0.480039833150274,
+  "composite_score_delta": -0.232024,
+  "composite_percentile_rank": 0.9971776589423649,
+  "brief_text": "Three detectors fired for Kampi Components. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with too few awards starting in 1 and too many in 3. Modification growth on contract SPE7MX21D0044 expanded at nearly 80 times its initial value, far exceeding the typical 2.8-fold ratio for peers in equipment manufacturing. Isolation Forest flagged the entity as a multivariate outlier, driven by concentration of all 559 awards from a single agency combined with low competition ratios and high modification frequency.\n\nThe Benford test yielded a p-value of 2.59e-11 across 559 transactions, with observed digit-1 frequency of 15.6 percent versus expected 30.1 percent. The modification growth z-score reached 13.42 sigmas, indicating extreme deviation. The Isolation Forest anomaly score of 0.926 reflects an entity receiving $98.2 million across 559 awards exclusively from DoD with only 22 percent competition rate and modifications on 10.2 percent of awards.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a specialized equipment niche. The single-agency concentration and modification intensity may reflect DoD's reliance on a qualified supplier rather than misconduct. The peer group for this NAICS code is small, potentially amplifying z-scores. Award velocity and new-entity detectors did not fire, suggesting an established vendor with consistent historical activity.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999741417,
+      "details": {
+        "observed_distribution": {
+          "1": 0.1556350626118068,
+          "2": 0.17173524150268335,
+          "3": 0.23076923076923078,
+          "4": 0.15742397137745975,
+          "5": 0.07692307692307693,
+          "6": 0.07334525939177101,
+          "7": 0.057245080500894455,
+          "8": 0.044722719141323794,
+          "9": 0.03220035778175313
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.1497509506051723,
+        "p_value": 2.5858260858354538e-11,
+        "n_transactions": 559
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999890118204904,
+      "details": {
+        "worst_award_id": "SPE7MX21D0044",
+        "growth_ratio": 79.74359325207547,
+        "naics_code": "333613",
+        "naics_avg_ratio": 2.8087131519760775,
+        "z_score": 13.418679464738359
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9261701306020338,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.992313372090164,
+          "award_count": 559.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 69.0,
+          "competition_ratio": 0.22182468694096602,
+          "modification_frequency": 0.10196779964221825
+        },
+        "raw_anomaly_score": -0.7587147685867253,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7120634694475814,
+      "rank": 8
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.480039833150274,
+      "rank": 20
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE7MX21D0044",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE7MX21D0044"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "uei": "J49CN39QTNW3",
+  "name": "GOVERNMENT SCIENTIFIC SOURCE INC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "334516",
+  "naics_description": "ANALYTICAL LABORATORY INSTRUMENT MANUFACTURING",
+  "lifetime_total": 130626401.07999995,
+  "lifetime_awards": 1655,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4735954573471453,
+  "composite_score_delta": -0.238089,
+  "composite_percentile_rank": 0.9967320261437909,
+  "brief_text": "Three detectors fired for Government Scientific Source Inc. Benford's Law analysis revealed significant deviation in the leading-digit distribution of award amounts, with a p-value of 1.66e-08 indicating the observed pattern is highly unlikely under natural conditions. Modification growth analysis flagged award SPE2DE24D0014, which experienced modifications growing at a ratio of 1404.57, roughly 25 times faster than the peer average of 55.48 for analytical laboratory instrument manufacturers. Isolation Forest identified the entity as a multivariate outlier with a score of 0.958, reflecting an unusual combination of high award volume, concentrated agency relationships, and elevated modification frequency.\n\nThe Benford detector observed 1628 transactions with leading digits skewed toward 2 (27.0%) and away from 1 (23.3%), compared to the expected 30.1% and 17.6% respectively. The modification growth z-score of 10.09 is extreme, indicating the flagged contract's growth trajectory deviates 10 standard deviations from peers. The isolation anomaly score of -0.772 places the entity in the top 5% of outliers across the federal contracting population.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. The entity's legitimate scale\u20141655 lifetime awards totaling $130.6 million\u2014may explain some patterns. However, the Benford deviation and modification growth are particularly notable given the entity's long operating history and substantial contract volume. The concentrated agency footprint (only 2 agencies) and high modification frequency relative to award count merit verification against contract documentation and performance records.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999834366753,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2328009828009828,
+          "2": 0.26965601965601965,
+          "3": 0.1732186732186732,
+          "4": 0.0988943488943489,
+          "5": 0.06756756756756757,
+          "6": 0.05466830466830467,
+          "7": 0.03931203931203931,
+          "8": 0.033169533169533166,
+          "9": 0.030712530712530713
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.0756000202340057,
+        "p_value": 1.6563324707353838e-08,
+        "n_transactions": 1628
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9996938607531681,
+      "details": {
+        "worst_award_id": "SPE2DE24D0014",
+        "growth_ratio": 1404.5741510984922,
+        "naics_code": "423450",
+        "naics_avg_ratio": 55.477210838964545,
+        "z_score": 10.091164318394588
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9581635560344945,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.116030961660293,
+          "award_count": 1628.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 22.0,
+          "competition_ratio": 0.8968058968058968,
+          "modification_frequency": 0.09766584766584767
+        },
+        "raw_anomaly_score": -0.7722430303408213,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.71168449628052,
+      "rank": 9
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4735954573471453,
+      "rank": 23
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2DE24D0014",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2DE24D0014"
+    }
+  ]
+}

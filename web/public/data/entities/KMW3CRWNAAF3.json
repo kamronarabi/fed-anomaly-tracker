@@ -1,0 +1,110 @@
+{
+  "uei": "KMW3CRWNAAF3",
+  "name": "ILLUMINA, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "325413",
+  "naics_description": "IN-VITRO DIAGNOSTIC SUBSTANCE MANUFACTURING",
+  "lifetime_total": 73884340.84000002,
+  "lifetime_awards": 753,
+  "score_date": "2026-05-29",
+  "composite_score": 0.552396758466111,
+  "composite_score_delta": -0.15305,
+  "composite_percentile_rank": 0.9989601901366608,
+  "brief_text": "Four detectors flagged Illumina for statistical anomalies. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected frequency, with digit 1 appearing 35 percent of the time versus the expected 30 percent, and digit 2 appearing 27 percent versus 18 percent expected. Modification growth on one contract vastly outpaced peer norms in the in-vitro diagnostics manufacturing sector. The entity also emerged as a multivariate outlier in Isolation Forest analysis, driven by extreme modification frequency and very low competition ratios. Finally, sole-source awards comprise 89 percent of its portfolio, roughly double the median for its industry peers.\n\nThe worst-performing contract, 75N92020D00022, showed modification growth of 1,487 times the baseline, compared to a sector average of 50 times, yielding a z-score of 8.63. Sole-source awards totaled 655 of 737 lifetime awards. The Benford test across 737 transactions produced a Kolmogorov-Smirnov statistic of 0.143 with p-value 1.65e-13. Illumina's lifetime obligated value reached 73.9 million across two awarding agencies.\n\nThese signals reflect statistical extremes rather than confirmed fraud. Illumina's dominant position in specialized diagnostics manufacturing and its established relationship with HHS may legitimately explain high sole-source concentration and modification frequency. The small peer group of 80 entities in this narrow NAICS code limits statistical power. Benford deviations can arise from legitimate business practices, contract structures, or procurement patterns specific to medical device supply. Closer review of the flagged contract's modification justifications would clarify whether growth reflects scope expansion or control weakness.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999998348,
+      "details": {
+        "observed_distribution": {
+          "1": 0.35278154681139756,
+          "2": 0.2672998643147897,
+          "3": 0.06919945725915876,
+          "4": 0.09362279511533243,
+          "5": 0.052917232021709636,
+          "6": 0.06105834464043419,
+          "7": 0.035278154681139755,
+          "8": 0.032564450474898234,
+          "9": 0.035278154681139755
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.14296015640652476,
+        "p_value": 1.6515622764002833e-13,
+        "n_transactions": 737
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9986819914156168,
+      "details": {
+        "worst_award_id": "75N92020D00022",
+        "growth_ratio": 1487.4258726423025,
+        "naics_code": "334516",
+        "naics_avg_ratio": 50.31015386029151,
+        "z_score": 8.630314451812344
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9093042669332659,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.8685524031119805,
+          "award_count": 737.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 19.0,
+          "competition_ratio": 0.008141112618724558,
+          "modification_frequency": 0.3541383989145183
+        },
+        "raw_anomaly_score": -0.7515831215268737,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.726719884663633,
+      "details": {
+        "total_awards": 737,
+        "sole_source_awards": 655,
+        "ss_frac": 0.8887381275440976,
+        "primary_naics": "334516",
+        "naics_peer_count": 80,
+        "naics_median_ss": 0.4166666666666667,
+        "naics_std_ss": 0.23865572067635837,
+        "z_score": 1.9780437675642741
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7054470341740664,
+      "rank": 14
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.552396758466111,
+      "rank": 8
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75N92020D00022",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75N92020D00022"
+    }
+  ]
+}

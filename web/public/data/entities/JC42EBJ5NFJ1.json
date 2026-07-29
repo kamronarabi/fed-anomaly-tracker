@@ -1,0 +1,110 @@
+{
+  "uei": "JC42EBJ5NFJ1",
+  "name": "HAMILTON SUNDSTRAND CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 788951394.8000001,
+  "lifetime_awards": 1943,
+  "score_date": "2026-05-29",
+  "composite_score": 0.48651622973845665,
+  "composite_score_delta": -0.224611,
+  "composite_percentile_rank": 0.9974747474747475,
+  "brief_text": "Four detectors flagged Hamilton Sundstrand Corporation. Benford's Law analysis found the distribution of leading digits in award amounts significantly deviates from expected patterns, with too few awards starting in 1 and too many in 2 and 3. Modification growth on contract SPRPA119GCE01 expanded at a rate nearly 46 times faster than peers in the same industry. The Isolation Forest algorithm identified the entity as a multivariate outlier based on its concentrated agency relationships and high modification frequency. Sole-source concentration showed the entity receives substantially more sole-source awards than typical competitors.\n\nThe Benford test yielded a KS statistic of 0.102 with p-value 4.1e-18 across 1,943 transactions. The worst modification contract grew at a ratio of 2,291 compared to a NAICS average of 50, producing a z-score of 8.02. The Isolation Forest anomaly score was 0.918 on a 0-1 scale. For sole-source work, the entity won 1,764 of 1,943 awards (90.8 percent sole-source) versus a peer median of 45.5 percent, yielding a z-score of 1.17.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices like tiered pricing or contract structures. As a major aerospace supplier with $789 million in lifetime obligations, Hamilton Sundstrand operates in a concentrated market where sole-source awards to established primes are common. The modification growth spike may reflect normal contract evolution rather than scope creep. The peer group for sole-source comparison includes 322 entities of varying size and specialization, which may mask legitimate differences in business model.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.19866186309830158,
+          "2": 0.18528049408131755,
+          "3": 0.1878538342768914,
+          "4": 0.12660833762223367,
+          "5": 0.08594956253216675,
+          "6": 0.08080288214101904,
+          "7": 0.055584148224395266,
+          "8": 0.049922799794132784,
+          "9": 0.029336078229541946
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.10236813256567961,
+        "p_value": 4.1262678697443855e-18,
+        "n_transactions": 1943
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9975838787335212,
+      "details": {
+        "worst_award_id": "SPRPA119GCE01",
+        "growth_ratio": 2290.800913663307,
+        "naics_code": "333999",
+        "naics_avg_ratio": 50.02858759160158,
+        "z_score": 8.023172762292708
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9179211159355758,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.897050248304005,
+          "award_count": 1943.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 19.0,
+          "competition_ratio": 0.012352032938754504,
+          "modification_frequency": 0.36438497169325784
+        },
+        "raw_anomaly_score": -0.755226713521887,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.5433089708666948,
+      "details": {
+        "total_awards": 1943,
+        "sole_source_awards": 1764,
+        "ss_frac": 0.9078744209984559,
+        "primary_naics": "336413",
+        "naics_peer_count": 322,
+        "naics_median_ss": 0.45454545454545453,
+        "naics_std_ss": 0.38624872937147114,
+        "z_score": 1.1736710880335777
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7111275552574101,
+      "rank": 11
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.48651622973845665,
+      "rank": 18
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPRPA119GCE01",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPRPA119GCE01"
+    }
+  ]
+}

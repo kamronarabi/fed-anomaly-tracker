@@ -1,0 +1,96 @@
+{
+  "uei": "DJRUN4KK1HK3",
+  "name": "HPI FEDERAL LLC",
+  "agency": "Department of Defense",
+  "naics_code": "541512",
+  "naics_description": "COMPUTER SYSTEMS DESIGN SERVICES",
+  "lifetime_total": 491033426.2900001,
+  "lifetime_awards": 2052,
+  "score_date": "2026-05-29",
+  "composite_score": 0.441543077949531,
+  "composite_score_delta": -0.219943,
+  "composite_percentile_rank": 0.9936125965537731,
+  "brief_text": "Three detectors fired for HPI Federal LLC. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 2 appearing much more frequently than predicted and digit 1 much less frequently. A parent contract modification grew at an extraordinary rate compared to peers in computer systems design services. Isolation Forest identified the entity as a multivariate outlier based on its combination of high total dollars, large award count, concentration among few agencies, and frequent modifications.\n\nThe Benford test yielded a KS statistic of 0.110 with p-value of 4.35e-22 across 2,050 transactions. The worst-performing contract modification grew by a factor of 13,560 compared to a NAICS peer average of 125, producing a z-score of 5.98 standard deviations above the mean. The Isolation Forest anomaly score was 0.796 on a scale where higher indicates greater outlier status.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can occur in legitimate portfolios with structured pricing or contract vehicles. The extreme modification growth on a single contract may reflect legitimate scope expansion or consolidation. The entity's profile\u2014nearly half a billion dollars across 2,052 awards primarily from DoD\u2014represents a large, established contractor where high modification frequency and agency concentration are contextually less unusual than for smaller firms. The small peer group in this NAICS segment may amplify z-score magnitudes.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.19073170731707317,
+          "2": 0.21951219512195122,
+          "3": 0.19317073170731708,
+          "4": 0.12390243902439024,
+          "5": 0.08682926829268292,
+          "6": 0.06682926829268293,
+          "7": 0.05170731707317073,
+          "8": 0.033170731707317075,
+          "9": 0.03414634146341464
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.11029828834690802,
+        "p_value": 4.351838224452205e-22,
+        "n_transactions": 2050
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9816087615861668,
+      "details": {
+        "worst_award_id": "N0003920D0020",
+        "growth_ratio": 13560.140309590648,
+        "naics_code": "541512",
+        "naics_avg_ratio": 124.87621221603948,
+        "z_score": 5.977318441130887
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7955482826782134,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.691111057009284,
+          "award_count": 2050.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 4.0,
+          "competition_ratio": 0.9985365853658537,
+          "modification_frequency": 0.615609756097561
+        },
+        "raw_anomaly_score": -0.7034819660458548,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6614862166405704,
+      "rank": 29
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.441543077949531,
+      "rank": 44
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N0003920D0020",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0003920D0020"
+    }
+  ]
+}

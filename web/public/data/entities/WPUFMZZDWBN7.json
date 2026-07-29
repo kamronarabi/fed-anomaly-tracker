@@ -1,0 +1,97 @@
+{
+  "uei": "WPUFMZZDWBN7",
+  "name": "RAO RADIOLOGISTS, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "561320",
+  "naics_description": "TEMPORARY HELP SERVICES",
+  "lifetime_total": 71000281.14999999,
+  "lifetime_awards": 62,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4371279171288229,
+  "composite_score_delta": 0.137417,
+  "composite_percentile_rank": 0.9930184194890078,
+  "brief_text": "Three detectors fired for RAO RADIOLOGISTS, INC. The Benford detector identified a significant deviation in the leading-digit distribution of award amounts, with digit 1 appearing in 53 percent of transactions versus an expected 30 percent. The modification-growth detector found that a single parent contract grew by a factor of 2,873 in dollar value, far exceeding the typical 65-fold growth ratio for peers in temporary help services. The award-velocity detector revealed that the entity received 19 awards in the past 90 days, a rate 4.1 times higher than its own historical baseline of one award every 20 days.\n\nThe Benford test produced a Kolmogorov-Smirnov statistic of 0.273 with a p-value of 0.0003 across 60 transactions. The worst-performing contract (36F79720D0062) showed a growth ratio of 2,873 compared to a NAICS average of 65, yielding a z-score of 7.34 standard deviations above peer norms. Recent award velocity reached 0.21 awards per day versus a baseline of 0.052 per day, with a z-score of 6.67.\n\nThese statistical anomalies warrant scrutiny, though they do not constitute proof of fraud. The entity's classification as temporary help services may not align with its actual business as a radiology firm, potentially skewing peer comparisons. The entity has accumulated 62 awards totaling 71 million dollars over its lifetime, suggesting it is established rather than a fly-by-night operation. The concentrated spike in recent awards and the extreme modification growth on a single contract merit closer examination of contract justifications and pricing.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9997367456741312,
+      "details": {
+        "observed_distribution": {
+          "1": 0.5333333333333333,
+          "2": 0.21666666666666667,
+          "3": 0.05,
+          "4": 0.05,
+          "5": 0.016666666666666666,
+          "6": 0.05,
+          "7": 0.03333333333333333,
+          "8": 0.05,
+          "9": 0.0
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.27287874528033756,
+        "p_value": 0.0002632543258688675,
+        "n_transactions": 60
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9952136194686907,
+      "details": {
+        "worst_award_id": "36F79720D0062",
+        "growth_ratio": 2872.6979207953495,
+        "naics_code": "561320",
+        "naics_avg_ratio": 64.94034756494287,
+        "z_score": 7.337182911465142
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9906753326793986,
+      "details": {
+        "recent_count": 19,
+        "baseline_count": 33,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.2111111111111111,
+        "baseline_rate_per_day": 0.0515625,
+        "expected_recent_count": 4.640625,
+        "z_score": 6.665723575970263,
+        "earliest_award": "2023-10-18",
+        "latest_award": "2026-03-31",
+        "as_of": "2026-04-01"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.29971136840036683,
+      "rank": 701
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4371279171288229,
+      "rank": 48
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "36F79720D0062",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=36F79720D0062"
+    }
+  ]
+}

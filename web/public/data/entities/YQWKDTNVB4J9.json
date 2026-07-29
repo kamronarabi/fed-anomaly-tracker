@@ -1,0 +1,96 @@
+{
+  "uei": "YQWKDTNVB4J9",
+  "name": "JAMAICA BEARINGS CO., INC.",
+  "agency": "Department of Defense",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 238877490.51000002,
+  "lifetime_awards": 1232,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4663666416679117,
+  "composite_score_delta": -0.038405,
+  "composite_percentile_rank": 0.9959893048128343,
+  "brief_text": "Three detectors fired for Jamaica Bearings. Benford's Law analysis found the distribution of leading digits in award amounts significantly deviates from expected patterns, with too few awards starting in 1 and too many in 2 and 3. Modification growth on contract SPE4A222D0026 expanded at 120.6 times its initial value, vastly exceeding the typical 4.7-fold growth ratio for peer firms in aircraft parts manufacturing. Isolation Forest flagged the entity as a multivariate outlier, driven primarily by concentration of all awards from a single agency despite substantial lifetime volume and high modification frequency.\n\nThe Benford test yielded a p-value of 0.0000012 across 1,232 transactions. The worst-performing contract showed a growth ratio of 120.58 against a NAICS average of 4.66, producing a z-score of 9.26 standard deviations above peer behavior. The isolation anomaly score was 0.942 on a 0-to-1 scale. Jamaica Bearings has received 1,232 awards totaling 238.9 million dollars, but exclusively from the Department of Defense.\n\nThese statistical signals warrant scrutiny but do not prove misconduct. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a specialized manufacturing sector. The extreme modification growth may reflect a long-term production contract that scaled legitimately over time. The single-agency concentration is notable but not uncommon for defense contractors serving niche markets. The peer group for aircraft parts manufacturing is relatively small, which can amplify z-scores.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.999998773127346,
+      "details": {
+        "observed_distribution": {
+          "1": 0.22483766233766234,
+          "2": 0.2159090909090909,
+          "3": 0.15827922077922077,
+          "4": 0.09740259740259741,
+          "5": 0.07954545454545454,
+          "6": 0.0689935064935065,
+          "7": 0.08035714285714286,
+          "8": 0.04220779220779221,
+          "9": 0.032467532467532464
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.07619233332631886,
+        "p_value": 1.2268726540711814e-06,
+        "n_transactions": 1232
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9992941874593002,
+      "details": {
+        "worst_award_id": "SPE4A222D0026",
+        "growth_ratio": 120.58215146459028,
+        "naics_code": "332991",
+        "naics_avg_ratio": 4.659991972809686,
+        "z_score": 9.255454817072916
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9420982031555486,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.37817522799237,
+          "award_count": 1232.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 31.0,
+          "competition_ratio": 0.07386363636363637,
+          "modification_frequency": 0.19074675324675325
+        },
+        "raw_anomaly_score": -0.7654498753103571,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5047712572277894,
+      "rank": 146
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4663666416679117,
+      "rank": 28
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE4A222D0026",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4A222D0026"
+    }
+  ]
+}

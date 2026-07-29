@@ -1,17 +1,18 @@
 """Isolation Forest multivariate outlier detector.
 
-Build a feature vector per entity and run sklearn's IsolationForest with
-contamination=0.05. Entities scoring as anomalous get a normalized [0, 1]
-score and appear in the output; entities classified as normal are filtered.
+Build a USAspending-derived feature vector per entity and run sklearn's
+IsolationForest with contamination=0.05. Entities scoring as anomalous get
+a normalized [0, 1] score and appear in the output; entities classified as
+normal are filtered.
 
-Features:
+Features (all USAspending-native; `entity_age_days` dropped in 2026-05-27
+pivot when SAM was removed entirely from the project):
   1. log_total_dollars      — log10 of total obligation (computed in SQL)
   2. award_count            — total award rows for this entity
   3. unique_agencies_count  — distinct awarding agencies
   4. naics_diversity        — distinct NAICS codes
   5. competition_ratio      — fraction of awards with full-and-open competition
   6. modification_frequency — fraction of award rows that are modifications
-  7. entity_age_days        — days since SAM registration; median-imputed if missing
 
 Score interpretation: BATCH-RELATIVE, not absolute. Scores are min-max
 normalized within the flagged batch, so the most-anomalous entity in any
@@ -20,12 +21,11 @@ exactly 0.0 -- regardless of how anomalous the population actually is.
 Re-running on a different population shifts the scale. Cross-detector
 comparisons must account for this; the composite scorer should be aware
 that isolation scores rank within the batch but don't measure absolute
-anomaly intensity the way Benford and new_entity do.
+anomaly intensity the way Benford does.
 """
 
 from __future__ import annotations
 
-import datetime
 import json
 
 import duckdb
@@ -44,7 +44,6 @@ _FEATURE_COLS = [
     "naics_diversity",
     "competition_ratio",
     "modification_frequency",
-    "entity_age_days",
 ]
 
 
@@ -73,10 +72,8 @@ def _build_features(db_path: str) -> pl.DataFrame:
                       THEN 1.0 ELSE 0.0
                     END) / NULLIF(COUNT(*), 0),
                 0.0
-              )                                                         AS modification_frequency,
-              MAX(e.registration_date)                                  AS registration_date
+              )                                                         AS modification_frequency
             FROM awards a
-            LEFT JOIN entities e ON e.uei = a.recipient_uei
             WHERE a.recipient_uei IS NOT NULL
               AND a.total_obligation IS NOT NULL
               AND a.total_obligation > 0
@@ -86,8 +83,7 @@ def _build_features(db_path: str) -> pl.DataFrame:
     finally:
         con.close()
 
-    today = datetime.date.today()
-    df = pl.DataFrame(
+    return pl.DataFrame(
         rows,
         schema={
             "uei": pl.Utf8,
@@ -97,20 +93,9 @@ def _build_features(db_path: str) -> pl.DataFrame:
             "naics_diversity": pl.Float64,
             "competition_ratio": pl.Float64,
             "modification_frequency": pl.Float64,
-            "registration_date": pl.Date,
         },
         orient="row",
     )
-    return df.with_columns(
-        pl.when(pl.col("registration_date").is_not_null())
-        .then(
-            (pl.lit(today) - pl.col("registration_date"))
-            .dt.total_days()
-            .cast(pl.Float64)
-        )
-        .otherwise(float("nan"))
-        .alias("entity_age_days")
-    ).drop("registration_date")
 
 
 def detect_isolation_outlier(db_path: str) -> pl.DataFrame:
@@ -118,13 +103,6 @@ def detect_isolation_outlier(db_path: str) -> pl.DataFrame:
     feats = _build_features(db_path)
     if feats.height == 0:
         return _empty()
-
-    # Median-impute entity_age_days for entities lacking SAM enrichment.
-    feats = feats.with_columns(
-        pl.col("entity_age_days").fill_nan(
-            pl.col("entity_age_days").median().fill_null(0.0)
-        )
-    )
 
     matrix = feats.select(_FEATURE_COLS).to_numpy().astype(float)
     matrix = MinMaxScaler().fit_transform(matrix)

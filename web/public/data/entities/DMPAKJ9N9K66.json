@@ -1,0 +1,96 @@
+{
+  "uei": "DMPAKJ9N9K66",
+  "name": "MEDLINE INDUSTRIES, LP",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "339113",
+  "naics_description": "SURGICAL APPLIANCE AND SUPPLIES MANUFACTURING",
+  "lifetime_total": 144720096.43,
+  "lifetime_awards": 214,
+  "score_date": "2026-05-29",
+  "composite_score": 0.43358568697716837,
+  "composite_score_delta": 0.016612,
+  "composite_percentile_rank": 0.9927213309566252,
+  "brief_text": "Three detectors fired for Medline Industries. Benford's Law analysis found a severe anomaly in the leading-digit distribution of award amounts, with digit 2 appearing far more frequently than expected and digit 1 appearing less frequently. Modification growth on a single parent contract exceeded peer norms dramatically, with modifications growing at a rate 41 times higher than the average for surgical appliance manufacturers. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its combination of high total dollars, moderate award count, concentration among few agencies, and frequent contract modifications.\n\nThe Benford test yielded a p-value of 2.06e-12 with a KS statistic of 0.259 across 205 transactions. Digit 2 appeared in 50.7 percent of leading positions versus an expected 17.6 percent. The worst-performing contract (75A50121A00003) showed a modification growth ratio of 1,231.76 compared to a NAICS average of 29.74, producing a z-score of 9.52. The Isolation Forest anomaly score was 0.704 on a scale where higher indicates greater outlier status.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Benford deviations can occur legitimately in procurement datasets, particularly when award amounts cluster around specific price points or contract vehicles. The extreme modification growth may reflect legitimate scope expansion on a critical medical supply contract, especially given HHS's role in pandemic response and emergency procurement. The entity's large lifetime total of 144.7 million dollars across 214 awards suggests an established vendor, though the concentration among two agencies and high modification frequency merit verification against contract documentation.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999979409,
+      "details": {
+        "observed_distribution": {
+          "1": 0.22926829268292684,
+          "2": 0.5073170731707317,
+          "3": 0.03902439024390244,
+          "4": 0.04878048780487805,
+          "5": 0.05365853658536585,
+          "6": 0.04878048780487805,
+          "7": 0.04390243902439024,
+          "8": 0.00975609756097561,
+          "9": 0.01951219512195122
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.2594641111339961,
+        "p_value": 2.059168087468595e-12,
+        "n_transactions": 205
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9994575149124642,
+      "details": {
+        "worst_award_id": "75A50121A00003",
+        "growth_ratio": 1231.7571507663854,
+        "naics_code": "339113",
+        "naics_avg_ratio": 29.74485848198312,
+        "z_score": 9.518807329054805
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7037114588874877,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.160528843231269,
+          "award_count": 205.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 4.0,
+          "competition_ratio": 0.6878048780487804,
+          "modification_frequency": 0.4878048780487805
+        },
+        "raw_anomaly_score": -0.6646492191888961,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4169737264740607,
+      "rank": 303
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.43358568697716837,
+      "rank": 50
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75A50121A00003",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75A50121A00003"
+    }
+  ]
+}

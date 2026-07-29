@@ -28,7 +28,7 @@ award_types: ["A", "B", "C", "D"]   # all contract action types
 award_amount_min: 0
 seed_strategy: "paginate"           # incremental refreshes always paginate
 
-sam_api_base: "https://api.sam.gov/entity-information/v3/entities"
 usaspending_api_base: "https://api.usaspending.gov/api/v2"
+# sam_api_base removed 2026-05-27 — SAM dropped from project entirely
 db_path: "data/anomaly_radar.duckdb"
 parquet_dir: "data/parquet"

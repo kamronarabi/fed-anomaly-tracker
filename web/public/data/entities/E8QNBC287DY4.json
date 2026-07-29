@@ -1,0 +1,110 @@
+{
+  "uei": "E8QNBC287DY4",
+  "name": "NATIONAL INDUSTRIES FOR THE BLIND",
+  "agency": "Department of Defense",
+  "naics_code": "315210",
+  "naics_description": "CUT AND SEW APPAREL CONTRACTORS",
+  "lifetime_total": 253122449.53,
+  "lifetime_awards": 236,
+  "score_date": "2026-05-29",
+  "composite_score": 0.43893719626411265,
+  "composite_score_delta": -0.072464,
+  "composite_percentile_rank": 0.9933155080213905,
+  "brief_text": "Four detectors flagged this entity. Benford's law analysis of leading digits in award amounts showed a modest deviation from expected frequency distribution, though the p-value of 0.29 suggests this is not statistically significant. Modification growth on a single contract reached a ratio of 457.75, roughly twelve times the NAICS peer average of 37.59, yielding a z-score of 4.12. An Isolation Forest multivariate analysis scored the entity at 0.85 as an outlier, driven by its concentration in two agencies, high modification frequency at 42 percent, and extremely low competition ratio of 0.021. Sole-source concentration was pronounced: 230 of 236 awards were sole-source, placing the entity 2.23 standard deviations above the NAICS median of zero percent.\n\nThe worst-performing contract, HQ003421D0011, saw modifications grow 457.74 times its initial value. Across its lifetime, the entity received 236 awards totaling 253.1 million dollars. The competition ratio of 0.021 indicates competitive awards were rare. Sole-source awards comprised 97.5 percent of the portfolio.\n\nThese signals warrant scrutiny but require context. National Industries for the Blind is a congressionally chartered nonprofit serving blind and severely disabled workers, which may legitimately justify sole-source awards and concentrated agency relationships under federal procurement law. The NAICS classification as apparel contractor may not fully capture its statutory role. The peer group of 25 entities in NAICS 561110 may include dissimilar commercial contractors, limiting comparability. Modification growth on a single contract deserves examination but could reflect legitimate scope changes on a long-term supply agreement.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.7102317958914526,
+      "details": {
+        "observed_distribution": {
+          "1": 0.25,
+          "2": 0.19915254237288135,
+          "3": 0.08898305084745763,
+          "4": 0.1228813559322034,
+          "5": 0.06779661016949153,
+          "6": 0.09322033898305085,
+          "7": 0.07627118644067797,
+          "8": 0.059322033898305086,
+          "9": 0.0423728813559322
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.0639243981076234,
+        "p_value": 0.2897682041085475,
+        "n_transactions": 236
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.8926216102985852,
+      "details": {
+        "worst_award_id": "HQ003421D0011",
+        "growth_ratio": 457.74688535179433,
+        "naics_code": "561110",
+        "naics_avg_ratio": 37.58774133859103,
+        "z_score": 4.1178038137889
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8508570702083912,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.403330664615524,
+          "award_count": 236.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 16.0,
+          "competition_ratio": 0.0211864406779661,
+          "modification_frequency": 0.423728813559322
+        },
+        "raw_anomaly_score": -0.7268690133812353,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.7730560292161828,
+      "details": {
+        "total_awards": 236,
+        "sole_source_awards": 230,
+        "ss_frac": 0.9745762711864406,
+        "primary_naics": "561110",
+        "naics_peer_count": 25,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.43788420752120694,
+        "z_score": 2.225648366501643
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.511400890423905,
+      "rank": 139
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.43893719626411265,
+      "rank": 46
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "HQ003421D0011",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=HQ003421D0011"
+    }
+  ]
+}

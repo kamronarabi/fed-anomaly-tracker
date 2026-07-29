@@ -1,8 +1,15 @@
 """DuckDB schema and Parquet loader for the Anomaly Radar pipeline.
 
 Task 1.1 defines the schema (`init_schema`).
-Task 1.4 adds the Parquet → DuckDB load with dedup/upsert semantics
+Task 1.4 adds the Parquet -> DuckDB load with dedup/upsert semantics
 (`load_all_parquet` and friends).
+
+History: `entities` and `entity_snapshots` table init + loaders were
+removed in the 2026-05-27 SAM-removal pivot. Empty SAM tables in any
+already-populated DuckDB are left in place (harmless; can be dropped
+later via `DROP TABLE`). The loader no longer creates them on init and
+no longer reads any `entities*.parquet` / `entity_snapshots*.parquet`
+files even if they exist on disk.
 """
 
 from __future__ import annotations
@@ -46,40 +53,68 @@ SCHEMA_STATEMENTS = [
     )
     """,
     """
-    CREATE TABLE IF NOT EXISTS entities (
-        uei                       VARCHAR PRIMARY KEY,
-        legal_business_name       VARCHAR,
-        dba_name                  VARCHAR,
-        physical_address_line1    VARCHAR,
-        physical_city             VARCHAR,
-        physical_state            VARCHAR,
-        physical_zip              VARCHAR,
-        business_type             VARCHAR,
-        entity_structure          VARCHAR,
-        registration_date         DATE,
-        expiration_date           DATE,
-        cage_code                 VARCHAR,
-        exclusion_status          VARCHAR,
-        last_pulled_at            TIMESTAMP
+    CREATE TABLE IF NOT EXISTS suspicion_scores (
+        uei                                       VARCHAR,
+        score_date                                DATE,
+        composite_score                           DOUBLE,
+        composite_percentile_rank                 DOUBLE,
+        benford_score                             DOUBLE,
+        benford_percentile                        DOUBLE,
+        new_entity_score                          DOUBLE,
+        new_entity_percentile                     DOUBLE,
+        mod_growth_score                          DOUBLE,
+        mod_growth_percentile                     DOUBLE,
+        isolation_score                           DOUBLE,
+        isolation_percentile                      DOUBLE,
+        sole_source_concentration_score           DOUBLE,
+        sole_source_concentration_percentile      DOUBLE,
+        award_velocity_score                      DOUBLE,
+        award_velocity_percentile                 DOUBLE,
+        detector_details                          VARCHAR,
+        generated_at                              TIMESTAMP,
+        PRIMARY KEY (uei, score_date)
     )
     """,
+    # Migration: add columns to suspicion_scores tables built before
+    # the sole_source_concentration detector landed (2026-05-29).
+    # Idempotent — IF NOT EXISTS prevents errors on fresh DBs.
     """
-    CREATE TABLE IF NOT EXISTS entity_snapshots (
-        uei                       VARCHAR,
-        snapshot_date             DATE,
-        legal_business_name       VARCHAR,
-        physical_address_line1    VARCHAR,
-        physical_city             VARCHAR,
-        physical_state            VARCHAR,
-        physical_zip              VARCHAR,
-        cage_code                 VARCHAR,
-        PRIMARY KEY (uei, snapshot_date)
+    ALTER TABLE suspicion_scores
+        ADD COLUMN IF NOT EXISTS sole_source_concentration_score DOUBLE
+    """,
+    """
+    ALTER TABLE suspicion_scores
+        ADD COLUMN IF NOT EXISTS sole_source_concentration_percentile DOUBLE
+    """,
+    # Migration: add award_velocity columns (added 2026-05-29).
+    """
+    ALTER TABLE suspicion_scores
+        ADD COLUMN IF NOT EXISTS award_velocity_score DOUBLE
+    """,
+    """
+    ALTER TABLE suspicion_scores
+        ADD COLUMN IF NOT EXISTS award_velocity_percentile DOUBLE
+    """,
+    # Phase 4a: AI-generated briefs. input_hash is a fingerprint of the
+    # detector state we sent to the LLM; identical hash → reuse the prior
+    # brief verbatim instead of calling the API. prompt_version is bumped
+    # whenever the system prompt changes, invalidating all prior caches.
+    """
+    CREATE TABLE IF NOT EXISTS entity_briefs (
+        uei                VARCHAR,
+        score_date         DATE,
+        input_hash         VARCHAR,
+        brief_text         TEXT,
+        model              VARCHAR,
+        prompt_version     VARCHAR,
+        generated_at       TIMESTAMP,
+        PRIMARY KEY (uei, score_date)
     )
     """,
 ]
 
 
-# Explicit column lists — used to align the SELECT against the table even
+# Explicit column list — used to align the SELECT against the table even
 # if a Parquet file's columns are reordered or have an extra column.
 AWARD_COLUMNS = [
     "award_id",
@@ -101,34 +136,6 @@ AWARD_COLUMNS = [
     "number_of_offers",
     "modification_number",
     "pulled_at",
-]
-
-ENTITY_COLUMNS = [
-    "uei",
-    "legal_business_name",
-    "dba_name",
-    "physical_address_line1",
-    "physical_city",
-    "physical_state",
-    "physical_zip",
-    "business_type",
-    "entity_structure",
-    "registration_date",
-    "expiration_date",
-    "cage_code",
-    "exclusion_status",
-    "last_pulled_at",
-]
-
-SNAPSHOT_COLUMNS = [
-    "uei",
-    "snapshot_date",
-    "legal_business_name",
-    "physical_address_line1",
-    "physical_city",
-    "physical_state",
-    "physical_zip",
-    "cage_code",
 ]
 
 
@@ -170,7 +177,7 @@ def effective_agency(agency: dict, config: dict) -> dict:
 
 
 def init_schema(db_path: str | None = None) -> str:
-    """Create the awards, entities, and entity_snapshots tables if they don't exist.
+    """Create the awards table if it doesn't exist.
 
     Returns the resolved db_path so callers can chain further work.
     """
@@ -198,14 +205,10 @@ def _load_parquet_files(
 ) -> int:
     """Load `paths` into `table` via INSERT OR {mode} ... SELECT FROM read_parquet.
 
-    `mode` is "REPLACE" (overwrite on PK conflict — used for awards and
-    entities, where newer pulls win) or "IGNORE" (keep existing rows on PK
-    conflict — used for entity_snapshots, where the morning snapshot of a
-    given day shouldn't be clobbered by an afternoon re-run).
+    `mode` is "REPLACE" (overwrite on PK conflict — newer pulls win) or
+    "IGNORE" (keep existing rows on PK conflict).
 
-    Returns the net delta in row count, which can be negative for
-    snapshots if the loader is somehow asked to no-op against a table that
-    held more rows before — in practice it'll be ≥0.
+    Returns the net delta in row count.
     """
     if not paths:
         logger.info("%s: no Parquet files to load", table)
@@ -237,33 +240,13 @@ def load_awards(con, parquet_dir: Path) -> int:
     return _load_parquet_files(con, "awards", AWARD_COLUMNS, paths, mode="REPLACE")
 
 
-def load_entities(con, parquet_dir: Path) -> int:
-    """Upsert `entities.parquet` into `entities`. No-op if the file is absent."""
-    path = parquet_dir / "entities.parquet"
-    paths = [path] if path.exists() else []
-    return _load_parquet_files(con, "entities", ENTITY_COLUMNS, paths, mode="REPLACE")
-
-
-def load_entity_snapshots(con, parquet_dir: Path) -> int:
-    """Append every `entity_snapshots_*.parquet` into `entity_snapshots`.
-
-    Uses INSERT OR IGNORE on the (uei, snapshot_date) primary key so the
-    snapshot history accumulates monotonically — re-running the pipeline
-    on the same day will not double-write or overwrite that day's row.
-    """
-    paths = sorted(parquet_dir.glob("entity_snapshots_*.parquet"))
-    return _load_parquet_files(
-        con, "entity_snapshots", SNAPSHOT_COLUMNS, paths, mode="IGNORE"
-    )
-
-
 def load_all_parquet(
     db_path: str | None = None, parquet_dir: Path | str | None = None
 ) -> dict[str, int]:
     """Initialize schema and load every Parquet partition into DuckDB.
 
     Returns a per-table delta dict for logging/tests:
-        {"awards": +N, "entities": +N, "entity_snapshots": +N}
+        {"awards": +N}
     """
     config = load_config()
     db_path = db_path or resolve_db_path(config)
@@ -275,14 +258,12 @@ def load_all_parquet(
         logger.warning(
             "parquet_dir %s does not exist — nothing to load", parquet_dir
         )
-        return {"awards": 0, "entities": 0, "entity_snapshots": 0}
+        return {"awards": 0}
 
     con = duckdb.connect(db_path)
     try:
         deltas = {
             "awards": load_awards(con, parquet_dir),
-            "entities": load_entities(con, parquet_dir),
-            "entity_snapshots": load_entity_snapshots(con, parquet_dir),
         }
     finally:
         con.close()
@@ -306,12 +287,7 @@ def main():
         return
 
     deltas = load_all_parquet()
-    print(
-        "Loaded: "
-        f"awards {deltas['awards']:+d}, "
-        f"entities {deltas['entities']:+d}, "
-        f"entity_snapshots {deltas['entity_snapshots']:+d}"
-    )
+    print(f"Loaded: awards {deltas['awards']:+d}")
 
 
 if __name__ == "__main__":

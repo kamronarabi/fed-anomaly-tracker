@@ -1,0 +1,96 @@
+{
+  "uei": "GJMSFBCNMSK3",
+  "name": "ATLANTIC DIVING SUPPLY, INC.",
+  "agency": "Department of Defense",
+  "naics_code": "423850",
+  "naics_description": "SERVICE ESTABLISHMENT EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 10958603626.669996,
+  "lifetime_awards": 14017,
+  "score_date": "2026-05-29",
+  "composite_score": 0.45525217925916167,
+  "composite_score_delta": -0.260678,
+  "composite_percentile_rank": 0.995395127748069,
+  "brief_text": "Three detectors flagged Atlantic Diving Supply. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 1 appearing less frequently than typical and digits 2 and 3 appearing more often. Modification growth on one contract vastly outpaced peer norms in the merchant wholesaler sector. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combined profile of total dollars, award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.049 with p-value of 7.95e-30 across 14,017 transactions. The modification growth detector found one contract (SPE8EJ21D0020) with a growth ratio of 14,024, compared to a NAICS 339999 peer average of 519, producing a z-score of 5.77. The Isolation Forest raw anomaly score was -0.79, placing the entity in the extreme tail of the contamination distribution.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, pricing structures, or contract bundling. The entity's massive lifetime obligated value of nearly 11 billion dollars and 14,017 awards suggest it is an established, high-volume DoD supplier; large, mature contractors often show different digit distributions than smaller peers. The modification growth spike on a single contract may reflect legitimate scope expansion or repricing rather than manipulation. The narrow agency concentration reflects DoD-focused specialization rather than suspicious behavior.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.25583220375258614,
+          "2": 0.17214810587144183,
+          "3": 0.15088820717699936,
+          "4": 0.11371905543268888,
+          "5": 0.0926731825640294,
+          "6": 0.06499250909609759,
+          "7": 0.056360134122850826,
+          "8": 0.048726546336591285,
+          "9": 0.04466005564671471
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.049140945095634436,
+        "p_value": 7.950907625780527e-30,
+        "n_transactions": 14017
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9775432116322208,
+      "details": {
+        "worst_award_id": "SPE8EJ21D0020",
+        "growth_ratio": 14024.25036552684,
+        "naics_code": "339999",
+        "naics_avg_ratio": 519.1491619046315,
+        "z_score": 5.773449551490401
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 1.0,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.039755218759012,
+          "award_count": 14017.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 35.0,
+          "competition_ratio": 0.9950060640650639,
+          "modification_frequency": 0.010986659056859529
+        },
+        "raw_anomaly_score": -0.7899333638132631,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7159306333293685,
+      "rank": 6
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.45525217925916167,
+      "rank": 32
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE8EJ21D0020",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE8EJ21D0020"
+    }
+  ]
+}

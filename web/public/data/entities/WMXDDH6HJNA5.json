@@ -1,0 +1,110 @@
+{
+  "uei": "WMXDDH6HJNA5",
+  "name": "HUNTINGTON INGALLS INC",
+  "agency": "Department of Defense",
+  "naics_code": "336611",
+  "naics_description": "SHIP BUILDING AND REPAIRING",
+  "lifetime_total": 67794272079.25,
+  "lifetime_awards": 148,
+  "score_date": "2026-05-29",
+  "composite_score": 0.43846305179952,
+  "composite_score_delta": 0.005577,
+  "composite_percentile_rank": 0.9931669637551991,
+  "brief_text": "Four detectors flagged Huntington Ingalls for statistical anomalies. Benford's law analysis of leading digits in award amounts showed a modest deviation from expected frequency, though not extreme. Modification growth on contract N0002418D4345 expanded at a rate 37 times faster than the shipbuilding peer average, a highly unusual pattern. Isolation Forest identified the entity as a multivariate outlier based on its concentrated agency relationships and high modification frequency relative to its scale. Sole-source awards comprised over half its portfolio, substantially above the median for shipbuilders.\n\nThe modification growth z-score reached 6.87 sigma, with that specific contract growing at a 1,636-fold ratio versus a peer median of 44-fold. Sole-source work accounted for 77 of 148 lifetime awards (52 percent), compared to a peer median of zero percent and standard deviation of 0.25. The entity's 67.8 billion dollars in lifetime obligations across 148 awards concentrated entirely within the Department of Defense. Benford's KS statistic was 0.078 with p-value 0.33, indicating no strong digit anomaly.\n\nThese signals reflect statistical deviations from peer norms, not proof of misconduct. Shipbuilding is a capital-intensive, specialized sector with few competitors, which naturally produces concentrated sole-source work and large modification activity as programs evolve. The peer group of 111 shipbuilders is relatively small and heterogeneous. Huntington Ingalls' dominant position in naval construction and its long-term relationship with DoD may legitimately explain both the sole-source concentration and the substantial contract modifications typical of major platform development.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.6720288940906611,
+      "details": {
+        "observed_distribution": {
+          "1": 0.22297297297297297,
+          "2": 0.19594594594594594,
+          "3": 0.16216216216216217,
+          "4": 0.12837837837837837,
+          "5": 0.060810810810810814,
+          "6": 0.08108108108108109,
+          "7": 0.04054054054054054,
+          "8": 0.060810810810810814,
+          "9": 0.0472972972972973
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.07805702269100823,
+        "p_value": 0.3279711059093388,
+        "n_transactions": 148
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9923488825174257,
+      "details": {
+        "worst_award_id": "N0002418D4345",
+        "growth_ratio": 1635.5514963210817,
+        "naics_code": "336611",
+        "naics_avg_ratio": 44.103088249672254,
+        "z_score": 6.8652230282165485
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7229581765664765,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.83119300198712,
+          "award_count": 148.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 7.0,
+          "competition_ratio": 0.4527027027027027,
+          "modification_frequency": 0.9121621621621622
+        },
+        "raw_anomaly_score": -0.6727875985949465,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.7477151787185183,
+      "details": {
+        "total_awards": 148,
+        "sole_source_awards": 77,
+        "ss_frac": 0.5202702702702703,
+        "primary_naics": "336611",
+        "naics_peer_count": 111,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.2493550863719265,
+        "z_score": 2.0864634358982324
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.43288581168193135,
+      "rank": 260
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.43846305179952,
+      "rank": 47
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N0002418D4345",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0002418D4345"
+    }
+  ]
+}

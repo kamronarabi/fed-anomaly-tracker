@@ -6,3 +6,4 @@ python-dotenv
 tenacity
 scipy
 scikit-learn
+anthropic

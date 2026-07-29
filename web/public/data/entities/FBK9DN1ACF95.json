@@ -1,0 +1,96 @@
+{
+  "uei": "FBK9DN1ACF95",
+  "name": "OWENS & MINOR DISTRIBUTION INC",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 119734562.64999998,
+  "lifetime_awards": 2102,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4416725338206136,
+  "composite_score_delta": -0.24659,
+  "composite_percentile_rank": 0.9937611408199644,
+  "brief_text": "Three detectors fired for Owens & Minor Distribution Inc. The Benford test found severe digit-frequency anomalies in award amounts, with leading digits 2 and 3 appearing far more often than expected and digit 1 appearing much less frequently. The modification growth detector identified one parent contract that grew 1142 times in dollar value, vastly exceeding the typical 55-fold growth ratio for medical equipment wholesalers. The Isolation Forest algorithm flagged the entity as a multivariate outlier, driven primarily by concentration of all awards within a single agency and minimal competition.\n\nThe Benford test showed a KS statistic of 0.246 with p-value near zero across 2100 transactions. The worst-performing contract, SPE2DM20D6005, exhibited a growth ratio of 1142 versus a NAICS peer average of 55, yielding a z-score of 8.13. The isolation score of 0.729 reflects that all 2100 awards came from one agency with no competitive bidding recorded and only two NAICS codes represented.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Medical equipment wholesalers serving sole-source government supply chains may legitimately concentrate work with DoD and experience heavy modification activity as procurement needs shift. The entity's substantial lifetime volume of 119.7 million dollars across over two thousand awards suggests an established vendor rather than a fly-by-night operation. However, the extreme modification growth and digit anomalies merit verification against contract documentation and pricing justifications.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.05476190476190476,
+          "2": 0.25857142857142856,
+          "3": 0.30428571428571427,
+          "4": 0.1619047619047619,
+          "5": 0.09285714285714286,
+          "6": 0.04904761904761905,
+          "7": 0.030476190476190476,
+          "8": 0.03428571428571429,
+          "9": 0.01380952380952381
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.24626809090207644,
+        "p_value": 4.752199660968787e-111,
+        "n_transactions": 2100
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9978214780237673,
+      "details": {
+        "worst_award_id": "SPE2DM20D6005",
+        "growth_ratio": 1141.973573724817,
+        "naics_code": "423450",
+        "naics_avg_ratio": 55.477210838964545,
+        "z_score": 8.126927726268544
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7286818985288924,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.078219532206875,
+          "award_count": 2100.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 1.0,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6752078461260742,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6882628920809429,
+      "rank": 19
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4416725338206136,
+      "rank": 43
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2DM20D6005",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2DM20D6005"
+    }
+  ]
+}

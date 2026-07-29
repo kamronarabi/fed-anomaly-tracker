@@ -1,0 +1,96 @@
+{
+  "uei": "TENRPZGMAGJ6",
+  "name": "W S DARLEY & CO",
+  "agency": "Department of Defense",
+  "naics_code": "339999",
+  "naics_description": "ALL OTHER MISCELLANEOUS MANUFACTURING",
+  "lifetime_total": 2793667579.4499993,
+  "lifetime_awards": 4213,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4500510073144414,
+  "composite_score_delta": -0.076338,
+  "composite_percentile_rank": 0.9948009506833037,
+  "brief_text": "Three detectors fired for W S Darley & Co. The Benford test found significant deviation in leading-digit frequencies across 4,213 transactions, with a p-value near zero indicating the observed distribution departs substantially from expected natural patterns. The modification-growth detector identified one contract (SPE8EJ21D0025) whose modifications grew at a ratio of 14,372, roughly 28 times faster than the NAICS peer average of 519, yielding a z-score of 5.92. The Isolation Forest algorithm flagged the entity as a multivariate outlier with a score of 0.95, driven primarily by concentration with a single awarding agency despite substantial lifetime volume.\n\nThe entity has obligated $2.79 billion across 4,213 awards, all from the Department of Defense. The Benford leading-digit distribution shows observed frequencies of 25% for digit 1 versus the expected 30%, and 17% for digit 3 versus expected 12%, with a Kolmogorov-Smirnov statistic of 0.057. The worst-performing contract modification ratio of 14,372 compares to a NAICS average of 519. The isolation score reflects that all awards come from one agency, though the entity operates across 14 NAICS codes and maintains a 99.7% competition ratio.\n\nThese statistical anomalies warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a large, specialized defense supplier. The extreme modification growth on a single contract may reflect legitimate scope expansion or a data artifact. The single-agency concentration is expected for a dedicated defense contractor. The peer group for \"All Other Miscellaneous Manufacturing\" is broad and may not capture industry-specific norms for this supplier.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.999999999995909,
+      "details": {
+        "observed_distribution": {
+          "1": 0.25373842867315455,
+          "2": 0.16686446712556374,
+          "3": 0.17540944694991692,
+          "4": 0.10942321386185616,
+          "5": 0.08877284595300261,
+          "6": 0.06313790647994304,
+          "7": 0.04676002848326608,
+          "8": 0.049370994540707334,
+          "9": 0.046522667932589606
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.056518358920944145,
+        "p_value": 4.0909889186750486e-12,
+        "n_transactions": 4213
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.980587817216388,
+      "details": {
+        "worst_award_id": "SPE8EJ21D0025",
+        "growth_ratio": 14372.323633666107,
+        "naics_code": "339999",
+        "naics_avg_ratio": 519.1491619046315,
+        "z_score": 5.922251357824549
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9464328339116178,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.446174727834196,
+          "award_count": 4213.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 14.0,
+          "competition_ratio": 0.9966769522905293,
+          "modification_frequency": 0.0011868027533823878
+        },
+        "raw_anomaly_score": -0.7672827524931787,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5263890252234634,
+      "rank": 124
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4500510073144414,
+      "rank": 36
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE8EJ21D0025",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE8EJ21D0025"
+    }
+  ]
+}

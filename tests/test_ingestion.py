@@ -30,12 +30,7 @@ from ingestion.pull_awards import (
     extract_row,
     fiscal_year_window,
 )
-from ingestion.pull_entities import (
-    _format_business_types,
-    _parse_date as _parse_entity_date,
-    _snapshot_rows_from_pulled,
-    extract_entity,
-)
+# SAM puller (ingestion.pull_entities) and its tests removed in 2026-05-27 pivot.
 
 
 def test_fiscal_year_window():
@@ -310,182 +305,7 @@ def test_extract_row_handles_nulls_and_missing_keys():
     assert out["modification_number"] is None
 
 
-# ── Task 1.3 — SAM.gov entity puller ──────────────────────────────────────
-
-
-def test_extract_entity_full():
-    """Map a fully-populated SAM v3 entityData record to the entities schema."""
-    pulled_at = datetime(2026, 4, 26, 12, 0, 0)
-    record = {
-        "entityRegistration": {
-            "ueiSAM": "ABC123XYZ456",
-            "legalBusinessName": "Acme Corp",
-            "dbaName": "Acme",
-            "cageCode": "1ABC2",
-            "registrationDate": "2024-01-15",
-            "registrationExpirationDate": "2026-01-15",
-            "exclusionStatusFlag": "N",
-        },
-        "coreData": {
-            "physicalAddress": {
-                "addressLine1": "123 Main St",
-                "city": "Tampa",
-                "stateOrProvinceCode": "FL",
-                "zipCode": "33601",
-            },
-            "generalInformation": {
-                "entityStructureCode": "2L",
-                "entityStructureDesc": "Corporate Entity (Not Tax Exempt)",
-            },
-            "businessTypes": {
-                "businessTypeList": [
-                    {"businessTypeCode": "23", "businessTypeDesc": "Minority Owned Business"},
-                    {"businessTypeCode": "OY", "businessTypeDesc": "Black American Owned"},
-                ],
-            },
-        },
-    }
-
-    out = extract_entity(record, pulled_at)
-
-    assert out["uei"] == "ABC123XYZ456"
-    assert out["legal_business_name"] == "Acme Corp"
-    assert out["dba_name"] == "Acme"
-    assert out["physical_address_line1"] == "123 Main St"
-    assert out["physical_city"] == "Tampa"
-    assert out["physical_state"] == "FL"
-    assert out["physical_zip"] == "33601"
-    assert out["business_type"] == "Minority Owned Business, Black American Owned"
-    # entityStructureDesc preferred over the code
-    assert out["entity_structure"] == "Corporate Entity (Not Tax Exempt)"
-    assert out["registration_date"] == date(2024, 1, 15)
-    assert out["expiration_date"] == date(2026, 1, 15)
-    assert out["cage_code"] == "1ABC2"
-    assert out["exclusion_status"] == "N"
-    assert out["last_pulled_at"] == pulled_at
-
-
-def test_extract_entity_returns_none_without_uei():
-    """Records missing a UEI are skipped silently rather than poisoning the
-    Parquet write."""
-    out = extract_entity({"entityRegistration": {}}, datetime(2026, 4, 26))
-    assert out is None
-
-
-def test_extract_entity_handles_missing_optional_fields():
-    """coreData and most registration fields can be absent on inactive
-    or partial registrations — the mapper should not crash."""
-    pulled_at = datetime(2026, 4, 26)
-    record = {
-        "entityRegistration": {
-            "ueiSAM": "PARTIAL00001",
-            "legalBusinessName": "Sparse LLC",
-        },
-    }
-
-    out = extract_entity(record, pulled_at)
-
-    assert out["uei"] == "PARTIAL00001"
-    assert out["legal_business_name"] == "Sparse LLC"
-    assert out["physical_address_line1"] is None
-    assert out["physical_state"] is None
-    assert out["business_type"] is None
-    assert out["entity_structure"] is None
-    assert out["registration_date"] is None
-    assert out["cage_code"] is None
-    assert out["last_pulled_at"] == pulled_at
-
-
-def test_extract_entity_falls_back_to_activation_date_and_state_field():
-    """SAM responses occasionally use `activationDate` instead of
-    `registrationDate`, and `state` instead of `stateOrProvinceCode`."""
-    pulled_at = datetime(2026, 4, 26)
-    record = {
-        "entityRegistration": {
-            "ueiSAM": "ALT0000000001",
-            "activationDate": "03/15/2024",  # US-style date
-            "expirationDate": "2027-03-15",
-        },
-        "coreData": {
-            "physicalAddress": {"state": "CA", "zip": "90001"},
-        },
-    }
-    out = extract_entity(record, pulled_at)
-    assert out["registration_date"] == date(2024, 3, 15)
-    assert out["expiration_date"] == date(2027, 3, 15)
-    assert out["physical_state"] == "CA"
-    assert out["physical_zip"] == "90001"
-
-
-def test_format_business_types_falls_back_to_code():
-    """When businessTypeDesc is missing, fall back to the code."""
-    core = {
-        "businessTypes": {
-            "businessTypeList": [
-                {"businessTypeCode": "OY"},
-                {"businessTypeDesc": "Veteran Owned"},
-            ],
-        },
-    }
-    assert _format_business_types(core) == "OY, Veteran Owned"
-
-
-def test_format_business_types_returns_none_on_empty():
-    assert _format_business_types(None) is None
-    assert _format_business_types({}) is None
-    assert _format_business_types({"businessTypes": {}}) is None
-    assert _format_business_types({"businessTypes": {"businessTypeList": []}}) is None
-
-
-def test_parse_entity_date_handles_iso_us_and_garbage():
-    assert _parse_entity_date("2024-01-15") == date(2024, 1, 15)
-    assert _parse_entity_date("2024-01-15T00:00:00") == date(2024, 1, 15)
-    assert _parse_entity_date("01/15/2024") == date(2024, 1, 15)
-    assert _parse_entity_date("") is None
-    assert _parse_entity_date(None) is None
-    assert _parse_entity_date("not a date") is None
-    # date object passes through
-    assert _parse_entity_date(date(2024, 1, 15)) == date(2024, 1, 15)
-
-
-def test_snapshot_rows_from_pulled_projects_to_snapshot_schema():
-    """Snapshot rows pull only the address / name / cage_code fields out
-    of the full entity row, plus a fixed snapshot_date."""
-    pulled_at = datetime(2026, 4, 26)
-    full_row = {
-        "uei": "ABC123XYZ456",
-        "legal_business_name": "Acme Corp",
-        "dba_name": "Acme",
-        "physical_address_line1": "123 Main St",
-        "physical_city": "Tampa",
-        "physical_state": "FL",
-        "physical_zip": "33601",
-        "business_type": "Minority Owned Business",
-        "entity_structure": "Corp",
-        "registration_date": date(2024, 1, 15),
-        "expiration_date": date(2026, 1, 15),
-        "cage_code": "1ABC2",
-        "exclusion_status": "N",
-        "last_pulled_at": pulled_at,
-    }
-    snap_date = date(2026, 4, 26)
-    out = _snapshot_rows_from_pulled([full_row], snap_date)
-
-    assert len(out) == 1
-    assert out[0] == {
-        "uei": "ABC123XYZ456",
-        "snapshot_date": snap_date,
-        "legal_business_name": "Acme Corp",
-        "physical_address_line1": "123 Main St",
-        "physical_city": "Tampa",
-        "physical_state": "FL",
-        "physical_zip": "33601",
-        "cage_code": "1ABC2",
-    }
-    # No leakage of fields outside the snapshot schema
-    assert "dba_name" not in out[0]
-    assert "registration_date" not in out[0]
-    assert "last_pulled_at" not in out[0]
+# Task 1.3 SAM puller tests removed in 2026-05-27 pivot (full SAM removal).
 
 
 # ── Task 1.4 — Parquet → DuckDB loader ────────────────────────────────────
@@ -517,57 +337,9 @@ def _award_row(award_id: str, **overrides) -> dict:
     return base
 
 
-def _entity_row(uei: str, **overrides) -> dict:
-    base = {
-        "uei": uei,
-        "legal_business_name": "Acme Corp",
-        "dba_name": None,
-        "physical_address_line1": "123 Main St",
-        "physical_city": "Tampa",
-        "physical_state": "FL",
-        "physical_zip": "33601",
-        "business_type": "Minority Owned Business",
-        "entity_structure": "Corporate Entity",
-        "registration_date": date(2024, 1, 15),
-        "expiration_date": date(2026, 1, 15),
-        "cage_code": "1ABC2",
-        "exclusion_status": "N",
-        "last_pulled_at": datetime(2026, 4, 26, 12, 0, 0),
-    }
-    base.update(overrides)
-    return base
-
-
-def _snapshot_row(uei: str, snap_date: date, **overrides) -> dict:
-    base = {
-        "uei": uei,
-        "snapshot_date": snap_date,
-        "legal_business_name": "Acme Corp",
-        "physical_address_line1": "123 Main St",
-        "physical_city": "Tampa",
-        "physical_state": "FL",
-        "physical_zip": "33601",
-        "cage_code": "1ABC2",
-    }
-    base.update(overrides)
-    return base
-
-
 def _write_awards_parquet(path: Path, rows: list[dict]) -> Path:
     from ingestion.pull_awards import _empty_awards_schema
     pl.DataFrame(rows, schema=_empty_awards_schema()).write_parquet(path)
-    return path
-
-
-def _write_entities_parquet(path: Path, rows: list[dict]) -> Path:
-    from ingestion.pull_entities import _entities_schema
-    pl.DataFrame(rows, schema=_entities_schema()).write_parquet(path)
-    return path
-
-
-def _write_snapshots_parquet(path: Path, rows: list[dict]) -> Path:
-    from ingestion.pull_entities import _snapshot_schema
-    pl.DataFrame(rows, schema=_snapshot_schema()).write_parquet(path)
     return path
 
 
@@ -581,7 +353,9 @@ def loader_dirs(tmp_path: Path) -> tuple[str, Path]:
     return db_path, parquet_dir
 
 
-def test_init_schema_creates_three_tables(tmp_path: Path):
+def test_init_schema_creates_awards_table(tmp_path: Path):
+    """Post-2026-05-27 schema only creates the `awards` table.
+    `entities` and `entity_snapshots` were removed when SAM was dropped."""
     db_path = str(tmp_path / "schema.duckdb")
     init_schema(db_path)
     con = duckdb.connect(db_path, read_only=True)
@@ -589,38 +363,26 @@ def test_init_schema_creates_three_tables(tmp_path: Path):
         tables = {r[0] for r in con.execute("SHOW TABLES").fetchall()}
     finally:
         con.close()
-    assert {"awards", "entities", "entity_snapshots"}.issubset(tables)
+    assert "awards" in tables
+    # SAM tables are no longer created on init.
+    assert "entities" not in tables
+    assert "entity_snapshots" not in tables
 
 
-def test_load_all_parquet_loads_awards_entities_snapshots(loader_dirs):
+def test_load_all_parquet_loads_awards(loader_dirs):
     db_path, parquet_dir = loader_dirs
 
     _write_awards_parquet(
         parquet_dir / "awards_DoD_2024.parquet",
         [_award_row("A1"), _award_row("A2", recipient_uei="UEI2")],
     )
-    _write_entities_parquet(
-        parquet_dir / "entities.parquet",
-        [_entity_row("ABC123XYZ456"), _entity_row("UEI2", legal_business_name="Beta LLC")],
-    )
-    _write_snapshots_parquet(
-        parquet_dir / "entity_snapshots_2026-04-26.parquet",
-        [
-            _snapshot_row("ABC123XYZ456", date(2026, 4, 26)),
-            _snapshot_row("UEI2", date(2026, 4, 26)),
-        ],
-    )
 
     deltas = load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
-    assert deltas == {"awards": 2, "entities": 2, "entity_snapshots": 2}
+    assert deltas == {"awards": 2}
 
     con = duckdb.connect(db_path, read_only=True)
     try:
         assert con.execute("SELECT COUNT(*) FROM awards").fetchone()[0] == 2
-        assert con.execute("SELECT COUNT(*) FROM entities").fetchone()[0] == 2
-        assert con.execute(
-            "SELECT COUNT(*) FROM entity_snapshots"
-        ).fetchone()[0] == 2
         # Round-trip a typed column to make sure schemas align
         row = con.execute(
             "SELECT recipient_name, total_obligation, award_date "
@@ -631,7 +393,7 @@ def test_load_all_parquet_loads_awards_entities_snapshots(loader_dirs):
         con.close()
 
 
-def test_load_all_parquet_dedups_awards_and_entities_on_rerun(loader_dirs):
+def test_load_all_parquet_dedups_awards_on_rerun(loader_dirs):
     """Re-running the loader with the same files must not duplicate rows;
     INSERT OR REPLACE on the PK keeps a single canonical row."""
     db_path, parquet_dir = loader_dirs
@@ -640,21 +402,13 @@ def test_load_all_parquet_dedups_awards_and_entities_on_rerun(loader_dirs):
         parquet_dir / "awards_DoD_2024.parquet",
         [_award_row("A1", total_obligation=100.0)],
     )
-    _write_entities_parquet(
-        parquet_dir / "entities.parquet",
-        [_entity_row("ABC123XYZ456", legal_business_name="Acme Corp")],
-    )
 
     load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
 
-    # Rewrite Parquets with updated values; loader should overwrite, not append.
+    # Rewrite Parquet with updated value; loader should overwrite, not append.
     _write_awards_parquet(
         parquet_dir / "awards_DoD_2024.parquet",
         [_award_row("A1", total_obligation=999.0)],
-    )
-    _write_entities_parquet(
-        parquet_dir / "entities.parquet",
-        [_entity_row("ABC123XYZ456", legal_business_name="Acme Corp Renamed")],
     )
 
     load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
@@ -665,45 +419,6 @@ def test_load_all_parquet_dedups_awards_and_entities_on_rerun(loader_dirs):
         assert con.execute(
             "SELECT total_obligation FROM awards WHERE award_id='A1'"
         ).fetchone()[0] == 999.0
-        assert con.execute("SELECT COUNT(*) FROM entities").fetchone()[0] == 1
-        assert con.execute(
-            "SELECT legal_business_name FROM entities WHERE uei='ABC123XYZ456'"
-        ).fetchone()[0] == "Acme Corp Renamed"
-    finally:
-        con.close()
-
-
-def test_load_all_parquet_appends_snapshots_across_days(loader_dirs):
-    """Snapshots accumulate: a different snapshot_date adds a new row;
-    the same snapshot_date is idempotent (INSERT OR IGNORE)."""
-    db_path, parquet_dir = loader_dirs
-
-    _write_snapshots_parquet(
-        parquet_dir / "entity_snapshots_2026-04-26.parquet",
-        [_snapshot_row("ABC123XYZ456", date(2026, 4, 26))],
-    )
-    load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
-
-    # Same-day re-run: no new row, no clobber.
-    load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
-
-    # Next-day snapshot: one new row.
-    _write_snapshots_parquet(
-        parquet_dir / "entity_snapshots_2026-05-03.parquet",
-        [_snapshot_row("ABC123XYZ456", date(2026, 5, 3), physical_city="Miami")],
-    )
-    load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
-
-    con = duckdb.connect(db_path, read_only=True)
-    try:
-        rows = con.execute(
-            "SELECT snapshot_date, physical_city FROM entity_snapshots "
-            "WHERE uei='ABC123XYZ456' ORDER BY snapshot_date"
-        ).fetchall()
-        assert rows == [
-            (date(2026, 4, 26), "Tampa"),
-            (date(2026, 5, 3), "Miami"),
-        ]
     finally:
         con.close()
 
@@ -713,7 +428,7 @@ def test_load_all_parquet_handles_missing_files(loader_dirs):
     pipeline can run on a fresh machine before the first ingestion."""
     db_path, parquet_dir = loader_dirs
     deltas = load_all_parquet(db_path=db_path, parquet_dir=parquet_dir)
-    assert deltas == {"awards": 0, "entities": 0, "entity_snapshots": 0}
+    assert deltas == {"awards": 0}
 
 
 # ── Award Data Archive helpers ────────────────────────────────────────────

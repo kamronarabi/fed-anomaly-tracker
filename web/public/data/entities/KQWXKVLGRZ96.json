@@ -1,0 +1,96 @@
+{
+  "uei": "KQWXKVLGRZ96",
+  "name": "FEDERAL EXPRESS CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "481211",
+  "naics_description": "NONSCHEDULED CHARTERED PASSENGER AIR TRANSPORTATION",
+  "lifetime_total": 1035017423.5400001,
+  "lifetime_awards": 488,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4550362113022863,
+  "composite_score_delta": -0.221429,
+  "composite_percentile_rank": 0.9952465834818777,
+  "brief_text": "Three detectors fired for Federal Express Corporation. Benford's Law analysis found the leading-digit distribution of award amounts significantly deviates from expected frequencies, with digit 1 appearing in roughly 20 percent of awards versus the expected 30 percent. A modification-growth detector identified one parent contract that expanded at 7,568 times its initial value, far exceeding the typical 171-fold growth ratio for peer air transportation contractors. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of high total obligated dollars, large award count, concentration across few agencies, and frequent contract modifications.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.190 with a p-value below 1e-15 across 488 transactions. The worst-performing contract, HTC71118DCC37, showed a growth ratio of 7,568 against a NAICS peer average of 171, producing a z-score of 8.9. The Isolation Forest raw anomaly score was -0.69, placing the entity at 0.77 on the outlier scale.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, such as tiered pricing or contract structures common in large logistics operations. Federal Express's scale\u2014over one billion dollars across 488 awards\u2014and concentration with the Department of Defense may naturally produce modification patterns and agency clustering that differ from smaller peers. The peer group for nonscheduled air transportation is small, limiting statistical power.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999999991,
+      "details": {
+        "observed_distribution": {
+          "1": 0.1987704918032787,
+          "2": 0.08811475409836066,
+          "3": 0.14959016393442623,
+          "4": 0.15163934426229508,
+          "5": 0.12704918032786885,
+          "6": 0.10245901639344263,
+          "7": 0.08196721311475409,
+          "8": 0.05327868852459016,
+          "9": 0.0471311475409836
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.1902360088180231,
+        "p_value": 9.146061547684527e-16,
+        "n_transactions": 488
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9989926449018901,
+      "details": {
+        "worst_award_id": "HTC71118DCC37",
+        "growth_ratio": 7568.275412044119,
+        "naics_code": "481211",
+        "naics_avg_ratio": 170.62239370806583,
+        "z_score": 8.899419234881709
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7744941024593714,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.01494766079157,
+          "award_count": 488.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.9979508196721312,
+          "modification_frequency": 0.3790983606557377
+        },
+        "raw_anomaly_score": -0.6945793100417428,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6764651835374765,
+      "rank": 24
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4550362113022863,
+      "rank": 33
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "HTC71118DCC37",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=HTC71118DCC37"
+    }
+  ]
+}

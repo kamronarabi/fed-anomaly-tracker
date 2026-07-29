@@ -1,0 +1,96 @@
+{
+  "uei": "D1NLDEZ14TV5",
+  "name": "10X GENOMICS, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "325414",
+  "naics_description": "BIOLOGICAL PRODUCT (EXCEPT DIAGNOSTIC) MANUFACTURING",
+  "lifetime_total": 18846708.97,
+  "lifetime_awards": 335,
+  "score_date": "2026-05-29",
+  "composite_score": 0.44596925681325433,
+  "composite_score_delta": -0.100539,
+  "composite_percentile_rank": 0.9942067736185384,
+  "brief_text": "Three detectors fired for 10X Genomics. Benford's Law analysis found a significant deviation in the leading-digit distribution of award amounts, with digit 2 appearing far more frequently than expected and digit 1 appearing less frequently. A parent contract modification grew at a rate 164.5 times its initial value, roughly 15 times faster than peers in biological product manufacturing. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combination of award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.290 with p-value 3.4e-24 across 326 transactions. The worst-performing contract (75N98022A00032) showed a modification growth ratio of 164.5 versus a NAICS average of 11.1, producing a z-score of 5.45. The Isolation Forest score of 0.883 reflects an entity with 326 awards across only 2 agencies, 13 NAICS codes, and a competition ratio of 0.006, indicating heavy sole-source concentration.\n\nThese statistical anomalies warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate clustering of contract values in certain ranges. The modification growth spike may reflect a large, multi-year research program with staged funding rather than improper cost escalation. The entity's narrow agency footprint and high modification frequency are consistent with a specialized biotech vendor serving HHS repeatedly. The small peer group in this NAICS code limits the robustness of comparative benchmarks.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.294478527607362,
+          "2": 0.4723926380368098,
+          "3": 0.03680981595092025,
+          "4": 0.0705521472392638,
+          "5": 0.046012269938650305,
+          "6": 0.012269938650306749,
+          "7": 0.015337423312883436,
+          "8": 0.03374233128834356,
+          "9": 0.018404907975460124
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.28974991092450936,
+        "p_value": 3.3754286314137285e-24,
+        "n_transactions": 326
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9693258133209262,
+      "details": {
+        "worst_award_id": "75N98022A00032",
+        "growth_ratio": 164.510855,
+        "naics_code": "325413",
+        "naics_avg_ratio": 11.06677951907168,
+        "z_score": 5.453179315917347
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8829625318156433,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.275235524252565,
+          "award_count": 326.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 13.0,
+          "competition_ratio": 0.006134969325153374,
+          "modification_frequency": 0.08282208588957055
+        },
+        "raw_anomaly_score": -0.7404446490778842,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5465081596702073,
+      "rank": 105
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.44596925681325433,
+      "rank": 40
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75N98022A00032",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75N98022A00032"
+    }
+  ]
+}

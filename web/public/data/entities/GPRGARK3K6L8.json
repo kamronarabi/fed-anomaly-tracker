@@ -1,0 +1,90 @@
+{
+  "uei": "GPRGARK3K6L8",
+  "name": "MEDTRONIC USA INC",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 8179004.07,
+  "lifetime_awards": 189,
+  "score_date": "2026-05-29",
+  "composite_score": 0.44240160075781576,
+  "composite_score_delta": 0.006987,
+  "composite_percentile_rank": 0.9939096850861557,
+  "brief_text": "Three detectors fired for Medtronic USA Inc. The Benford detector identified a severe departure from expected leading-digit frequencies in award amounts, with a p-value near zero indicating the distribution is highly anomalous. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its feature profile. Most significantly, the sole-source concentration detector found that 188 of 189 awards were sole-source, placing this entity far above peers in the same medical equipment wholesaler NAICS code.\n\nThe Benford test showed observed leading digits clustered heavily on 2, 3, and 4 (totaling 86 percent) versus the expected 61 percent, with a Kolmogorov-Smirnov statistic of 0.243. The isolation score was 0.717 out of 1.0. For sole-source concentration, the entity's 99.5 percent sole-source fraction deviated 3.37 standard deviations above the NAICS median of 1.4 percent, where the peer group spans 113 firms.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Medtronic is a large, established medical device manufacturer with legitimate reasons for sole-source awards\u2014proprietary equipment, specialized supply contracts, and existing vendor relationships commonly justify non-competitive procurement in this sector. The Benford anomaly may reflect genuine business patterns in medical equipment pricing rather than manipulation. The small peer group and industry-specific procurement practices should be weighed before escalation.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999995821758,
+      "details": {
+        "observed_distribution": {
+          "1": 0.0582010582010582,
+          "2": 0.2328042328042328,
+          "3": 0.3915343915343915,
+          "4": 0.20634920634920634,
+          "5": 0.026455026455026454,
+          "6": 0.026455026455026454,
+          "7": 0.042328042328042326,
+          "8": 0.005291005291005291,
+          "9": 0.010582010582010581
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.242828937462923,
+        "p_value": 4.1782420917953826e-10,
+        "n_transactions": 189
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.717477862598266,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 6.912700424302622,
+          "award_count": 189.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.0,
+          "modification_frequency": 0.005291005291005291
+        },
+        "raw_anomaly_score": -0.6704702749306489,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.9142751902655932,
+      "details": {
+        "total_awards": 189,
+        "sole_source_awards": 188,
+        "ss_frac": 0.9947089947089947,
+        "primary_naics": "423450",
+        "naics_peer_count": 113,
+        "naics_median_ss": 0.01384083044982699,
+        "naics_std_ss": 0.2913190592288794,
+        "z_score": 3.366989330720491
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4354147857490104,
+      "rank": 250
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.44240160075781576,
+      "rank": 42
+    }
+  ],
+  "flagged_contracts": []
+}

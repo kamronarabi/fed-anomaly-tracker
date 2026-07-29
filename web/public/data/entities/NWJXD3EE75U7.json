@@ -1,0 +1,110 @@
+{
+  "uei": "NWJXD3EE75U7",
+  "name": "GOODRICH CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 486067465.7700001,
+  "lifetime_awards": 503,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4481977953310061,
+  "composite_score_delta": 0.00625,
+  "composite_percentile_rank": 0.994503862150921,
+  "brief_text": "Four detectors flagged Goodrich Corporation. Benford's Law analysis of leading digits in 503 award amounts showed statistically significant deviation from expected frequency patterns, with a p-value of 0.0013. Modification growth on contract SPE4AX18D9416 expanded at a ratio of 6,970 times, vastly exceeding the 62-fold average for peers in aircraft parts manufacturing, yielding a z-score of 8.47. Isolation Forest identified the entity as a multivariate outlier with a score of 0.71, driven by concentration in a single agency and high modification frequency. Sole-source concentration reached 99.4 percent of awards, substantially above the 45 percent median for the 322 peer firms in NAICS 336413.\n\nThe entity holds 503 lifetime awards totaling 486 million dollars, all from the Department of Defense. The worst-performing contract modification ratio was 6,970 compared to a peer average of 62. Sole-source awards numbered 500 of 503 total, against a peer median of 45 percent. The Benford statistic was 0.0855 with 503 transactions analyzed.\n\nThese signals reflect statistical anomalies rather than confirmed fraud. Goodrich's profile\u2014a large, established aerospace supplier with deep DoD relationships and specialized manufacturing\u2014may naturally exhibit high sole-source concentration and single-agency focus. The extreme modification ratio warrants scrutiny but could reflect legitimate contract restructuring in defense procurement. The small Benford deviation, while statistically significant at scale, remains modest in practical magnitude.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9987137227959141,
+      "details": {
+        "observed_distribution": {
+          "1": 0.26043737574552683,
+          "2": 0.1312127236580517,
+          "3": 0.16500994035785288,
+          "4": 0.12922465208747516,
+          "5": 0.09343936381709742,
+          "6": 0.0775347912524851,
+          "7": 0.04771371769383698,
+          "8": 0.05964214711729622,
+          "9": 0.03578528827037773
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.0854711553160839,
+        "p_value": 0.001286277204085967,
+        "n_transactions": 503
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9984456031509946,
+      "details": {
+        "worst_award_id": "SPE4AX18D9416",
+        "growth_ratio": 6970.563315417694,
+        "naics_code": "336413",
+        "naics_avg_ratio": 61.827543016556355,
+        "z_score": 8.465112080871274
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7144982837027637,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.6866965531679,
+          "award_count": 503.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 1.0,
+          "competition_ratio": 0.005964214711729622,
+          "modification_frequency": 0.2783300198807157
+        },
+        "raw_anomaly_score": -0.6692103747270766,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.597904955721553,
+      "details": {
+        "total_awards": 503,
+        "sole_source_awards": 500,
+        "ss_frac": 0.9940357852882704,
+        "primary_naics": "336413",
+        "naics_peer_count": 322,
+        "naics_median_ss": 0.45454545454545453,
+        "naics_std_ss": 0.38624872937147114,
+        "z_score": 1.396743315170795
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.44194758197643025,
+      "rank": 236
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4481977953310061,
+      "rank": 38
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE4AX18D9416",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX18D9416"
+    }
+  ]
+}

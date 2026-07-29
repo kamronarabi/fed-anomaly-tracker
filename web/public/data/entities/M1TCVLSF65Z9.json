@@ -1,0 +1,110 @@
+{
+  "uei": "M1TCVLSF65Z9",
+  "name": "SKOOKUM EDUCATIONAL PROGRAMS",
+  "agency": "Department of Defense",
+  "naics_code": "811111",
+  "naics_description": "GENERAL AUTOMOTIVE REPAIR",
+  "lifetime_total": 742580766.34,
+  "lifetime_awards": 298,
+  "score_date": "2026-05-29",
+  "composite_score": 0.5548000245739656,
+  "composite_score_delta": 0.088256,
+  "composite_percentile_rank": 0.9991087344028521,
+  "brief_text": "Four detectors flagged Skookum Educational Programs. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency patterns, with digit 1 appearing less often than predicted. Modification growth on a single parent contract expanded at a rate far exceeding typical patterns for automotive repair firms. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combined profile of award volume, agency concentration, and modification frequency. Finally, sole-source concentration was extreme: all 296 lifetime awards were sole-source, compared to a median of zero percent sole-source work among 155 peer firms in the same NAICS code.\n\nThe modification growth detector recorded a z-score of 6.82 on contract N4425518D5009, with a growth ratio of 906.76 versus a peer average of 31.23. Benford's test yielded a KS statistic of 0.089 with p-value 0.019 across 296 transactions. The sole-source concentration z-score was 2.83, with standard deviation 0.354 among peers. The entity's lifetime obligated total is 742.6 million dollars across 298 awards, concentrated among just two agencies.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. The entity's NAICS classification as automotive repair appears misaligned with its name and award pattern, suggesting possible data quality issues that could explain some signals. The small peer group for sole-source analysis and the entity's apparent specialization in DoD work may partially contextualize the concentration metrics. Benford deviations can arise from legitimate business practices. Independent verification of contract documentation and entity operations is necessary before drawing conclusions.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9808383065458709,
+      "details": {
+        "observed_distribution": {
+          "1": 0.24324324324324326,
+          "2": 0.14527027027027026,
+          "3": 0.14189189189189189,
+          "4": 0.0945945945945946,
+          "5": 0.13175675675675674,
+          "6": 0.125,
+          "7": 0.05405405405405406,
+          "8": 0.02702702702702703,
+          "9": 0.037162162162162164
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.08860774120614895,
+        "p_value": 0.01916169345412911,
+        "n_transactions": 296
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9919778163917892,
+      "details": {
+        "worst_award_id": "N4425518D5009",
+        "growth_ratio": 906.7555647703515,
+        "naics_code": "561720",
+        "naics_avg_ratio": 31.229533616983595,
+        "z_score": 6.817490089356499
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8214615000436194,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.87074369633024,
+          "award_count": 296.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 8.0,
+          "competition_ratio": 0.0,
+          "modification_frequency": 0.44256756756756754
+        },
+        "raw_anomaly_score": -0.7144392418821057,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8612306203152796,
+      "details": {
+        "total_awards": 296,
+        "sole_source_awards": 296,
+        "ss_frac": 1.0,
+        "primary_naics": "561210",
+        "naics_peer_count": 155,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.35391353467245934,
+        "z_score": 2.8255489039871904
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.46654381989685934,
+      "rank": 189
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.5548000245739656,
+      "rank": 7
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N4425518D5009",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N4425518D5009"
+    }
+  ]
+}

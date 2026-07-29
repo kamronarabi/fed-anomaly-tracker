@@ -1,0 +1,96 @@
+{
+  "uei": "KABZK8W6PQT3",
+  "name": "AMERISOURCEBERGEN DRUG CORP",
+  "agency": "Department of Defense",
+  "naics_code": "325411",
+  "naics_description": "MEDICINAL AND BOTANICAL MANUFACTURING",
+  "lifetime_total": 11796205994.249992,
+  "lifetime_awards": 99127,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4837002997361939,
+  "composite_score_delta": -0.235393,
+  "composite_percentile_rank": 0.9973262032085563,
+  "brief_text": "Three detectors fired for AmerisourceBergen Drug Corp. The Benford test found significant deviation in leading-digit frequencies across 99,127 transactions, with digits 2 through 4 appearing far more often than expected and digit 1 substantially less often, yielding a Kolmogorov-Smirnov statistic of 0.184 and p-value near zero. The modification-growth detector identified one parent contract (SPE2DB22D2206) whose modifications expanded at a rate 6,145 times the initial award value, roughly 44 times faster than the NAICS peer median. The Isolation Forest algorithm flagged the entity as a multivariate outlier with a score of 0.889, driven by extreme award volume and dollar concentration relative to peer patterns.\n\nThe worst modification contract showed a growth ratio of 6,144.67 against a NAICS average of 141.18, producing a z-score of 13.81 standard deviations above peer behavior. Across its lifetime, the entity has received 99,127 awards totaling approximately 11.8 billion dollars, but works with only two agencies and four NAICS codes, suggesting narrow customer and product concentration.\n\nThese signals reflect statistical anomalies rather than confirmed fraud. AmerisourceBergen is a major pharmaceutical distributor with legitimate reasons for high transaction volume and large modification activity in government supply contracts. The Benford deviation may reflect systematic pricing or contract-structuring practices common in bulk pharmaceutical distribution. The small agency count reflects the entity's primary DoD relationship. Peer-group composition and industry-specific contracting norms should be examined before escalation.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.11677948490320499,
+          "2": 0.20478779747192996,
+          "3": 0.23694856093697983,
+          "4": 0.15305618045537542,
+          "5": 0.09422256297476973,
+          "6": 0.06808437660778598,
+          "7": 0.05351720520140829,
+          "8": 0.04210759934225791,
+          "9": 0.030496232106287893
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.1842505107607762,
+        "p_value": 0.0,
+        "n_transactions": 99127
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.999992583075957,
+      "details": {
+        "worst_award_id": "SPE2DB22D2206",
+        "growth_ratio": 6144.672196063352,
+        "naics_code": "424210",
+        "naics_avg_ratio": 141.1786238430665,
+        "z_score": 13.811738719245053
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8887974106332275,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.071742347923923,
+          "award_count": 99127.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 4.0,
+          "competition_ratio": 0.9952888718512615,
+          "modification_frequency": 0.00016140910145570834
+        },
+        "raw_anomaly_score": -0.7429118987356098,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.71909373617105,
+      "rank": 5
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4837002997361939,
+      "rank": 19
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2DB22D2206",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2DB22D2206"
+    }
+  ]
+}

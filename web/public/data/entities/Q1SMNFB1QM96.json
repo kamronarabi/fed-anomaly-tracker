@@ -1,0 +1,90 @@
+{
+  "uei": "Q1SMNFB1QM96",
+  "name": "KLS-MARTIN LIMITED PARTNERSHIP",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 10954828.150000002,
+  "lifetime_awards": 251,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4593171444431297,
+  "composite_score_delta": 0.012632,
+  "composite_percentile_rank": 0.9956922162804517,
+  "brief_text": "Three detectors fired for KLS-Martin Limited Partnership. The Benford's Law test identified severe anomalies in the leading-digit distribution of award amounts, with a p-value near zero indicating the observed pattern is extremely unlikely under normal circumstances. The Isolation Forest algorithm flagged the entity as a multivariate outlier, scoring 0.755 on a scale where higher values indicate greater statistical isolation from peer entities. Most significantly, the sole-source concentration detector found that this entity receives nearly all its awards through sole-source procurement, a pattern far exceeding industry norms.\n\nThe entity received 251 lifetime awards totaling approximately 10.95 million dollars. Of these, 250 awards were sole-source procurements, representing 99.6 percent of its portfolio. The Benford test showed a z-score of 3.37 for sole-source concentration, meaning the entity's reliance on non-competitive awards deviates 3.37 standard deviations above the median for its NAICS peer group, where the typical sole-source fraction is only 1.4 percent. The Isolation Forest raw anomaly score was -0.686, reflecting extreme deviation across multiple dimensions including competition ratio and modification patterns.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Medical equipment wholesalers may legitimately receive sole-source awards for specialized or proprietary items where competition is infeasible. The entity's peer group contains 113 firms, providing reasonable statistical power. However, the combination of near-universal sole-source procurement with Benford anomalies suggests procurement patterns merit compliance review to verify that sole-source justifications are documented and defensible.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999999999925,
+      "details": {
+        "observed_distribution": {
+          "1": 0.043824701195219126,
+          "2": 0.3187250996015936,
+          "3": 0.33067729083665337,
+          "4": 0.1593625498007968,
+          "5": 0.043824701195219126,
+          "6": 0.043824701195219126,
+          "7": 0.027888446215139442,
+          "8": 0.027888446215139442,
+          "9": 0.00398406374501992
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.25720529446876206,
+        "p_value": 7.555930088014382e-15,
+        "n_transactions": 251
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7546969737688177,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.039605569108764,
+          "award_count": 251.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.0,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6862081920609341,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.9146261550892087,
+      "details": {
+        "total_awards": 251,
+        "sole_source_awards": 250,
+        "ss_frac": 0.9960159362549801,
+        "primary_naics": "423450",
+        "naics_peer_count": 113,
+        "naics_median_ss": 0.01384083044982699,
+        "naics_std_ss": 0.2913190592288794,
+        "z_score": 3.37147561990955
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4466850996596986,
+      "rank": 224
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4593171444431297,
+      "rank": 30
+    }
+  ],
+  "flagged_contracts": []
+}

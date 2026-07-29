@@ -1,0 +1,96 @@
+{
+  "uei": "GL33N7Y7WX98",
+  "name": "FUJIFILM SONOSITE INC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 26047809.75,
+  "lifetime_awards": 291,
+  "score_date": "2026-05-29",
+  "composite_score": 0.43530837302298037,
+  "composite_score_delta": -0.011874,
+  "composite_percentile_rank": 0.9928698752228164,
+  "brief_text": "Three detectors fired for FUJIFILM SONOSITE INC. The Benford detector identified a severe digit-frequency anomaly in award amounts, with a Kolmogorov-Smirnov statistic of 0.40 and p-value near zero across 291 transactions. The modification growth detector found that one parent contract grew at a rate 918 times its initial value, far exceeding the typical 55-fold growth seen among medical equipment wholesalers in the same industry code. The Isolation Forest multivariate detector scored the entity at 0.75, flagging it as a statistical outlier based on its feature profile.\n\nThe Benford test shows the entity's award amounts heavily skew toward leading digits 5 and 6, which together account for 56 percent of transactions versus an expected 15 percent. The problematic contract SPE2D117D7001 exhibited a growth ratio of 918 against a peer average of 55, yielding a z-score of 6.45 standard deviations above the mean. The Isolation Forest raw anomaly score was -0.68 with a 5 percent contamination threshold, driven partly by concentration across only two agencies and three NAICS codes despite 291 lifetime awards totaling 26 million dollars.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Medical equipment wholesalers may legitimately receive large modification-driven contracts from government health agencies, and digit anomalies can arise from legitimate pricing structures or contract bundling practices. The entity's substantial lifetime award history and established presence in the sector provide some context, though the extreme modification growth and digit-distribution deviation remain unusual and merit document review.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.15463917525773196,
+          "2": 0.07216494845360824,
+          "3": 0.024054982817869417,
+          "4": 0.044673539518900345,
+          "5": 0.3539518900343643,
+          "6": 0.21993127147766323,
+          "7": 0.10996563573883161,
+          "8": 0.01718213058419244,
+          "9": 0.003436426116838488
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.4034373582879089,
+        "p_value": 1.4503797127926467e-41,
+        "n_transactions": 291
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.988490322914141,
+      "details": {
+        "worst_award_id": "SPE2D117D7001",
+        "growth_ratio": 918.1834075525475,
+        "naics_code": "423450",
+        "naics_avg_ratio": 55.477210838964545,
+        "z_score": 6.45299068565027
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7478859562675739,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.415771211187189,
+          "award_count": 291.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 3.0,
+          "competition_ratio": 0.9862542955326461,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6833281869872958,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4471820959788874,
+      "rank": 222
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.43530837302298037,
+      "rank": 49
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2D117D7001",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2D117D7001"
+    }
+  ]
+}

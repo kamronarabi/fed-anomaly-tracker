@@ -1,0 +1,96 @@
+{
+  "uei": "J4Q3HP6NHK47",
+  "name": "ROCKWELL COLLINS, INC.",
+  "agency": "Department of Defense",
+  "naics_code": "541330",
+  "naics_description": "ENGINEERING SERVICES",
+  "lifetime_total": 4947278634.16,
+  "lifetime_awards": 762,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4461168385315682,
+  "composite_score_delta": -0.22074,
+  "composite_percentile_rank": 0.9943553178847298,
+  "brief_text": "Three detectors fired for Rockwell Collins. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency distribution, with observed digit-1 frequency of 27.4% versus expected 30.1%, suggesting possible non-random award structuring. Modification growth on contract W15P7T16D0003 expanded at an extreme rate relative to engineering-services peers, with a growth ratio of 32,947 compared to a peer average of 124. The Isolation Forest multivariate test flagged the entity as a statistical outlier based on its combined profile of total dollars, award volume, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.051 with p-value 0.039 across 762 transactions. The modification-growth z-score reached 19.8 sigma, far exceeding the typical 3-sigma threshold for anomaly. The isolation anomaly score was 0.921 on a 0-to-1 scale, indicating strong multivariate deviation. The entity shows a 9.4% competition ratio and 63.9% modification frequency, with all 762 awards concentrated in a single awarding agency.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Rockwell Collins is a large, established defense contractor with $4.9 billion in lifetime obligations, which may explain high modification frequency and sole-agency concentration in legitimate program contexts. The Benford deviation is modest in absolute terms and may reflect industry-standard contract structures. The extreme modification-growth z-score on a single contract deserves investigation, though large defense programs routinely experience scope changes. Small peer-group size in specialized engineering services may inflate z-scores.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.961302487175191,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2742782152230971,
+          "2": 0.15354330708661418,
+          "3": 0.12335958005249344,
+          "4": 0.1010498687664042,
+          "5": 0.0984251968503937,
+          "6": 0.07349081364829396,
+          "7": 0.07217847769028872,
+          "8": 0.05774278215223097,
+          "9": 0.045931758530183726
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.05087888896575765,
+        "p_value": 0.03869751282480899,
+        "n_transactions": 762
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999999816444444,
+      "details": {
+        "worst_award_id": "W15P7T16D0003",
+        "growth_ratio": 32947.51626909239,
+        "naics_code": "334220",
+        "naics_avg_ratio": 124.07085987790235,
+        "z_score": 19.813333532536152
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.920747901444876,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.69436637081909,
+          "award_count": 762.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 20.0,
+          "competition_ratio": 0.09448818897637795,
+          "modification_frequency": 0.6391076115485564
+        },
+        "raw_anomaly_score": -0.7564220057975837,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6668572447592485,
+      "rank": 26
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4461168385315682,
+      "rank": 39
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "W15P7T16D0003",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=W15P7T16D0003"
+    }
+  ]
+}

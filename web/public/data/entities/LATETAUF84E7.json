@@ -1,0 +1,107 @@
+{
+  "uei": "LATETAUF84E7",
+  "name": "CHENEGA GOVERNMENT MISSION SOLUTIONS, LLC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541990",
+  "naics_description": "ALL OTHER PROFESSIONAL, SCIENTIFIC, AND TECHNICAL SERVICES",
+  "lifetime_total": 81284335.13000001,
+  "lifetime_awards": 117,
+  "score_date": "2026-05-29",
+  "composite_score": 0.5427279590635014,
+  "composite_score_delta": 0.215284,
+  "composite_percentile_rank": 0.9988116458704694,
+  "brief_text": "Four detectors flagged this entity. Benford's law analysis of 110 award amounts showed a KS statistic of 0.078 with p-value 0.51, indicating the leading-digit distribution is consistent with expected patterns and not anomalous. The Isolation Forest multivariate test scored 0.78, identifying the entity as a statistical outlier based on its feature profile. Sole-source concentration was the strongest signal: 102 of 110 awards were sole-source, representing 92.7 percent of the portfolio versus a median of 3.6 percent among 75 peers in the same NAICS code, yielding a z-score of 3.57. Award velocity also spiked sharply, with 45 awards in the most recent 90 days compared to a historical baseline rate, producing a z-score of 12.0.\n\nThe entity has received 117 lifetime awards totaling 81.3 million dollars from the Department of Health and Human Services. In the past 90 days alone, it won 45 awards at a rate of 0.5 per day, versus its historical rate of 0.1 per day. The sole-source fraction of 92.7 percent deviates 3.57 standard deviations above the peer median of 3.6 percent. The Isolation Forest raw anomaly score was negative 0.70, placing the entity in the upper tail of outlier likelihood.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Sole-source concentration and award velocity are the primary concerns; however, government contractors in professional services and mission-critical roles may legitimately receive sole-source awards and experience accelerated procurement cycles. The entity operates in only two agencies, which may reflect genuine specialization rather than dispersed risk. The Benford test was not anomalous, and the small peer group (75 entities) limits confidence in the NAICS comparison. Recent award clustering could reflect contract ramp-up or seasonal demand rather than improper steering.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.4874835761551397,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2818181818181818,
+          "2": 0.15454545454545454,
+          "3": 0.11818181818181818,
+          "4": 0.09090909090909091,
+          "5": 0.05454545454545454,
+          "6": 0.10909090909090909,
+          "7": 0.06363636363636363,
+          "8": 0.05454545454545454,
+          "9": 0.07272727272727272
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.07815125038364357,
+        "p_value": 0.5125164238448603,
+        "n_transactions": 110
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.780175814079845,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.910006857745342,
+          "award_count": 110.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 12.0,
+          "competition_ratio": 0.00909090909090909,
+          "modification_frequency": 0.5636363636363636
+        },
+        "raw_anomaly_score": -0.6969817937074984,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.9286881833189438,
+      "details": {
+        "total_awards": 110,
+        "sole_source_awards": 102,
+        "ss_frac": 0.9272727272727272,
+        "primary_naics": "561320",
+        "naics_peer_count": 75,
+        "naics_median_ss": 0.03571428571428571,
+        "naics_std_ss": 0.24996655020314476,
+        "z_score": 3.5667109892658955
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9999546021312976,
+      "details": {
+        "recent_count": 45,
+        "baseline_count": 64,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.5,
+        "baseline_rate_per_day": 0.1,
+        "expected_recent_count": 9.0,
+        "z_score": 12.0,
+        "earliest_award": "2024-02-23",
+        "latest_award": "2026-03-31",
+        "as_of": "2026-04-01"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.3274435290645184,
+      "rank": 594
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.5427279590635014,
+      "rank": 9
+    }
+  ],
+  "flagged_contracts": []
+}

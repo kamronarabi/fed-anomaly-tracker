@@ -1,0 +1,96 @@
+{
+  "uei": "YLE5AAYNVPK6",
+  "name": "NOBLE SUPPLY & LOGISTICS, LLC",
+  "agency": "Department of Defense",
+  "naics_code": "339999",
+  "naics_description": "ALL OTHER MISCELLANEOUS MANUFACTURING",
+  "lifetime_total": 1965217417.0599997,
+  "lifetime_awards": 6652,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4912528103427613,
+  "composite_score_delta": -0.247376,
+  "composite_percentile_rank": 0.9977718360071302,
+  "brief_text": "Three detectors fired for Noble Supply & Logistics. Benford's Law analysis found the leading-digit distribution of award amounts significantly deviates from expected patterns, with too few awards starting in 1 and too many in 3, suggesting possible systematic manipulation of contract values. Modification growth on contract SPE4AX23D9409 expanded at a rate far exceeding industry norms for miscellaneous manufacturing suppliers. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its combined profile of high award volume, low agency diversity, and elevated modification frequency.\n\nThe Benford test yielded a KS statistic of 0.107 with p-value near zero across 6,652 transactions. The modification growth ratio reached 3,039 compared to a NAICS average of 24, producing a z-score of 15.4 sigmas. The isolation anomaly score was 0.98 on a 0-to-1 scale. Over its lifetime, the entity received 6,652 awards totaling nearly $2 billion, concentrated with only two awarding agencies and spanning 19 NAICS codes.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in specific industries. The extreme modification growth may reflect a single large parent contract that legitimately expanded scope. The isolation score reflects statistical rarity in the overall population rather than inherent misconduct. The entity's scale and DoD concentration merit investigation, but industry-specific procurement patterns for supply and logistics vendors should be considered before drawing conclusions.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.19392663860493084,
+          "2": 0.18430547203848466,
+          "3": 0.19978953698135898,
+          "4": 0.13740228502705953,
+          "5": 0.08448586891160553,
+          "6": 0.06509320505111245,
+          "7": 0.054269392663860494,
+          "8": 0.0417919422730006,
+          "9": 0.03893565844858689
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.10710335705905036,
+        "p_value": 1.0532302399320574e-66,
+        "n_transactions": 6652
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999984380332617,
+      "details": {
+        "worst_award_id": "SPE4AX23D9409",
+        "growth_ratio": 3038.7295205928485,
+        "naics_code": "332722",
+        "naics_avg_ratio": 23.896034996603902,
+        "z_score": 15.369563239179339
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9817924829809558,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.293410604485546,
+          "award_count": 6652.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 19.0,
+          "competition_ratio": 0.9254359591100421,
+          "modification_frequency": 0.022399278412507516
+        },
+        "raw_anomaly_score": -0.7822344052679904,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7386283243809774,
+      "rank": 2
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4912528103427613,
+      "rank": 16
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE4AX23D9409",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX23D9409"
+    }
+  ]
+}

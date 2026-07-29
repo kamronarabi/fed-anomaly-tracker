@@ -1,0 +1,110 @@
+{
+  "uei": "WA4MHTAVJV85",
+  "name": "REINHART FOODSERVICE, LLC",
+  "agency": "Department of Defense",
+  "naics_code": "311999",
+  "naics_description": "ALL OTHER MISCELLANEOUS FOOD MANUFACTURING",
+  "lifetime_total": 118996535.54000002,
+  "lifetime_awards": 2710,
+  "score_date": "2026-05-29",
+  "composite_score": 0.470098046819393,
+  "composite_score_delta": -0.181473,
+  "composite_percentile_rank": 0.9964349376114082,
+  "brief_text": "Four detectors flagged Reinhart Foodservice. Benford's law analysis found severe distortion in leading-digit frequencies across 2,710 transactions, with digits 2 and 3 appearing far more often than expected and digit 1 appearing rarely. A parent contract modification grew at 1,920 times its initial value, vastly outpacing the 109-fold average growth ratio for peers in food manufacturing. Isolation Forest identified the entity as a multivariate outlier, driven partly by concentration of all awards from a single agency despite operating in a diverse industry. The entity also pursues sole-source contracts at nearly 70 percent of its awards, well above the median of 22 percent for comparable firms.\n\nThe Benford detector registered a Kolmogorov-Smirnov statistic of 0.272 with p-value near zero, indicating extreme digit-distribution anomaly. The modification-growth z-score reached 5.99 sigmas, with award SPE30024D3013 showing a 1,920-fold modification ratio versus a peer average of 109. Sole-source awards numbered 1,887 of 2,710 total, yielding a 69.6 percent concentration rate compared to a peer median of 22.2 percent and standard deviation of 0.35. The Isolation Forest anomaly score was 0.78 on a 0-to-1 scale.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a large, mature vendor. The entity's 119 million dollar lifetime total and 2,710 awards reflect an established supplier, not a fly-by-night operator. However, the combination of extreme modification growth, high sole-source reliance, and single-agency concentration is unusual and merits document review of contract justifications and pricing practices.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.02915129151291513,
+          "2": 0.24280442804428043,
+          "3": 0.3328413284132841,
+          "4": 0.17638376383763837,
+          "5": 0.1014760147601476,
+          "6": 0.05387453874538745,
+          "7": 0.03099630996309963,
+          "8": 0.020664206642066422,
+          "9": 0.011808118081180811
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.2718787041510661,
+        "p_value": 2.0283689626913553e-174,
+        "n_transactions": 2710
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9817660819473633,
+      "details": {
+        "worst_award_id": "SPE30024D3013",
+        "growth_ratio": 1920.02551366942,
+        "naics_code": "311999",
+        "naics_avg_ratio": 108.7997816313729,
+        "z_score": 5.98606958527671
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.781168443011115,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.075534317545783,
+          "award_count": 2710.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.303690036900369,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6974015219430778,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.5868937867034275,
+      "details": {
+        "total_awards": 2710,
+        "sole_source_awards": 1887,
+        "ss_frac": 0.696309963099631,
+        "primary_naics": "311999",
+        "naics_peer_count": 31,
+        "naics_median_ss": 0.2222222222222222,
+        "naics_std_ss": 0.35088003284158675,
+        "z_score": 1.3511391259229821
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6515714250138938,
+      "rank": 30
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.470098046819393,
+      "rank": 25
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE30024D3013",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024D3013"
+    }
+  ]
+}

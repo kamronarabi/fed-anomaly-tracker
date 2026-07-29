@@ -1,0 +1,110 @@
+{
+  "uei": "E5DLYCJBNYX7",
+  "name": "HOWMEDICA OSTEONICS CORP",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 43952390.54999998,
+  "lifetime_awards": 865,
+  "score_date": "2026-05-29",
+  "composite_score": 0.5694749871398304,
+  "composite_score_delta": -0.020242,
+  "composite_percentile_rank": 0.9992572786690435,
+  "brief_text": "Four detectors flagged this entity. Benford's law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 2 and 3 rather than the expected natural distribution. Modification growth on a specific contract vastly outpaced peer norms in the medical equipment wholesale sector. An isolation forest algorithm identified the entity as a multivariate outlier based on its profile of high award volume, extreme concentration in sole-source awards, and minimal competition exposure. Sole-source concentration was the most striking signal: the entity received 859 of 863 awards without competition, far exceeding typical peer behavior.\n\nThe Benford test yielded a KS statistic of 0.234 with p-value 2.08e-41 across 863 transactions, indicating highly improbable digit patterns. The worst-performing contract modification (SPE2DE22DA003) showed a growth ratio of 596.4 versus a peer median of 55.5, producing a z-score of 4.05. Sole-source awards comprised 99.5 percent of the entity's portfolio compared to a sector median of 1.4 percent, yielding a z-score of 3.37. The isolation forest raw anomaly score was -0.72 with contamination set at 5 percent.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. Medical equipment wholesalers may legitimately receive high volumes of sole-source awards if they hold exclusive supply contracts or specialized certifications. The small peer group (113 entities) and the entity's large lifetime obligated total of 44 million dollars across 865 awards suggest an established supplier, though the Benford deviation and modification growth remain difficult to reconcile with normal procurement patterns.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.06720741599073002,
+          "2": 0.3638470451911935,
+          "3": 0.2966396292004635,
+          "4": 0.11819235225955968,
+          "5": 0.038238702201622246,
+          "6": 0.039397450753186555,
+          "7": 0.028968713789107765,
+          "8": 0.010428736964078795,
+          "9": 0.03707995365005794
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.23382257967325118,
+        "p_value": 2.0824396703780673e-41,
+        "n_transactions": 863
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.8855530213716841,
+      "details": {
+        "worst_award_id": "SPE2DE22DA003",
+        "growth_ratio": 596.4040932988651,
+        "naics_code": "423450",
+        "naics_avg_ratio": 55.477210838964545,
+        "z_score": 4.046100685759243
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8397533409013909,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.6429825011262755,
+          "award_count": 863.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 3.0,
+          "competition_ratio": 0.0011587485515643105,
+          "modification_frequency": 0.004634994206257242
+        },
+        "raw_anomaly_score": -0.7221738563456489,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.9144515179887219,
+      "details": {
+        "total_awards": 863,
+        "sole_source_awards": 859,
+        "ss_frac": 0.9953650057937428,
+        "primary_naics": "423450",
+        "naics_peer_count": 113,
+        "naics_median_ss": 0.01384083044982699,
+        "naics_std_ss": 0.2913190592288794,
+        "z_score": 3.3692411953478327
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.589716798571294,
+      "rank": 72
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.5694749871398304,
+      "rank": 6
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2DE22DA003",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2DE22DA003"
+    }
+  ]
+}

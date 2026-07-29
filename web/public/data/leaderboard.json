@@ -1,0 +1,523 @@
+{
+  "score_date": "2026-05-29",
+  "generated_at": "2026-06-01T02:16:00Z",
+  "total_scored": 6733,
+  "total_flagged": 50,
+  "lead": {
+    "rank": 1,
+    "uei": "ZMXAHH8M8VL8",
+    "name": "OSHKOSH DEFENSE LLC",
+    "agency": "Department of Defense",
+    "naics_description": "MOTOR VEHICLE BODY MANUFACTURING",
+    "lifetime_total": 10754794407.879995,
+    "lifetime_awards": 1540,
+    "composite_score": 0.6315464316354339,
+    "composite_percentile_rank": 1.0,
+    "detectors_fired": [
+      "benford",
+      "mod_growth",
+      "isolation",
+      "sole_source_concentration"
+    ],
+    "brief_text": "Four detectors flagged Oshkosh Defense. Benford's law analysis found the leading-digit distribution of award amounts significantly deviates from expected patterns, with digit 2 and 3 appearing far more frequently than natural. Modification growth on contract SPE7LX24D0096 expanded at 777.7 times its initial value, vastly outpacing the 24-fold median growth rate for motor vehicle manufacturers. The entity also concentrates heavily on sole-source awards at 45 percent, compared to zero median for peers in its NAICS code. Multivariate isolation analysis flagged it as a statistical outlier given its extreme scale, single-agency focus, and modification intensity.\n\nThe Benford test yielded a KS statistic of 0.128 with p-value 3.2e-22 across 1,540 transactions. The modification growth z-score reached 7.24 sigmas. Sole-source concentration z-score was 4.02 sigmas, with 695 of 1,540 awards sole-sourced versus a peer median of zero. The isolation anomaly score was 0.985 on a 0-to-1 scale. Lifetime obligated value totals 10.75 billion dollars.\n\nThese statistical signals warrant scrutiny but do not prove misconduct. Oshkosh Defense is a major defense contractor with legitimate reasons for high modification frequency and sole-source awards in specialized vehicle manufacturing. The single-agency concentration reflects its primary DoD customer base. Benford deviations can arise from contract-bundling practices or tiered pricing structures common in large defense programs. The peer group for sole-source comparison is small (33 entities), limiting statistical power."
+  },
+  "featured": [
+    {
+      "rank": 2,
+      "uei": "TVJCF48T79L9",
+      "name": "JOHNSON & JOHNSON HEALTH CARE SYSTEMS INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 61433189.87000002,
+      "composite_score": 0.5946140367398006,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged Johnson & Johnson Health Care Systems Inc. for statistical anomalies. Benford's Law analysis of leading digits in award amounts showed a severe departure from expected frequency patterns, with digit 3 appearing far m\u2026"
+    },
+    {
+      "rank": 3,
+      "uei": "G4KDGE4JFFK7",
+      "name": "LOCKHEED MARTIN CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 280630279767.20996,
+      "composite_score": 0.5860082203591755,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors fired for Lockheed Martin. Benford's Law analysis found the distribution of leading digits in award amounts deviated slightly from expected frequencies, with a p-value of 0.019. Modification growth on contract F4262001D0058\u2026"
+    },
+    {
+      "rank": 4,
+      "uei": "C1HBCJ9RMBV3",
+      "name": "THE JOHNS HOPKINS UNIVERSITY APPLIED PHYSICS LABORATORY LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 7808862851.839999,
+      "composite_score": 0.5759952505380008,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged this entity. Benford's law analysis of leading digits in award amounts showed a p-value of 0.30, indicating the distribution is consistent with expected patterns and not anomalous. Modification growth on contract N00\u2026"
+    },
+    {
+      "rank": 5,
+      "uei": "VUNJK3HWKJY7",
+      "name": "OCEAN FAIR INTERNATIONAL SHIP CHANDLEING LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 249767322.31000006,
+      "composite_score": 0.5724303853089586,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged this entity. Benford's Law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 3 and 4 while digit 1 appeared far less often than expected. Modification growth\u2026"
+    },
+    {
+      "rank": 6,
+      "uei": "E5DLYCJBNYX7",
+      "name": "HOWMEDICA OSTEONICS CORP",
+      "agency": "Department of Defense",
+      "lifetime_total": 43952390.54999998,
+      "composite_score": 0.5694749871398304,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged this entity. Benford's law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 2 and 3 rather than the expected natural distribution. Modification growth on a s\u2026"
+    },
+    {
+      "rank": 7,
+      "uei": "M1TCVLSF65Z9",
+      "name": "SKOOKUM EDUCATIONAL PROGRAMS",
+      "agency": "Department of Defense",
+      "lifetime_total": 742580766.34,
+      "composite_score": 0.5548000245739656,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged Skookum Educational Programs. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency patterns, with digit 1 appearing less often than predicted.\u2026"
+    },
+    {
+      "rank": 8,
+      "uei": "KMW3CRWNAAF3",
+      "name": "ILLUMINA, INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 73884340.84000002,
+      "composite_score": 0.552396758466111,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "Four detectors flagged Illumina for statistical anomalies. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected frequency, with digit 1 appearing 35 percent of the time versus the expected 30\u2026"
+    },
+    {
+      "rank": 9,
+      "uei": "LATETAUF84E7",
+      "name": "CHENEGA GOVERNMENT MISSION SOLUTIONS, LLC",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 81284335.13000001,
+      "composite_score": 0.5427279590635014,
+      "detectors_fired": [
+        "benford",
+        "isolation",
+        "sole_source_concentration",
+        "award_velocity"
+      ],
+      "brief_excerpt": "Four detectors flagged this entity. Benford's law analysis of 110 award amounts showed a KS statistic of 0.078 with p-value 0.51, indicating the leading-digit distribution is consistent with expected patterns and not anomalous. The Isolati\u2026"
+    },
+    {
+      "rank": 10,
+      "uei": "YULKFV81TEL3",
+      "name": "BAE SYSTEMS GCS INTERNATIONAL LIMITED",
+      "agency": "Department of Defense",
+      "lifetime_total": 1064045404.1500001,
+      "composite_score": 0.5271269987022505,
+      "detectors_fired": [
+        "benford",
+        "mod_growth",
+        "isolation",
+        "sole_source_concentration"
+      ],
+      "brief_excerpt": "BAE Systems GCS International Limited triggered four detectors. The benford test found the distribution of leading digits in award amounts slightly deviates from expected frequencies, though the p-value of 0.066 suggests this is borderline\u2026"
+    }
+  ],
+  "ranking": [
+    {
+      "rank": 11,
+      "uei": "FGYNNDFFUPV3",
+      "name": "PENN POWER GROUP LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 21796923.15,
+      "composite_score": 0.5155126335112141,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 12,
+      "uei": "PKFJZHG2MLG9",
+      "name": "NATIONAL ACADEMY OF SCIENCES",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 163895736.69,
+      "composite_score": 0.5064495157445528,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 13,
+      "uei": "UTJWTSLMFNG4",
+      "name": "SIKORSKY AIRCRAFT CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 32056561806.639996,
+      "composite_score": 0.5016059585534017,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 14,
+      "uei": "M25AW7P5S7K7",
+      "name": "THE BOEING COMPANY",
+      "agency": "Department of Defense",
+      "lifetime_total": 8885035654.659998,
+      "composite_score": 0.4919336632641412,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 15,
+      "uei": "UE9QJD4KK1L6",
+      "name": "LEIDOS, INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 11003100670.580002,
+      "composite_score": 0.49156945389466905,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 16,
+      "uei": "YLE5AAYNVPK6",
+      "name": "NOBLE SUPPLY & LOGISTICS, LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 1965217417.0599997,
+      "composite_score": 0.4912528103427613,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 17,
+      "uei": "QN1BCFY7JDJ5",
+      "name": "RTX CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 47021922255.34999,
+      "composite_score": 0.48837471205546995,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 18,
+      "uei": "JC42EBJ5NFJ1",
+      "name": "HAMILTON SUNDSTRAND CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 788951394.8000001,
+      "composite_score": 0.48651622973845665,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 19,
+      "uei": "KABZK8W6PQT3",
+      "name": "AMERISOURCEBERGEN DRUG CORP",
+      "agency": "Department of Defense",
+      "lifetime_total": 11796205994.249992,
+      "composite_score": 0.4837002997361939,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 20,
+      "uei": "XX2WFHJEFB45",
+      "name": "KAMPI COMPONENTS CO INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 98245659.45000002,
+      "composite_score": 0.480039833150274,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 21,
+      "uei": "G5XXLHZSW8X3",
+      "name": "OPTUMSERVE HEALTH SERVICES, INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 548704308.5,
+      "composite_score": 0.4783184052818066,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 22,
+      "uei": "PK8PM2GNVMP8",
+      "name": "NORTHROP GRUMMAN SYSTEMS CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 20415833492.980003,
+      "composite_score": 0.47709703345685855,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 23,
+      "uei": "J49CN39QTNW3",
+      "name": "GOVERNMENT SCIENTIFIC SOURCE INC",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 130626401.07999995,
+      "composite_score": 0.4735954573471453,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 24,
+      "uei": "SYALZ4FMVK93",
+      "name": "SIMMONDS PRECISION PRODUCTS INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 167822410.04,
+      "composite_score": 0.47200435399435636,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 25,
+      "uei": "WA4MHTAVJV85",
+      "name": "REINHART FOODSERVICE, LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 118996535.54000002,
+      "composite_score": 0.470098046819393,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 26,
+      "uei": "KZVRFB7NM8T1",
+      "name": "ZIMMER US INC",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 17505839.919999998,
+      "composite_score": 0.46927003541746387,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 27,
+      "uei": "TWJNLZXJ39F1",
+      "name": "AAR SUPPLY CHAIN, INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 305158286.17,
+      "composite_score": 0.4692165565290464,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 28,
+      "uei": "YQWKDTNVB4J9",
+      "name": "JAMAICA BEARINGS CO., INC.",
+      "agency": "Department of Defense",
+      "lifetime_total": 238877490.51000002,
+      "composite_score": 0.4663666416679117,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 29,
+      "uei": "MC5HF1LR16H1",
+      "name": "THE CNA CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 363624196.35999995,
+      "composite_score": 0.4648369247077703,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 30,
+      "uei": "Q1SMNFB1QM96",
+      "name": "KLS-MARTIN LIMITED PARTNERSHIP",
+      "agency": "Department of Defense",
+      "lifetime_total": 10954828.150000002,
+      "composite_score": 0.4593171444431297,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 31,
+      "uei": "KTTQP5D3JDY7",
+      "name": "PRIDE INDUSTRIES",
+      "agency": "Department of Defense",
+      "lifetime_total": 958741175.9700001,
+      "composite_score": 0.4571943505270169,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 32,
+      "uei": "GJMSFBCNMSK3",
+      "name": "ATLANTIC DIVING SUPPLY, INC.",
+      "agency": "Department of Defense",
+      "lifetime_total": 10958603626.669996,
+      "composite_score": 0.45525217925916167,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 33,
+      "uei": "KQWXKVLGRZ96",
+      "name": "FEDERAL EXPRESS CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 1035017423.5400001,
+      "composite_score": 0.4550362113022863,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 34,
+      "uei": "EPUXNLX5EYC4",
+      "name": "AECOM TECHNICAL SERVICES, INC.",
+      "agency": "Department of Defense",
+      "lifetime_total": 1825799405.61,
+      "composite_score": 0.45417342696891067,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 35,
+      "uei": "ZLHMCNLMEYK1",
+      "name": "HONEYWELL INTERNATIONAL INC.",
+      "agency": "Department of Defense",
+      "lifetime_total": 632075208.1400002,
+      "composite_score": 0.4511475007554113,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 36,
+      "uei": "TENRPZGMAGJ6",
+      "name": "W S DARLEY & CO",
+      "agency": "Department of Defense",
+      "lifetime_total": 2793667579.4499993,
+      "composite_score": 0.4500510073144414,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 37,
+      "uei": "MNDKKMTB8EJ1",
+      "name": "PHILLIPS 66 COMPANY",
+      "agency": "Department of Defense",
+      "lifetime_total": 1224414456.3400002,
+      "composite_score": 0.44921983062842824,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 38,
+      "uei": "NWJXD3EE75U7",
+      "name": "GOODRICH CORPORATION",
+      "agency": "Department of Defense",
+      "lifetime_total": 486067465.7700001,
+      "composite_score": 0.4481977953310061,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 39,
+      "uei": "J4Q3HP6NHK47",
+      "name": "ROCKWELL COLLINS, INC.",
+      "agency": "Department of Defense",
+      "lifetime_total": 4947278634.16,
+      "composite_score": 0.4461168385315682,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 40,
+      "uei": "D1NLDEZ14TV5",
+      "name": "10X GENOMICS, INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 18846708.97,
+      "composite_score": 0.44596925681325433,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 41,
+      "uei": "PMLZCBF9U569",
+      "name": "MITCHELL CONSULTING SERVICES GROUP INC",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 44394712.33,
+      "composite_score": 0.44421593169517015,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 42,
+      "uei": "GPRGARK3K6L8",
+      "name": "MEDTRONIC USA INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 8179004.07,
+      "composite_score": 0.44240160075781576,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 43,
+      "uei": "FBK9DN1ACF95",
+      "name": "OWENS & MINOR DISTRIBUTION INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 119734562.64999998,
+      "composite_score": 0.4416725338206136,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 44,
+      "uei": "DJRUN4KK1HK3",
+      "name": "HPI FEDERAL LLC",
+      "agency": "Department of Defense",
+      "lifetime_total": 491033426.2900001,
+      "composite_score": 0.441543077949531,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 45,
+      "uei": "N57XYJDHV9E5",
+      "name": "GOODWILL INDUSTRIES OF SOUTH FLORIDA INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 189143487.73000002,
+      "composite_score": 0.4398643359422352,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 46,
+      "uei": "E8QNBC287DY4",
+      "name": "NATIONAL INDUSTRIES FOR THE BLIND",
+      "agency": "Department of Defense",
+      "lifetime_total": 253122449.53,
+      "composite_score": 0.43893719626411265,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 47,
+      "uei": "WMXDDH6HJNA5",
+      "name": "HUNTINGTON INGALLS INC",
+      "agency": "Department of Defense",
+      "lifetime_total": 67794272079.25,
+      "composite_score": 0.43846305179952,
+      "detectors_fired_count": 4
+    },
+    {
+      "rank": 48,
+      "uei": "WPUFMZZDWBN7",
+      "name": "RAO RADIOLOGISTS, INC.",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 71000281.14999999,
+      "composite_score": 0.4371279171288229,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 49,
+      "uei": "GL33N7Y7WX98",
+      "name": "FUJIFILM SONOSITE INC",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 26047809.75,
+      "composite_score": 0.43530837302298037,
+      "detectors_fired_count": 3
+    },
+    {
+      "rank": 50,
+      "uei": "DMPAKJ9N9K66",
+      "name": "MEDLINE INDUSTRIES, LP",
+      "agency": "Department of Health and Human Services",
+      "lifetime_total": 144720096.43,
+      "composite_score": 0.43358568697716837,
+      "detectors_fired_count": 3
+    }
+  ]
+}

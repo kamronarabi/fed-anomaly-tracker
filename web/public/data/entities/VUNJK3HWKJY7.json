@@ -1,0 +1,110 @@
+{
+  "uei": "VUNJK3HWKJY7",
+  "name": "OCEAN FAIR INTERNATIONAL SHIP CHANDLEING LLC",
+  "agency": "Department of Defense",
+  "naics_code": "311812",
+  "naics_description": "COMMERCIAL BAKERIES",
+  "lifetime_total": 249767322.31000006,
+  "lifetime_awards": 3304,
+  "score_date": "2026-05-29",
+  "composite_score": 0.5724303853089586,
+  "composite_score_delta": -0.073476,
+  "composite_percentile_rank": 0.9994058229352347,
+  "brief_text": "Four detectors flagged this entity. Benford's Law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 3 and 4 while digit 1 appeared far less often than expected. Modification growth on a single parent contract exceeded peer norms dramatically, suggesting unusually aggressive scope expansion. Isolation Forest identified the entity as a multivariate outlier based on its feature profile. Sole-source concentration showed all 3,304 awards were sole-source, vastly exceeding the median of zero sole-source awards among 23 peers in the same NAICS code.\n\nThe Benford test yielded a KS statistic of 0.189 with p-value 6.4e-103 across 3,304 transactions. The worst modification contract (SPE30024DA054) grew at a ratio of 1,009.5 compared to a peer average of 65.3, producing a z-score of 5.36. The isolation anomaly score was 0.767 on a 0\u20131 scale. Sole-source awards comprised 100 percent of the portfolio, with a z-score of 2.90 relative to peers whose median sole-source fraction was zero and standard deviation 0.34.\n\nThese statistical signals warrant scrutiny but do not prove fraud. The entity's NAICS classification as \"Commercial Bakeries\" appears inconsistent with its name and DoD contracting pattern, which may reflect data quality issues rather than misconduct. The peer group for sole-source comparison is small (23 entities), limiting statistical power. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions. The modification growth spike on a single contract requires investigation into whether scope changes were properly justified and competed.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.14437046004842616,
+          "2": 0.14376513317191283,
+          "3": 0.24303874092009686,
+          "4": 0.1952179176755448,
+          "5": 0.07687651331719128,
+          "6": 0.07052058111380145,
+          "7": 0.048728813559322036,
+          "8": 0.040859564164648914,
+          "9": 0.03662227602905569
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.18898566149932344,
+        "p_value": 6.365275098032508e-103,
+        "n_transactions": 3304
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9665793122675005,
+      "details": {
+        "worst_award_id": "SPE30024DA054",
+        "growth_ratio": 1009.5370826492789,
+        "naics_code": "311991",
+        "naics_avg_ratio": 65.3148883214486,
+        "z_score": 5.364588255176843
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7667009209575598,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.397535617910101,
+          "award_count": 3304.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.0,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6912840017767291,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8700685910713208,
+      "details": {
+        "total_awards": 3304,
+        "sole_source_awards": 3304,
+        "ss_frac": 1.0,
+        "primary_naics": "311812",
+        "naics_peer_count": 23,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.3446415556753173,
+        "z_score": 2.9015653612650474
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6459062054389758,
+      "rank": 33
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.5724303853089586,
+      "rank": 5
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE30024DA054",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024DA054"
+    }
+  ]
+}

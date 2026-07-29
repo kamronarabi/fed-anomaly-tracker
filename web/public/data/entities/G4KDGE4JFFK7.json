@@ -1,0 +1,110 @@
+{
+  "uei": "G4KDGE4JFFK7",
+  "name": "LOCKHEED MARTIN CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "336411",
+  "naics_description": "AIRCRAFT MANUFACTURING",
+  "lifetime_total": 280630279767.20996,
+  "lifetime_awards": 1147,
+  "score_date": "2026-05-29",
+  "composite_score": 0.5860082203591755,
+  "composite_score_delta": -0.091127,
+  "composite_percentile_rank": 0.9997029114676174,
+  "brief_text": "Four detectors fired for Lockheed Martin. Benford's Law analysis found the distribution of leading digits in award amounts deviated slightly from expected frequencies, with a p-value of 0.019. Modification growth on contract F4262001D0058 showed extreme acceleration, with a growth ratio of 27,673 compared to a peer average of 42, yielding a z-score of 62. Isolation Forest identified the entity as a multivariate outlier with a score of 0.95, driven by concentration in a single agency, high modification frequency at 83 percent, and low competition ratio of 0.15. Sole-source concentration was elevated at 83 percent of 1,147 awards, compared to a median of zero percent among 633 peers in the same NAICS code, producing a z-score of 2.63.\n\nThe contract modification signal is the most striking: growth ratio of 27,673 versus peer average of 42. Lockheed Martin has received 1,147 lifetime awards totaling 280.6 billion dollars, all from the Department of Defense. The entity operates across 16 NAICS codes but receives work almost exclusively from one agency.\n\nThese detectors flag statistical anomalies common to large defense contractors with sustained sole-source relationships and heavy modification activity. Lockheed Martin's scale, monopoly-like position in certain aircraft manufacturing segments, and long-term strategic partnerships with DoD explain most signals. The small peer group in this specialized NAICS and the entity's dominant market position limit the interpretive power of peer-comparison metrics. Benford deviation is marginal and may reflect rounding or contract-structure conventions in defense procurement.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9806064412297242,
+      "details": {
+        "observed_distribution": {
+          "1": 0.27898866608544026,
+          "2": 0.15693112467306017,
+          "3": 0.12118570183086312,
+          "4": 0.11072362685265912,
+          "5": 0.09067131647776809,
+          "6": 0.09154315605928509,
+          "7": 0.05666957279860506,
+          "8": 0.05056669572798605,
+          "9": 0.042720139494333044
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.044954498738598914,
+        "p_value": 0.019393558770275866,
+        "n_transactions": 1147
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 1.0,
+      "details": {
+        "worst_award_id": "F4262001D0058",
+        "growth_ratio": 27673.826515569093,
+        "naics_code": "541330",
+        "naics_avg_ratio": 42.04833603410383,
+        "z_score": 62.010326402589406
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9534104481266835,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 11.448134529223816,
+          "award_count": 1147.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 16.0,
+          "competition_ratio": 0.15170008718395817,
+          "modification_frequency": 0.8256320836965998
+        },
+        "raw_anomaly_score": -0.7702332021635268,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8361524862278622,
+      "details": {
+        "total_awards": 1147,
+        "sole_source_awards": 947,
+        "ss_frac": 0.8256320836965998,
+        "primary_naics": "541330",
+        "naics_peer_count": 633,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.3139434946712311,
+        "z_score": 2.6298747950207435
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6771350547825565,
+      "rank": 23
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.5860082203591755,
+      "rank": 3
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "F4262001D0058",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=F4262001D0058"
+    }
+  ]
+}

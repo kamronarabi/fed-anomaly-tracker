@@ -1,0 +1,110 @@
+{
+  "uei": "MC5HF1LR16H1",
+  "name": "THE CNA CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "541990",
+  "naics_description": "ALL OTHER PROFESSIONAL, SCIENTIFIC, AND TECHNICAL SERVICES",
+  "lifetime_total": 363624196.35999995,
+  "lifetime_awards": 377,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4648369247077703,
+  "composite_score_delta": 0.008652,
+  "composite_percentile_rank": 0.995840760546643,
+  "brief_text": "Four detectors flagged The CNA Corporation. Benford's Law analysis of 376 award amounts shows significant deviation from expected leading-digit frequencies, with a p-value near zero indicating the distribution is highly anomalous. Modification growth on contract N0001422D7001 expanded at a rate 35 times faster than peers in the same industry classification. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combined profile of award volume, agency concentration, and modification patterns. Sole-source concentration is extreme: 369 of 376 awards were non-competitive, placing the entity far above the median peer rate.\n\nThe Benford detector's KS statistic reached 0.177 with p-value 1.31e-10 across 376 transactions. The worst-performing contract showed a modification growth ratio of 3,607 versus a NAICS average of 102, yielding a z-score of 4.09. The entity's sole-source fraction is 0.981 compared to a peer median of 0.292 and standard deviation of 0.408, producing a z-score of 1.69. The Isolation Forest raw anomaly score was -0.703 with contamination set at 0.05. The entity operates across only two agencies and three NAICS codes despite 376 lifetime awards totaling 363.6 million dollars.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate clustering in contract values or rounding practices. The modification growth spike may reflect a single large task order with justified expansions. Sole-source concentration is notable but not uncommon in specialized defense consulting; CNA's primary NAICS (541990) includes research and analysis work often awarded non-competitively to established firms. The peer group contains 131 entities, providing reasonable statistical power, though industry norms for sole-source work in this classification should be verified independently.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999999998691627,
+      "details": {
+        "observed_distribution": {
+          "1": 0.18351063829787234,
+          "2": 0.11702127659574468,
+          "3": 0.14893617021276595,
+          "4": 0.1702127659574468,
+          "5": 0.125,
+          "6": 0.0851063829787234,
+          "7": 0.06382978723404255,
+          "8": 0.05585106382978723,
+          "9": 0.05053191489361702
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.1765893398260454,
+        "p_value": 1.3083729148158776e-10,
+        "n_transactions": 376
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.8900314787643503,
+      "details": {
+        "worst_award_id": "N0001422D7001",
+        "growth_ratio": 3607.0959060040595,
+        "naics_code": "541990",
+        "naics_avg_ratio": 102.38005623395134,
+        "z_score": 4.091062677246052
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7938426922966473,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.560652774428913,
+          "award_count": 376.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 3.0,
+          "competition_ratio": 0.018617021276595744,
+          "modification_frequency": 0.598404255319149
+        },
+        "raw_anomaly_score": -0.7027607655862227,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.665865998270878,
+      "details": {
+        "total_awards": 376,
+        "sole_source_awards": 369,
+        "ss_frac": 0.9813829787234043,
+        "primary_naics": "541990",
+        "naics_peer_count": 131,
+        "naics_median_ss": 0.2916666666666667,
+        "naics_std_ss": 0.4082257463556228,
+        "z_score": 1.6895463312005223
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4561846742829363,
+      "rank": 209
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4648369247077703,
+      "rank": 29
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N0001422D7001",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0001422D7001"
+    }
+  ]
+}

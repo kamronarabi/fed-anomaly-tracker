@@ -1,0 +1,110 @@
+{
+  "uei": "KTTQP5D3JDY7",
+  "name": "PRIDE INDUSTRIES",
+  "agency": "Department of Defense",
+  "naics_code": "561210",
+  "naics_description": "FACILITIES SUPPORT SERVICES",
+  "lifetime_total": 958741175.9700001,
+  "lifetime_awards": 200,
+  "score_date": "2026-05-29",
+  "composite_score": 0.4571943505270169,
+  "composite_score_delta": 0.121344,
+  "composite_percentile_rank": 0.9955436720142603,
+  "brief_text": "Four detectors flagged Pride Industries. Benford's Law analysis of leading digits in award amounts showed a modest deviation from expected frequency, with observed digit 1 appearing 25 percent of the time versus the expected 30 percent, though the p-value of 0.096 suggests this is borderline. Modification growth on contract N6247324D4601 expanded at 86.87 times its baseline, far exceeding the 9.07 average for facilities support peers. The entity scored as a multivariate outlier via Isolation Forest, driven by concentration in a single agency and high modification frequency. Sole-source awards comprised 99 percent of its portfolio, compared to a median of zero percent among 155 peer firms in the same NAICS code.\n\nThe modification growth z-score reached 4.15 sigmas, indicating very unusual acceleration. Pride Industries holds 200 lifetime awards totaling 958.7 million dollars, with 198 classified as sole-source. The isolation anomaly score was 0.68 on a 0-to-1 scale. The sole-source concentration z-score was 2.80 sigmas, reflecting a 99 percent sole-source rate against peer median of zero and standard deviation of 0.35.\n\nThese statistical signals warrant scrutiny but do not establish fraud. Facilities support services may legitimately involve sole-source work and contract modifications. The entity's large lifetime portfolio and 200 awards suggest an established contractor rather than a fly-by-night operator. The Benford deviation is marginal and not statistically significant. However, the combination of extreme sole-source concentration, rapid modification growth on a single contract, and multivariate outlier status merits closer examination of award justifications and modification rationales.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9035510908948636,
+      "details": {
+        "observed_distribution": {
+          "1": 0.25,
+          "2": 0.145,
+          "3": 0.12,
+          "4": 0.13,
+          "5": 0.12,
+          "6": 0.045,
+          "7": 0.055,
+          "8": 0.03,
+          "9": 0.105
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.08705999132796238,
+        "p_value": 0.09644890910513634,
+        "n_transactions": 200
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.8958039426049245,
+      "details": {
+        "worst_award_id": "N6247324D4601",
+        "growth_ratio": 86.86687050477894,
+        "naics_code": "561710",
+        "naics_avg_ratio": 9.070193020941971,
+        "z_score": 4.151447283270672
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.6798989259560009,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.98170137983039,
+          "award_count": 200.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 7.0,
+          "competition_ratio": 0.01,
+          "modification_frequency": 0.45
+        },
+        "raw_anomaly_score": -0.6545802073787903,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8578191448022391,
+      "details": {
+        "total_awards": 200,
+        "sole_source_awards": 198,
+        "ss_frac": 0.99,
+        "primary_naics": "561210",
+        "naics_peer_count": 155,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.35391353467245934,
+        "z_score": 2.7972934149473185
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.3358504713869019,
+      "rank": 561
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4571943505270169,
+      "rank": 31
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N6247324D4601",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N6247324D4601"
+    }
+  ]
+}
