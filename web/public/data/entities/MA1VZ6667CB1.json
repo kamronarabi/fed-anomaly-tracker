@@ -1,0 +1,101 @@
+{
+  "uei": "MA1VZ6667CB1",
+  "name": "ASRC FEDERAL FACILITIES LOGISTICS, LLC",
+  "agency": "Department of Defense",
+  "naics_code": "423610",
+  "naics_description": "ELECTRICAL APPARATUS AND EQUIPMENT, WIRING SUPPLIES, AND RELATED EQUIPMENT MERCHANT  WHOLESALERS",
+  "lifetime_total": 982370756.0499996,
+  "lifetime_awards": 9459,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4621925779194563,
+  "composite_score_delta": 0.031794,
+  "composite_percentile_rank": 0.9945621064682312,
+  "brief_text": "Three detectors fired for ASRC Federal Facilities Logistics. Benford's law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 2 and 3 appearing far more frequently than predicted. Modification growth on contract SPE8E325D0022 expanded at 412 times its initial value, vastly outpacing the typical 17-fold growth ratio for peers in the same industry code. An isolation forest algorithm flagged the entity as a multivariate outlier based on its combined profile of high award volume, single-agency concentration, and frequent contract modifications.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.173 with p-value near zero across 9,459 transactions. The modification growth ratio of 412 versus a peer average of 17 produced a z-score of 6.44, indicating extreme deviation. The isolation score of 0.973 reflects an entity with 9,459 lifetime awards totaling 982 million dollars, all from one agency, with 29 NAICS codes and a 0.19 modification frequency.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. Large federal contractors with extensive modification histories and diverse subcontracting footprints often show Benford deviations due to volume and portfolio composition rather than manipulation. The single-agency concentration reflects DoD's dominant role in this entity's business. The peer group for modification growth may be small or heterogeneous, and aggressive contract expansion is common in logistics and facilities support. Human review of specific awards and modifications is needed to assess whether patterns reflect legitimate business practices or irregularities.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.12781477957500792,
+          "2": 0.18638333861930437,
+          "3": 0.2609155301828946,
+          "4": 0.1564647425732107,
+          "5": 0.09831906121154456,
+          "6": 0.05761708425837826,
+          "7": 0.04789089755788138,
+          "8": 0.030341473728723967,
+          "9": 0.03425309229305423
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.17321521608897328,
+        "p_value": 6.204299061598416e-247,
+        "n_transactions": 9459
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9883040149030022,
+      "details": {
+        "worst_award_id": "SPE8E325D0022",
+        "growth_ratio": 411.979670749879,
+        "naics_code": "333998",
+        "naics_avg_ratio": 16.98090935866087,
+        "z_score": 6.436744728997242
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9728285619927376,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.992275425585415,
+          "award_count": 9459.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 29.0,
+          "competition_ratio": 0.7268210170208267,
+          "modification_frequency": 0.18934348239771645
+        },
+        "raw_anomaly_score": -0.7789560376112422,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6455768627832513,
+      "rank": 34
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4303990758658974,
+      "rank": 53
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4621925779194563,
+      "rank": 39
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE8E325D0022",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE8E325D0022"
+    }
+  ]
+}

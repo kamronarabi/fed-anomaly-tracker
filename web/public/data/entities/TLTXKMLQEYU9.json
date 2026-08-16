@@ -1,0 +1,101 @@
+{
+  "uei": "TLTXKMLQEYU9",
+  "name": "VETERANS HEALTHCARE SUPPLY SOLUTIONS, INC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "339112",
+  "naics_description": "SURGICAL AND MEDICAL INSTRUMENT MANUFACTURING",
+  "lifetime_total": 64844234.15,
+  "lifetime_awards": 704,
+  "score_date": "2026-07-29",
+  "composite_score": 0.466133570584073,
+  "composite_score_delta": 0.075834,
+  "composite_percentile_rank": 0.9957069261591298,
+  "brief_text": "Three detectors fired for Veterans Healthcare Supply Solutions. Benford's law analysis found the leading digits of award amounts deviate significantly from expected natural frequencies, with digits 3 and 4 appearing much more often than predicted while digit 1 appeared far less frequently. A modification growth detector identified one parent contract that expanded at roughly 25 times the rate typical for surgical instrument manufacturers in the same industry code. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of high award volume, concentrated agency relationships, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.168 with p-value near zero across 703 transactions. The worst-performing contract, SPE2D123D0007, showed a modification growth ratio of 1465 compared to a peer average of 58, producing a z-score of 9.19. The isolation score of 0.80 reflects an entity with 704 lifetime awards totaling 64.8 million dollars, concentrated among just two agencies, with minimal modification frequency relative to its size.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can occur in procurement data due to contract structure, pricing conventions, or legitimate clustering around certain thresholds. The extreme modification growth on a single contract may reflect scope expansion or legitimate program evolution rather than impropriety. The entity's high award concentration among two agencies is consistent with specialized medical supply contracting to HHS. A small peer group in this NAICS code may inflate z-scores.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.16500711237553342,
+          "2": 0.14366998577524892,
+          "3": 0.18492176386913228,
+          "4": 0.18492176386913228,
+          "5": 0.15362731152204837,
+          "6": 0.04551920341394026,
+          "7": 0.06116642958748222,
+          "8": 0.04267425320056899,
+          "9": 0.01849217638691323
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.16844415656888007,
+        "p_value": 9.455823698437224e-18,
+        "n_transactions": 703
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.999245006425405,
+      "details": {
+        "worst_award_id": "SPE2D123D0007",
+        "growth_ratio": 1465.136140071071,
+        "naics_code": "423450",
+        "naics_avg_ratio": 57.793377251975265,
+        "z_score": 9.188046040496056
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8033757687151473,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 7.811871365336606,
+          "award_count": 703.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 5.0,
+          "competition_ratio": 0.9772403982930299,
+          "modification_frequency": 0.001422475106685633
+        },
+        "raw_anomaly_score": -0.7087492618494398,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6077194494374532,
+      "rank": 58
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.39029970307651435,
+      "rank": 110
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.466133570584073,
+      "rank": 31
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE2D123D0007",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE2D123D0007"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "uei": "F8GUESLHSWJ7",
+  "name": "GAP SOLUTIONS, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541611",
+  "naics_description": "ADMINISTRATIVE MANAGEMENT AND GENERAL MANAGEMENT CONSULTING SERVICES",
+  "lifetime_total": 329757331.51000005,
+  "lifetime_awards": 658,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5201373239274935,
+  "composite_score_delta": 0.22003,
+  "composite_percentile_rank": 0.9984258729250143,
+  "brief_text": "Four detectors flagged Gap Solutions. Benford's Law analysis of 651 award amounts shows the leading digit one appears 40.4 percent of the time versus an expected 30.1 percent, a statistically significant deviation with p-value below one in a million. Modification growth on contract 75N95021D00011 expanded at a ratio of 22,036 times, far exceeding the 304-fold average for peers in the same NAICS code. An Isolation Forest multivariate test scored the entity at 0.77 on a zero-to-one outlier scale, driven by concentration in just two agencies, high modification frequency, and a $330 million lifetime total across 651 awards. Award velocity also spiked: 83 awards arrived in the most recent 90 days versus a historical baseline of 0.63 awards per day, yielding a z-score of 3.50.\n\nThe Benford detector's Kolmogorov-Smirnov statistic was 0.108 with p-value 4.89e-07. The modification growth z-score reached 7.13, comparing a 22,036 ratio to a peer mean of 304. The Isolation Forest raw anomaly score was -0.69 under 5 percent contamination. Award velocity showed 83 recent awards against an expected 56.7 under Poisson baseline, spanning from October 2023 to July 2026.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise in legitimate consulting contracts where round numbers or specific price points dominate. The extreme modification growth on a single contract may reflect scope changes on a large, long-running engagement rather than improper inflation. The entity's concentration with HHS and high modification frequency are consistent with a specialized vendor serving one agency's evolving needs. The small peer group in this NAICS and the entity's substantial legitimate award history (658 awards, $330 million) provide context that may explain rather than condemn these anomalies.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9999995108432602,
+      "details": {
+        "observed_distribution": {
+          "1": 0.4039938556067588,
+          "2": 0.18125960061443933,
+          "3": 0.09216589861751152,
+          "4": 0.07680491551459294,
+          "5": 0.05837173579109063,
+          "6": 0.07373271889400922,
+          "7": 0.04608294930875576,
+          "8": 0.03379416282642089,
+          "9": 0.03379416282642089
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.10813220150153574,
+        "p_value": 4.891567398292701e-07,
+        "n_transactions": 651
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.994126223080511,
+      "details": {
+        "worst_award_id": "75N95021D00011",
+        "growth_ratio": 22035.926894999997,
+        "naics_code": "541690",
+        "naics_avg_ratio": 303.7021513173333,
+        "z_score": 7.131366329144941
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7654182996311939,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.51819446001504,
+          "award_count": 651.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 6.0,
+          "competition_ratio": 0.9938556067588326,
+          "modification_frequency": 0.6113671274961597
+        },
+        "raw_anomaly_score": -0.6930229261017771,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.8171753485774309,
+      "details": {
+        "recent_count": 83,
+        "baseline_count": 403,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.9222222222222223,
+        "baseline_rate_per_day": 0.6296875,
+        "expected_recent_count": 56.67187499999999,
+        "z_score": 3.4973261922359162,
+        "earliest_award": "2023-10-12",
+        "latest_award": "2026-07-02",
+        "as_of": "2026-07-04"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.46108204128758945,
+      "rank": 200
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.3001074293353705,
+      "rank": 295
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5201373239274935,
+      "rank": 12
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75N95021D00011",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75N95021D00011"
+    }
+  ]
+}

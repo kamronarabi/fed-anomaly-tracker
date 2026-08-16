@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "541715",
   "naics_description": "RESEARCH AND DEVELOPMENT IN THE PHYSICAL, ENGINEERING, AND LIFE SCIENCES (EXCEPT NANOTECHNOLOGY AND BIOTECHNOLOGY)",
-  "lifetime_total": 7808862851.839999,
-  "lifetime_awards": 1494,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5759952505380008,
-  "composite_score_delta": -0.045175,
-  "composite_percentile_rank": 0.9995543672014261,
-  "brief_text": "Four detectors flagged this entity. Benford's law analysis of leading digits in award amounts showed a p-value of 0.30, indicating the distribution is consistent with expected patterns and not anomalous. Modification growth on contract N0002413D6400 revealed extreme acceleration: the award's modifications grew at a ratio of 13,104 times, vastly exceeding the NAICS peer average of 57 times, with a z-score of 23.67. Isolation Forest identified the entity as a multivariate outlier with a score of 0.93, driven by its massive lifetime dollar total, high award count, concentration among two agencies, and very high modification frequency. Sole-source concentration showed 1,439 of 1,493 awards were sole-source, representing 96.4 percent, compared to a NAICS median of 7.7 percent.\n\nThe entity has obligated 7.8 billion dollars across 1,494 lifetime awards. The worst-performing contract modification ratio of 13,104 compares to a peer z-score of 23.67 standard deviations above the mean. The isolation anomaly score of 0.93 reflects a feature vector including log total dollars of 9.89, modification frequency of 0.78, and competition ratio of 0.036. Sole-source awards comprise 96.4 percent of the portfolio versus a peer median of 7.7 percent, yielding a z-score of 3.72.\n\nJohns Hopkins APL is a federally funded research and development center with a decades-long relationship to the Department of Defense, which explains the concentration in two agencies and high sole-source award prevalence in this specialized sector. The extreme modification growth and multivariate outlier status warrant scrutiny, but the entity's scale, mission criticality, and FFRDC status are material context. Benford's test showed no digit anomaly. The small peer group in this NAICS may inflate z-scores for legitimate structural differences.",
+  "lifetime_total": 7004293008.099999,
+  "lifetime_awards": 1624,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5478983903966057,
+  "composite_score_delta": -0.028097,
+  "composite_percentile_rank": 0.9991413852318259,
+  "brief_text": "Four detectors flagged this entity. Benford's law analysis of leading digits in award amounts showed minor deviation from expected frequency distribution but was not statistically significant. Modification growth on a specific contract exhibited extreme acceleration relative to peers in the same industry classification. Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combined profile of scale, award frequency, and structural characteristics. Sole-source award concentration was substantially higher than industry peers, with over 96 percent of awards issued without competition.\n\nThe worst-performing contract modification grew at a ratio of 14,213.89 times, compared to a peer median of 65.32 in the same NAICS code, yielding a z-score of 22.16 standard deviations above the mean. The entity holds 1,623 lifetime awards totaling 7.0 billion dollars obligated, with 1,567 awarded on a sole-source basis. The isolation score of 0.88 reflects extreme multivariate outlier status. Benford's test produced a p-value of 0.62, indicating the digit distribution was consistent with random variation.\n\nThese signals reflect statistical anomalies rather than confirmed fraud. Johns Hopkins Applied Physics Laboratory operates in federally funded research and development, a sector where sole-source awards to established research entities are common and often justified by technical specialization and continuity requirements. The peer group for sole-source comparison includes 340 entities in the primary NAICS code, though the entity's scale and mission may place it in a distinct operational category. The modification growth signal warrants review of contract justifications but may reflect legitimate scope expansion in long-term research programs.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.6951646423203856,
+      "score": 0.3817457537308868,
       "details": {
         "observed_distribution": {
-          "1": 0.27595445411922304,
-          "2": 0.18017414601473544,
-          "3": 0.12391158740790355,
-          "4": 0.09444072337575352,
-          "5": 0.09109176155391828,
-          "6": 0.061620897521768254,
-          "7": 0.058941728064300064,
-          "8": 0.05291359678499665,
-          "9": 0.06095110515740121
+          "1": 0.2846580406654344,
+          "2": 0.18114602587800369,
+          "3": 0.12446087492298213,
+          "4": 0.08995686999383858,
+          "5": 0.09118915588416512,
+          "6": 0.06715958102279729,
+          "7": 0.056685150955021565,
+          "8": 0.04867529266789895,
+          "9": 0.056069008009858284
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.025075541544758162,
-        "p_value": 0.30483535767961445,
-        "n_transactions": 1493
+        "ks_statistic": 0.018748192875760017,
+        "p_value": 0.6182542462691132,
+        "n_transactions": 1623
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999996116111,
+      "score": 0.9999999982348595,
       "details": {
         "worst_award_id": "N0002413D6400",
-        "growth_ratio": 13103.834977700002,
+        "growth_ratio": 14213.885739299994,
         "naics_code": "541712",
-        "naics_avg_ratio": 57.36039005492322,
-        "z_score": 23.669014003410037
+        "naics_avg_ratio": 65.32436566944673,
+        "z_score": 22.155035559360982
       }
     },
     {
       "name": "isolation",
-      "score": 0.9301440410969063,
+      "score": 0.8822244752540788,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.89258779532062,
-          "award_count": 1493.0,
+          "log_total_dollars": 9.845364305478128,
+          "award_count": 1623.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 9.0,
-          "competition_ratio": 0.0361687876758205,
-          "modification_frequency": 0.7809778968519759
+          "competition_ratio": 0.03450400492914356,
+          "modification_frequency": 0.6678989525569933
         },
-        "raw_anomaly_score": -0.7603951169906645,
+        "raw_anomaly_score": -0.7414174365783069,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9379222017211063,
+      "score": 0.9391405352109394,
       "details": {
-        "total_awards": 1493,
-        "sole_source_awards": 1439,
-        "ss_frac": 0.9638312123241795,
+        "total_awards": 1623,
+        "sole_source_awards": 1567,
+        "ss_frac": 0.9654959950708565,
         "primary_naics": "541715",
-        "naics_peer_count": 335,
-        "naics_median_ss": 0.07692307692307693,
-        "naics_std_ss": 0.23871914651384551,
-        "z_score": 3.715278595592929
+        "naics_peer_count": 340,
+        "naics_median_ss": 0.06666666666666667,
+        "naics_std_ss": 0.24056039552862135,
+        "z_score": 3.7363977824739196
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.5759952505380008,
       "rank": 4
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5478983903966057,
+      "rank": 7
     }
   ],
   "flagged_contracts": [

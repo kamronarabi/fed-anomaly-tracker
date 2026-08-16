@@ -1,0 +1,115 @@
+{
+  "uei": "RDFKNPZNQ8E3",
+  "name": "L3HARRIS TECHNOLOGIES INTEGRATED SYSTEMS L.P.",
+  "agency": "Department of Defense",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 10355287455.02,
+  "lifetime_awards": 340,
+  "score_date": "2026-07-29",
+  "composite_score": 0.46958848420150207,
+  "composite_score_delta": 0.179604,
+  "composite_percentile_rank": 0.9958500286204922,
+  "brief_text": "Four detectors flagged L3Harris Technologies Integrated Systems. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency patterns. Modification growth on a single Air Force contract grew at an extraordinary rate compared to peer manufacturers. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its portfolio characteristics. Finally, sole-source award concentration substantially exceeded industry norms for aircraft parts manufacturing.\n\nThe Benford test yielded a p-value of 0.025 across 340 transactions, with observed digit-1 frequency of 27 percent versus expected 30 percent. The modification growth detector found a z-score of 47.4 on contract FA862021G4027, where modifications grew at a ratio of 48,585 compared to a peer median of 74. The Isolation Forest score was 0.825 on a 0-to-1 scale. Sole-source awards comprised 94 percent of the entity's 340 total awards, yielding a z-score of 1.25 against a peer median of 45 percent.\n\nThese signals reflect statistical anomalies rather than confirmed fraud. L3Harris is a large, established defense contractor with over 10 billion dollars in lifetime obligations, which may explain some outlier characteristics. The single-agency concentration and high modification frequency are consistent with long-term prime contractor relationships on major programs. The peer group for sole-source comparison includes 328 manufacturers, though industry consolidation may limit true comparability. Benford deviations at p=0.025 warrant attention but remain borderline.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9754501835342784,
+      "details": {
+        "observed_distribution": {
+          "1": 0.27058823529411763,
+          "2": 0.19705882352941176,
+          "3": 0.19411764705882353,
+          "4": 0.11764705882352941,
+          "5": 0.07352941176470588,
+          "6": 0.03529411764705882,
+          "7": 0.03823529411764706,
+          "8": 0.029411764705882353,
+          "9": 0.04411764705882353
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.0804417603698635,
+        "p_value": 0.024549816465721647,
+        "n_transactions": 340
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 1.0,
+      "details": {
+        "worst_award_id": "FA862021G4027",
+        "growth_ratio": 48585.17456098361,
+        "naics_code": "336413",
+        "naics_avg_ratio": 74.18417960540526,
+        "z_score": 47.37663133082132
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8246127139309932,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.01516215908618,
+          "award_count": 340.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 11.0,
+          "competition_ratio": 0.061764705882352944,
+          "modification_frequency": 0.8323529411764706
+        },
+        "raw_anomaly_score": -0.7175480395018808,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.562168328185707,
+      "details": {
+        "total_awards": 340,
+        "sole_source_awards": 319,
+        "ss_frac": 0.9382352941176471,
+        "primary_naics": "336413",
+        "naics_peer_count": 328,
+        "naics_median_ss": 0.45227272727272727,
+        "naics_std_ss": 0.3887803807865096,
+        "z_score": 1.2499667958084943
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.39448746440725047,
+      "rank": 360
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.2899842425805137,
+      "rank": 339
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.46958848420150207,
+      "rank": 30
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "FA862021G4027",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=FA862021G4027"
+    }
+  ]
+}

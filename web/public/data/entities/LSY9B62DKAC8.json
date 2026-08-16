@@ -1,0 +1,132 @@
+{
+  "uei": "LSY9B62DKAC8",
+  "name": "GOLDBELT C6, LLC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541715",
+  "naics_description": "RESEARCH AND DEVELOPMENT IN THE PHYSICAL, ENGINEERING, AND LIFE SCIENCES (EXCEPT NANOTECHNOLOGY AND BIOTECHNOLOGY)",
+  "lifetime_total": 215867029.45,
+  "lifetime_awards": 87,
+  "score_date": "2026-07-29",
+  "composite_score": 0.45789977247429947,
+  "composite_score_delta": 0.250736,
+  "composite_percentile_rank": 0.9942759015455065,
+  "brief_text": "Five detectors fired for Goldbelt C6, LLC. Benford's law analysis of leading digits in award amounts showed no significant deviation from expected frequency patterns. Modification growth on one contract exceeded peer norms substantially, with a z-score of 3.2 indicating the contract's modification ratio was far above typical for its industry. Isolation Forest flagged the entity as a multivariate outlier based on its combined profile of high dollar volume, award count, low agency diversity, and very frequent modifications. Sole-source concentration was notably elevated, with 91 percent of awards being sole-source compared to a median of 28 percent among peers in the same NAICS code. Award velocity showed the most extreme signal: 31 awards in the past 90 days versus a historical baseline of 23 awards over 640 days, yielding a z-score of 15.4.\n\nThe worst-performing contract, HHSF223201710033I, had a modification growth ratio of 83.2 compared to a peer average of 11.5. Of 86 lifetime awards totaling 215.9 million dollars, 78 were sole-source. The entity operates across only two agencies and eight NAICS codes. Recent award velocity of 0.34 per day far exceeds the baseline rate of 0.036 per day.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. The entity's heavy reliance on sole-source awards and rapid recent acceleration in contract volume may reflect legitimate factors such as specialized research capabilities, established relationships with HHS, or genuine increased demand. The small peer group for sole-source concentration analysis and the entity's apparent focus on a narrow customer base limit generalizability of those comparisons. The modification growth signal on a single contract merits document review but could reflect legitimate scope changes or cost adjustments.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.06352397874125237,
+      "details": {
+        "observed_distribution": {
+          "1": 0.313953488372093,
+          "2": 0.22093023255813954,
+          "3": 0.10465116279069768,
+          "4": 0.09302325581395349,
+          "5": 0.09302325581395349,
+          "6": 0.06976744186046512,
+          "7": 0.05813953488372093,
+          "8": 0.03488372093023256,
+          "9": 0.011627906976744186
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.057762466210570185,
+        "p_value": 0.9364760212587476,
+        "n_transactions": 86
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.769319064192123,
+      "details": {
+        "worst_award_id": "HHSF223201710033I",
+        "growth_ratio": 83.21723739687309,
+        "naics_code": "541711",
+        "naics_avg_ratio": 11.481889291169354,
+        "z_score": 3.204470265902235
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7640131761713672,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.334186315231968,
+          "award_count": 86.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 8.0,
+          "competition_ratio": 0.09302325581395349,
+          "modification_frequency": 0.9534883720930233
+        },
+        "raw_anomaly_score": -0.6924407628588254,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.6331093410744414,
+      "details": {
+        "total_awards": 86,
+        "sole_source_awards": 78,
+        "ss_frac": 0.9069767441860465,
+        "primary_naics": "541990",
+        "naics_peer_count": 140,
+        "naics_median_ss": 0.2820716829582481,
+        "naics_std_ss": 0.404317703537686,
+        "z_score": 1.545579270360967
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9999985424537668,
+      "details": {
+        "recent_count": 31,
+        "baseline_count": 23,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.34444444444444444,
+        "baseline_rate_per_day": 0.0359375,
+        "expected_recent_count": 3.2343749999999996,
+        "z_score": 15.438754740809244,
+        "earliest_award": "2023-10-25",
+        "latest_award": "2026-06-08",
+        "as_of": "2026-07-04"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.2894919865367414,
+      "rank": 729
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.2071635407430922,
+      "rank": 827
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.45789977247429947,
+      "rank": 41
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "HHSF223201710033I",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=HHSF223201710033I"
+    }
+  ]
+}

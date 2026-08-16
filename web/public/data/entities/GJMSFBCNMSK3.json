@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "423850",
   "naics_description": "SERVICE ESTABLISHMENT EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
-  "lifetime_total": 10958603626.669996,
-  "lifetime_awards": 14017,
-  "score_date": "2026-05-29",
-  "composite_score": 0.45525217925916167,
-  "composite_score_delta": -0.260678,
-  "composite_percentile_rank": 0.995395127748069,
-  "brief_text": "Three detectors flagged Atlantic Diving Supply. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 1 appearing less frequently than typical and digits 2 and 3 appearing more often. Modification growth on one contract vastly outpaced peer norms in the merchant wholesaler sector. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combined profile of total dollars, award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.049 with p-value of 7.95e-30 across 14,017 transactions. The modification growth detector found one contract (SPE8EJ21D0020) with a growth ratio of 14,024, compared to a NAICS 339999 peer average of 519, producing a z-score of 5.77. The Isolation Forest raw anomaly score was -0.79, placing the entity in the extreme tail of the contamination distribution.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, pricing structures, or contract bundling. The entity's massive lifetime obligated value of nearly 11 billion dollars and 14,017 awards suggest it is an established, high-volume DoD supplier; large, mature contractors often show different digit distributions than smaller peers. The modification growth spike on a single contract may reflect legitimate scope expansion or repricing rather than manipulation. The narrow agency concentration reflects DoD-focused specialization rather than suspicious behavior.",
+  "lifetime_total": 12180959286.179998,
+  "lifetime_awards": 15262,
+  "score_date": "2026-07-29",
+  "composite_score": 0.48658539616264046,
+  "composite_score_delta": 0.031333,
+  "composite_percentile_rank": 0.9969948483113908,
+  "brief_text": "Three detectors fired for Atlantic Diving Supply. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 1 appearing less frequently than typical and digits 2 and 3 appearing more often. Modification growth analysis identified one parent contract that expanded at 291 times its initial value, vastly exceeding the typical 7.3-fold growth ratio for peer wholesalers in the same industry code. Isolation Forest flagged the entity as a multivariate outlier based on its combined profile of massive total dollars, extremely high award count, concentration with a single agency, and heavy modification activity.\n\nThe Benford test yielded a KS statistic of 0.048 with p-value near zero across 15,262 transactions. The worst-performing contract (47QSMA19D08Q1) showed a growth ratio of 291.3 versus a peer average of 7.3, producing a z-score of 11.58. The isolation score reached 1.0, driven by a feature vector showing 12.2 billion dollars obligated, 15,262 awards, sole reliance on Department of Defense, and a 0.96 competition ratio.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. Atlantic Diving Supply is a large, established wholesaler with deep DoD relationships spanning many years, which legitimately explains high award volume and single-agency concentration. The Benford deviation and extreme modification growth are genuine outliers, but modification-heavy contracts are common in defense supply chains where requirements evolve. The peer group for this NAICS code may be small or heterogeneous, potentially inflating z-scores.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.25583220375258614,
-          "2": 0.17214810587144183,
-          "3": 0.15088820717699936,
-          "4": 0.11371905543268888,
-          "5": 0.0926731825640294,
-          "6": 0.06499250909609759,
-          "7": 0.056360134122850826,
-          "8": 0.048726546336591285,
-          "9": 0.04466005564671471
+          "1": 0.25625737124885334,
+          "2": 0.17265102869872886,
+          "3": 0.15122526536495873,
+          "4": 0.11440178220416722,
+          "5": 0.09153453020573975,
+          "6": 0.06611191193814703,
+          "7": 0.055235224741187264,
+          "8": 0.04842091469007994,
+          "9": 0.04416197090813786
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,20 +38,20 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.049140945095634436,
-        "p_value": 7.950907625780527e-30,
-        "n_transactions": 14017
+        "ks_statistic": 0.048212854772080205,
+        "p_value": 3.0675430071364675e-31,
+        "n_transactions": 15262
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9775432116322208,
+      "score": 0.9999310556293189,
       "details": {
-        "worst_award_id": "SPE8EJ21D0020",
-        "growth_ratio": 14024.25036552684,
-        "naics_code": "339999",
-        "naics_avg_ratio": 519.1491619046315,
-        "z_score": 5.773449551490401
+        "worst_award_id": "47QSMA19D08Q1",
+        "growth_ratio": 291.28539574490793,
+        "naics_code": "332999",
+        "naics_avg_ratio": 7.34699523865133,
+        "z_score": 11.58214165380411
       }
     },
     {
@@ -59,14 +59,14 @@
       "score": 1.0,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 10.039755218759012,
-          "award_count": 14017.0,
+          "log_total_dollars": 10.085681491604687,
+          "award_count": 15262.0,
           "unique_agencies_count": 1.0,
-          "naics_diversity": 35.0,
-          "competition_ratio": 0.9950060640650639,
-          "modification_frequency": 0.010986659056859529
+          "naics_diversity": 40.0,
+          "competition_ratio": 0.9947582230376097,
+          "modification_frequency": 0.009631765168392085
         },
-        "raw_anomaly_score": -0.7899333638132631,
+        "raw_anomaly_score": -0.7902135626033302,
         "contamination_param": 0.05
       }
     }
@@ -81,16 +81,21 @@
       "date": "2026-05-29",
       "composite_score": 0.45525217925916167,
       "rank": 32
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.48658539616264046,
+      "rank": 22
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE8EJ21D0020",
+      "award_id": "47QSMA19D08Q1",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE8EJ21D0020"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=47QSMA19D08Q1"
     }
   ]
 }

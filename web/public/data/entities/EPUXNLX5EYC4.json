@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "541330",
   "naics_description": "ENGINEERING SERVICES",
-  "lifetime_total": 1825799405.61,
-  "lifetime_awards": 635,
-  "score_date": "2026-05-29",
-  "composite_score": 0.45417342696891067,
-  "composite_score_delta": -0.223078,
-  "composite_percentile_rank": 0.9950980392156863,
-  "brief_text": "Three detectors fired for AECOM TECHNICAL SERVICES, INC. Benford's Law analysis found the leading-digit distribution of award amounts deviated from expected frequencies, with a KS statistic of 0.061 and p-value of 0.017 across 635 transactions. Modification growth analysis identified contract N6247019D8022 with a growth ratio of 3805, far exceeding the engineering services peer average of 24.4, yielding a z-score of 27.4. Isolation Forest flagged the entity as a multivariate outlier with a score of 0.892, driven by concentration in a single agency despite substantial dollar volume and high modification frequency.\n\nThe entity shows a lifetime obligated total of 1.83 billion dollars across 635 awards, all from the Department of Defense. The benford detector's p-value of 0.017 indicates modest digit-frequency irregularity. The modification growth z-score of 27.4 is extreme, representing a 156-fold deviation above peer norms. The isolation score of 0.892 reflects the combination of high dollar volume, single-agency concentration, and elevated modification activity relative to typical engineering services contractors.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate clustering of contract values or rounding practices. The extreme modification growth may reflect a large, long-term program with evolving scope rather than improper cost escalation. AECOM's scale as a major DoD contractor and engineering services firm may explain concentration with a single agency. The small peer group in this NAICS segment could amplify z-score magnitudes. Verification of contract documentation and modification justifications is recommended.",
+  "lifetime_total": 1984027412.3999999,
+  "lifetime_awards": 669,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4498172546123847,
+  "composite_score_delta": -0.004356,
+  "composite_percentile_rank": 0.9935603892386948,
+  "brief_text": "Three detectors fired for AECOM TECHNICAL SERVICES, INC. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency distribution, with digit 1 appearing less often than predicted and digits 2 and 3 appearing more frequently. Modification growth on a single parent contract vastly exceeded peer norms in the engineering services sector. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of contract characteristics, award volume, and modification patterns.\n\nThe modification growth detector identified contract N6247019D8022 with a growth ratio of 9,187, compared to a sector average of 26, yielding a z-score of 43.7 standard deviations above peer behavior. Benford's test produced a KS statistic of 0.060 with p-value 0.016 across 669 transactions. The isolation score of 0.846 reflects an entity with $1.98 billion lifetime obligations, 669 awards concentrated with a single agency, 13 NAICS codes, and a 68 percent modification frequency.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Large, established contractors like AECOM often exhibit atypical profiles due to scale and complexity. The single-agency concentration and high modification frequency may reflect legitimate DoD relationships rather than misconduct. Benford deviations can arise from genuine business practices in contract pricing. The extreme modification growth ratio is the most concrete anomaly and merits investigation into whether scope changes were properly documented and competed.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9832695943339173,
+      "score": 0.9840237293670028,
       "details": {
         "observed_distribution": {
-          "1": 0.2755905511811024,
-          "2": 0.14015748031496064,
-          "3": 0.1700787401574803,
-          "4": 0.11811023622047244,
-          "5": 0.07244094488188976,
-          "6": 0.07401574803149606,
-          "7": 0.05984251968503937,
-          "8": 0.05826771653543307,
-          "9": 0.031496062992125984
+          "1": 0.2750373692077728,
+          "2": 0.14200298953662183,
+          "3": 0.16890881913303438,
+          "4": 0.11509715994020926,
+          "5": 0.07025411061285501,
+          "6": 0.07922272047832586,
+          "7": 0.06576980568011959,
+          "8": 0.04783258594917788,
+          "9": 0.03587443946188341
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.06137322322359945,
-        "p_value": 0.016730405666082703,
-        "n_transactions": 635
+        "ks_statistic": 0.060080895975267834,
+        "p_value": 0.015976270632997218,
+        "n_transactions": 669
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999999909437,
+      "score": 1.0,
       "details": {
         "worst_award_id": "N6247019D8022",
-        "growth_ratio": 3805.0056664,
+        "growth_ratio": 9187.0582264,
         "naics_code": "236220",
-        "naics_avg_ratio": 24.415830062948338,
-        "z_score": 27.427553490416628
+        "naics_avg_ratio": 25.97468519907538,
+        "z_score": 43.691216767344855
       }
     },
     {
       "name": "isolation",
-      "score": 0.8919218632817102,
+      "score": 0.8460266142937289,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.261453061357026,
-          "award_count": 635.0,
+          "log_total_dollars": 9.297547668307985,
+          "award_count": 669.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 13.0,
-          "competition_ratio": 0.9417322834645669,
-          "modification_frequency": 0.7448818897637796
+          "competition_ratio": 0.9417040358744395,
+          "modification_frequency": 0.6831091180866966
         },
-        "raw_anomaly_score": -0.7442330580893084,
+        "raw_anomaly_score": -0.72642013226514,
         "contamination_param": 0.05
       }
     }
@@ -81,6 +81,11 @@
       "date": "2026-05-29",
       "composite_score": 0.45417342696891067,
       "rank": 34
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4498172546123847,
+      "rank": 46
     }
   ],
   "flagged_contracts": [

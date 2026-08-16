@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "336413",
   "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
-  "lifetime_total": 305158286.17,
-  "lifetime_awards": 1808,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4692165565290464,
-  "composite_score_delta": -0.166482,
-  "composite_percentile_rank": 0.9961378490790256,
-  "brief_text": "Three detectors fired for AAR Supply Chain. Benford's law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 1 appearing in only 19 percent of transactions versus the expected 30 percent. Modification growth on contract SPE4A119G0022 expanded at a rate 63 times faster than the peer average for aircraft parts manufacturers, a severe outlier. Isolation Forest flagged the entity as a multivariate anomaly, driven primarily by extremely high award concentration with a single agency and unusually frequent contract modifications relative to transaction volume.\n\nThe Benford test yielded a KS statistic of 0.111 with p-value near zero across 1,808 transactions. The modification contract grew at a ratio of 1,513 compared to a NAICS average of 24, producing a z-score of 7.59. The isolation anomaly score was 0.93 on a 0-to-1 scale. The entity shows 1,808 lifetime awards totaling 305 million dollars, all from the Department of Defense, with a competition ratio of 0.007 indicating nearly all sole-source work.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices such as tiered pricing or contract structures common in aerospace supply. The modification growth spike may reflect a critical wartime or emergency procurement rather than manipulation. The single-agency concentration and high modification frequency are consistent with a specialized defense contractor serving a single customer with evolving requirements. Industry context and contract documentation should be reviewed to validate whether these patterns reflect normal operations.",
+  "lifetime_total": 340440036.70000005,
+  "lifetime_awards": 1968,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4634450069274097,
+  "composite_score_delta": -0.005772,
+  "composite_percentile_rank": 0.9952776187750428,
+  "brief_text": "Three detectors flagged AAR Supply Chain. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected frequency, with digit 1 appearing in only 19 percent of transactions versus the expected 30 percent. Modification growth on contract SPE4AX24D9401 expanded at a rate nearly 30 times faster than peers in the same industry classification. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combination of high dollar volume, concentrated agency relationships, and frequent contract modifications.\n\nThe Benford test produced a KS statistic of 0.110 with p-value 3.3e-21 across 1,968 transactions totaling 340 million dollars lifetime. The modification growth ratio reached 913.6 compared to a NAICS average of 31.0, yielding a z-score of 6.6 standard deviations above peer behavior. The Isolation Forest anomaly score was 0.934 on a 0-to-1 scale, reflecting extreme multivariate distance from typical entities.\n\nThese statistical signals warrant scrutiny but do not prove misconduct. Benford deviations can reflect legitimate business practices in specialized manufacturing. The entity's concentration with a single agency and high modification frequency may reflect long-term prime contractor status rather than fraud. The peer group for aircraft parts manufacturing is relatively small, potentially amplifying apparent anomalies. Industry context and contract documentation should be reviewed to determine whether these patterns reflect normal operations or genuine risk.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.18971238938053098,
-          "2": 0.17754424778761063,
-          "3": 0.19690265486725664,
-          "4": 0.13938053097345132,
-          "5": 0.09679203539823009,
-          "6": 0.06969026548672566,
-          "7": 0.05143805309734513,
-          "8": 0.04480088495575221,
-          "9": 0.03373893805309734
+          "1": 0.19207317073170732,
+          "2": 0.17479674796747968,
+          "3": 0.195630081300813,
+          "4": 0.14329268292682926,
+          "5": 0.09451219512195122,
+          "6": 0.06910569105691057,
+          "7": 0.04878048780487805,
+          "8": 0.04573170731707317,
+          "9": 0.036077235772357726
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.11131760628345022,
-        "p_value": 6.936443656186132e-20,
-        "n_transactions": 1808
+        "ks_statistic": 0.11025133602047543,
+        "p_value": 3.333252687458979e-21,
+        "n_transactions": 1968
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9962900123298516,
+      "score": 0.9900175746952998,
       "details": {
-        "worst_award_id": "SPE4A119G0022",
-        "growth_ratio": 1513.3111838168702,
-        "naics_code": "332722",
-        "naics_avg_ratio": 23.896034996603902,
-        "z_score": 7.593009839035105
+        "worst_award_id": "SPE4AX24D9401",
+        "growth_ratio": 913.5888432464487,
+        "naics_code": "333611",
+        "naics_avg_ratio": 31.012420918819657,
+        "z_score": 6.596896617885879
       }
     },
     {
       "name": "isolation",
-      "score": 0.9323264187707788,
+      "score": 0.9340638850629052,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.484525167145467,
-          "award_count": 1808.0,
+          "log_total_dollars": 8.532040628661145,
+          "award_count": 1968.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 28.0,
-          "competition_ratio": 0.007190265486725664,
-          "modification_frequency": 0.18030973451327434
+          "competition_ratio": 0.0066056910569105695,
+          "modification_frequency": 0.16463414634146342
         },
-        "raw_anomaly_score": -0.7613179245993955,
+        "raw_anomaly_score": -0.7628952638225615,
         "contamination_param": 0.05
       }
     }
@@ -81,16 +81,21 @@
       "date": "2026-05-29",
       "composite_score": 0.4692165565290464,
       "rank": 27
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4634450069274097,
+      "rank": 34
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE4A119G0022",
+      "award_id": "SPE4AX24D9401",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4A119G0022"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX24D9401"
     }
   ]
 }

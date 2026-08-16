@@ -2,30 +2,30 @@
   "uei": "YLE5AAYNVPK6",
   "name": "NOBLE SUPPLY & LOGISTICS, LLC",
   "agency": "Department of Defense",
-  "naics_code": "339999",
-  "naics_description": "ALL OTHER MISCELLANEOUS MANUFACTURING",
-  "lifetime_total": 1965217417.0599997,
-  "lifetime_awards": 6652,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4912528103427613,
-  "composite_score_delta": -0.247376,
-  "composite_percentile_rank": 0.9977718360071302,
-  "brief_text": "Three detectors fired for Noble Supply & Logistics. Benford's Law analysis found the leading-digit distribution of award amounts significantly deviates from expected patterns, with too few awards starting in 1 and too many in 3, suggesting possible systematic manipulation of contract values. Modification growth on contract SPE4AX23D9409 expanded at a rate far exceeding industry norms for miscellaneous manufacturing suppliers. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its combined profile of high award volume, low agency diversity, and elevated modification frequency.\n\nThe Benford test yielded a KS statistic of 0.107 with p-value near zero across 6,652 transactions. The modification growth ratio reached 3,039 compared to a NAICS average of 24, producing a z-score of 15.4 sigmas. The isolation anomaly score was 0.98 on a 0-to-1 scale. Over its lifetime, the entity received 6,652 awards totaling nearly $2 billion, concentrated with only two awarding agencies and spanning 19 NAICS codes.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in specific industries. The extreme modification growth may reflect a single large parent contract that legitimately expanded scope. The isolation score reflects statistical rarity in the overall population rather than inherent misconduct. The entity's scale and DoD concentration merit investigation, but industry-specific procurement patterns for supply and logistics vendors should be considered before drawing conclusions.",
+  "naics_code": "333999",
+  "naics_description": "ALL OTHER MISCELLANEOUS GENERAL PURPOSE MACHINERY MANUFACTURING",
+  "lifetime_total": 2100895609.06,
+  "lifetime_awards": 7029,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4753549716992696,
+  "composite_score_delta": -0.015898,
+  "composite_percentile_rank": 0.9965655409273039,
+  "brief_text": "Three detectors fired for Noble Supply & Logistics. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with digit 1 appearing in only 19% of transactions versus the expected 30%, while digits 3 and 2 appear more frequently than typical. Modification Growth detected a single parent contract that grew 2,986 times its initial value through modifications, vastly exceeding the 35-fold average growth ratio for peers in the same machinery manufacturing sector. Isolation Forest flagged the entity as a multivariate outlier based on its combined profile of high total dollars, massive award count, concentration across only two agencies, and heavy modification activity.\n\nThe Benford test yielded a KS statistic of 0.107 with p-value below 1e-70 across 7,029 transactions. The worst-performing contract SPE4AX23D9409 showed a growth ratio of 2,986 against a peer average of 35, producing a z-score of 8.24 standard deviations above the sector mean. The entity's lifetime obligated total is $2.1 billion across 7,029 awards, concentrated with only two agencies, and the Isolation Forest raw anomaly score was -0.79.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can occur legitimately in procurement if award amounts cluster around contract vehicles or pricing tiers. The extreme modification growth on a single contract may reflect legitimate scope expansion or a long-term supply relationship rather than improper billing. The entity's concentration with two agencies and high modification frequency could reflect specialized supplier status or a dominant customer relationship. The small peer group in this NAICS code may also inflate z-scores.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.19392663860493084,
-          "2": 0.18430547203848466,
-          "3": 0.19978953698135898,
-          "4": 0.13740228502705953,
-          "5": 0.08448586891160553,
-          "6": 0.06509320505111245,
-          "7": 0.054269392663860494,
-          "8": 0.0417919422730006,
-          "9": 0.03893565844858689
+          "1": 0.19362640489401053,
+          "2": 0.18309859154929578,
+          "3": 0.1997439180537772,
+          "4": 0.137430644472898,
+          "5": 0.08479157774932423,
+          "6": 0.06544316403471333,
+          "7": 0.054488547446293924,
+          "8": 0.04282259211836677,
+          "9": 0.038554559681320245
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.10710335705905036,
-        "p_value": 1.0532302399320574e-66,
-        "n_transactions": 6652
+        "ks_statistic": 0.10740359076997066,
+        "p_value": 7.464732699431931e-71,
+        "n_transactions": 7029
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999984380332617,
+      "score": 0.9980458811579573,
       "details": {
         "worst_award_id": "SPE4AX23D9409",
-        "growth_ratio": 3038.7295205928485,
+        "growth_ratio": 2985.867094659488,
         "naics_code": "332722",
-        "naics_avg_ratio": 23.896034996603902,
-        "z_score": 15.369563239179339
+        "naics_avg_ratio": 34.854384882033685,
+        "z_score": 8.235859876709203
       }
     },
     {
       "name": "isolation",
-      "score": 0.9817924829809558,
+      "score": 0.9961326100443543,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.293410604485546,
-          "award_count": 6652.0,
+          "log_total_dollars": 9.322404473379041,
+          "award_count": 7029.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 19.0,
-          "competition_ratio": 0.9254359591100421,
-          "modification_frequency": 0.022399278412507516
+          "competition_ratio": 0.9270166453265045,
+          "modification_frequency": 0.022193768672641914
         },
-        "raw_anomaly_score": -0.7822344052679904,
+        "raw_anomaly_score": -0.7886112462640847,
         "contamination_param": 0.05
       }
     }
@@ -81,6 +81,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4912528103427613,
       "rank": 16
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4753549716992696,
+      "rank": 25
     }
   ],
   "flagged_contracts": [

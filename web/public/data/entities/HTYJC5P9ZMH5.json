@@ -1,0 +1,101 @@
+{
+  "uei": "HTYJC5P9ZMH5",
+  "name": "SUPPLYCORE LLC",
+  "agency": "Department of Defense",
+  "naics_code": "423610",
+  "naics_description": "ELECTRICAL APPARATUS AND EQUIPMENT, WIRING SUPPLIES, AND RELATED EQUIPMENT MERCHANT  WHOLESALERS",
+  "lifetime_total": 1586379302.3500009,
+  "lifetime_awards": 5057,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4629480686212018,
+  "composite_score_delta": 0.053109,
+  "composite_percentile_rank": 0.9948483113909559,
+  "brief_text": "Three detectors fired for SupplyCore LLC. Benford's law analysis found the leading digits of award amounts deviate significantly from expected natural distribution, with fewer awards starting in 1 and more in 2 and 3. Modification growth analysis identified one contract that grew 17,330 times its initial value, far exceeding the typical 540-fold growth ratio for electrical equipment wholesalers. Isolation Forest flagged the entity as a multivariate outlier based on its profile of high award volume concentrated with a single agency across diverse NAICS codes.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.111 with p-value below 1e-54 across 5,057 transactions. The worst-performing contract SPE8EJ21D0023 showed a growth ratio of 17,330 versus a peer average of 540, producing a z-score of 6.50. The isolation anomaly score was 0.964 on a 0-to-1 scale. SupplyCore's lifetime obligated total is 1.59 billion dollars across 5,057 awards, all from the Department of Defense.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a large wholesaler's portfolio. The extreme modification growth on a single contract may reflect legitimate scope expansion or repricing in a long-term supply relationship. The isolation signal reflects concentration with one agency, which is common for established DoD vendors. The peer group for electrical equipment wholesalers is relatively small, limiting statistical power.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2034803243029464,
+          "2": 0.16234921890448883,
+          "3": 0.18232153450662447,
+          "4": 0.1386197350207633,
+          "5": 0.08938105596203283,
+          "6": 0.07375914573858018,
+          "7": 0.05596203282578604,
+          "8": 0.049040933359699425,
+          "9": 0.0450860193790785
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.11129171151222722,
+        "p_value": 7.884434080417281e-55,
+        "n_transactions": 5057
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9889915179991567,
+      "details": {
+        "worst_award_id": "SPE8EJ21D0023",
+        "growth_ratio": 17330.444158481077,
+        "naics_code": "339999",
+        "naics_avg_ratio": 540.0777443806155,
+        "z_score": 6.498019688599139
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9637937825114232,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.20040703495051,
+          "award_count": 5057.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 15.0,
+          "competition_ratio": 0.7603322127743721,
+          "modification_frequency": 0.007118845165117659
+        },
+        "raw_anomaly_score": -0.7752127960580453,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.7068408417684289,
+      "rank": 13
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.40983861898252494,
+      "rank": 77
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4629480686212018,
+      "rank": 37
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE8EJ21D0023",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE8EJ21D0023"
+    }
+  ]
+}

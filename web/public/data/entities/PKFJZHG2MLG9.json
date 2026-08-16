@@ -4,28 +4,28 @@
   "agency": "Department of Health and Human Services",
   "naics_code": "541690",
   "naics_description": "OTHER SCIENTIFIC AND TECHNICAL CONSULTING SERVICES",
-  "lifetime_total": 163895736.69,
-  "lifetime_awards": 253,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5064495157445528,
-  "composite_score_delta": 0.008183,
-  "composite_percentile_rank": 0.9983660130718955,
-  "brief_text": "Four detectors flagged National Academy of Sciences. Benford's law analysis found the leading-digit distribution of award amounts significantly deviates from expected frequencies, with an unusually high proportion of awards starting with 1 or 2. Modification growth on one contract grew 178-fold, far exceeding the typical 13-fold ratio for peers in scientific consulting. The entity also emerged as a multivariate outlier, combining high dollar volume, concentrated agency relationships, and frequent contract modifications. Finally, sole-source awards comprise 93 percent of its portfolio versus a median of 1.4 percent for comparable firms.\n\nThe Benford test yielded a p-value of 0.00007 across 248 transactions. The worst-performing contract (HHSD200201138807I) showed a growth ratio of 178.51 against a NAICS average of 13.25, producing a z-score of 3.60. Sole-source awards totaled 230 of 248 (92.7 percent), with a z-score of 2.53 relative to peer standard deviation. The isolation forest assigned an anomaly score of 0.86, reflecting the entity's extreme position on multiple dimensions simultaneously.\n\nNational Academy of Sciences is a congressionally chartered nonprofit with a legitimate federal advisory mission, which contextualizes some signals. High sole-source concentration and modification frequency align with its role providing specialized scientific expertise and policy analysis. However, the Benford deviation and extreme modification growth on a single contract warrant scrutiny. The peer group for scientific consulting is small and heterogeneous, limiting statistical power. The combination of signals\u2014particularly the 178-fold modification ratio\u2014merits closer examination of contract justifications and pricing practices.",
+  "lifetime_total": 167956318.81,
+  "lifetime_awards": 303,
+  "score_date": "2026-07-29",
+  "composite_score": 0.7176846704574315,
+  "composite_score_delta": 0.211235,
+  "composite_percentile_rank": 0.9999999999999999,
+  "brief_text": "Five detectors fired for the National Academy of Sciences. Benford's law analysis found the leading-digit distribution of award amounts significantly deviates from expected frequencies, with digits 1 and 2 appearing more often than natural patterns predict. Modification growth on a single contract vastly outpaced peer norms in the scientific consulting sector. An isolation forest algorithm flagged the entity as a multivariate outlier based on its combination of high dollar volume, award count, low agency diversity, and extremely frequent contract modifications. Sole-source concentration showed the entity receives nearly 94 percent of awards without competition, far exceeding the median of 1.3 percent for peers in the same industry. Award velocity surged sharply in the past 90 days, with 60 recent awards versus a historical baseline rate that would predict only 25.\n\nThe worst-performing contract modification grew 387.66 times in value compared to a peer average of 12.61, yielding a z-score of 9.24. The entity received 279 sole-source awards out of 297 total, a fraction of 0.939. Benford's test produced a Kolmogorov-Smirnov statistic of 0.122 with p-value 0.0003 across 297 transactions. Recent award velocity reached 0.67 awards per day versus a baseline of 0.28 per day, with a z-score of 6.89. The isolation forest raw anomaly score was negative 0.744 under 5 percent contamination.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. The National Academy of Sciences is a congressionally chartered nonprofit with legitimate advisory and research roles across federal agencies, which may explain high sole-source reliance and modification frequency. However, the Benford deviation and extreme modification growth on a single contract remain difficult to reconcile with normal operations and merit closer examination of contract documentation and justifications.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9999302080241567,
+      "score": 0.9997191628775912,
       "details": {
         "observed_distribution": {
-          "1": 0.3870967741935484,
-          "2": 0.23387096774193547,
-          "3": 0.06451612903225806,
-          "4": 0.06048387096774194,
-          "5": 0.06048387096774194,
-          "6": 0.04032258064516129,
-          "7": 0.0846774193548387,
-          "8": 0.020161290322580645,
-          "9": 0.04838709677419355
+          "1": 0.367003367003367,
+          "2": 0.23232323232323232,
+          "3": 0.08417508417508418,
+          "4": 0.0707070707070707,
+          "5": 0.06060606060606061,
+          "6": 0.04040404040404041,
+          "7": 0.07744107744107744,
+          "8": 0.02356902356902357,
+          "9": 0.04377104377104377
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,67 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.14384648721582144,
-        "p_value": 6.979197584335603e-05,
-        "n_transactions": 248
+        "ks_statistic": 0.12220534460693683,
+        "p_value": 0.00028083712240882747,
+        "n_transactions": 297
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.8317565871878355,
+      "score": 0.99928243420578,
       "details": {
         "worst_award_id": "HHSD200201138807I",
-        "growth_ratio": 178.51006120000002,
+        "growth_ratio": 387.6575980509818,
         "naics_code": "541620",
-        "naics_avg_ratio": 13.251722413262646,
-        "z_score": 3.5981280179722988
+        "naics_avg_ratio": 12.611059046156697,
+        "z_score": 9.238928091905443
       }
     },
     {
       "name": "isolation",
-      "score": 0.8593204109204746,
+      "score": 0.8879286266274908,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.214567656706016,
-          "award_count": 248.0,
+          "log_total_dollars": 8.225196347401816,
+          "award_count": 297.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 16.0,
-          "competition_ratio": 0.06048387096774194,
-          "modification_frequency": 0.8870967741935484
+          "competition_ratio": 0.050505050505050504,
+          "modification_frequency": 0.8585858585858586
         },
-        "raw_anomaly_score": -0.7304476951547411,
+        "raw_anomaly_score": -0.7437807500925816,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.822117899811818,
+      "score": 0.8018205279417419,
       "details": {
-        "total_awards": 248,
-        "sole_source_awards": 230,
-        "ss_frac": 0.9274193548387096,
+        "total_awards": 297,
+        "sole_source_awards": 279,
+        "ss_frac": 0.9393939393939394,
         "primary_naics": "541690",
-        "naics_peer_count": 31,
-        "naics_median_ss": 0.014084507042253521,
-        "naics_std_ss": 0.36089310002889513,
-        "z_score": 2.530762842856595
+        "naics_peer_count": 30,
+        "naics_median_ss": 0.013437950937950938,
+        "naics_std_ss": 0.38618319551945407,
+        "z_score": 2.397711757526081
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9925683128278301,
+      "details": {
+        "recent_count": 60,
+        "baseline_count": 180,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.6666666666666666,
+        "baseline_rate_per_day": 0.28125,
+        "expected_recent_count": 25.3125,
+        "z_score": 6.894542930624351,
+        "earliest_award": "2023-10-23",
+        "latest_award": "2026-07-01",
+        "as_of": "2026-07-04"
       }
     }
   ],
@@ -95,6 +112,11 @@
       "date": "2026-05-29",
       "composite_score": 0.5064495157445528,
       "rank": 12
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.7176846704574315,
+      "rank": 1
     }
   ],
   "flagged_contracts": [

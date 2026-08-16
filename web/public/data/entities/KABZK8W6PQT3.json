@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "325411",
   "naics_description": "MEDICINAL AND BOTANICAL MANUFACTURING",
-  "lifetime_total": 11796205994.249992,
-  "lifetime_awards": 99127,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4837002997361939,
-  "composite_score_delta": -0.235393,
-  "composite_percentile_rank": 0.9973262032085563,
-  "brief_text": "Three detectors fired for AmerisourceBergen Drug Corp. The Benford test found significant deviation in leading-digit frequencies across 99,127 transactions, with digits 2 through 4 appearing far more often than expected and digit 1 substantially less often, yielding a Kolmogorov-Smirnov statistic of 0.184 and p-value near zero. The modification-growth detector identified one parent contract (SPE2DB22D2206) whose modifications expanded at a rate 6,145 times the initial award value, roughly 44 times faster than the NAICS peer median. The Isolation Forest algorithm flagged the entity as a multivariate outlier with a score of 0.889, driven by extreme award volume and dollar concentration relative to peer patterns.\n\nThe worst modification contract showed a growth ratio of 6,144.67 against a NAICS average of 141.18, producing a z-score of 13.81 standard deviations above peer behavior. Across its lifetime, the entity has received 99,127 awards totaling approximately 11.8 billion dollars, but works with only two agencies and four NAICS codes, suggesting narrow customer and product concentration.\n\nThese signals reflect statistical anomalies rather than confirmed fraud. AmerisourceBergen is a major pharmaceutical distributor with legitimate reasons for high transaction volume and large modification activity in government supply contracts. The Benford deviation may reflect systematic pricing or contract-structuring practices common in bulk pharmaceutical distribution. The small agency count reflects the entity's primary DoD relationship. Peer-group composition and industry-specific contracting norms should be examined before escalation.",
+  "lifetime_total": 13502029439.239994,
+  "lifetime_awards": 113876,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4746966011833527,
+  "composite_score_delta": -0.009004,
+  "composite_percentile_rank": 0.9964224384659416,
+  "brief_text": "Three detectors fired for AmerisourceBergen Drug Corp. Benford's law analysis found significant deviation in the leading-digit distribution of award amounts, with a Kolmogorov-Smirnov statistic of 0.182 and p-value near zero across 113,876 transactions. The modification growth detector identified extreme acceleration in a single parent contract, with modifications growing at a ratio 24 times faster than peers in pharmaceutical distribution. The isolation forest algorithm flagged the entity as a multivariate outlier, driven primarily by its massive award count and total obligated value combined with very high competition ratios and low modification frequency.\n\nThe worst-performing contract, SPE2DB22D2206, showed a modification growth ratio of 3,969 compared to a NAICS average of 163, yielding a z-score of 8.72. Benford's test observed digit \"3\" leading 23.8 percent of amounts versus an expected 12.5 percent, while digit \"1\" appeared in only 11.9 percent of cases against an expected 30.1 percent. The isolation forest raw anomaly score was -0.749 with a contamination parameter of 0.05.\n\nThese statistical signals warrant scrutiny but do not establish fraud. AmerisourceBergen is a major pharmaceutical distributor with legitimate reasons for high award volume and dollar totals. The Benford deviation may reflect pricing structures or contract-bundling practices common in pharmaceutical supply. The modification growth spike on a single contract requires investigation but could reflect legitimate scope changes. The entity's dominance in its peer group and reliance on competitive awards mitigate some concerns, though the scale of operations limits the utility of peer comparisons.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.11677948490320499,
-          "2": 0.20478779747192996,
-          "3": 0.23694856093697983,
-          "4": 0.15305618045537542,
-          "5": 0.09422256297476973,
-          "6": 0.06808437660778598,
-          "7": 0.05351720520140829,
-          "8": 0.04210759934225791,
-          "9": 0.030496232106287893
+          "1": 0.11855000175629632,
+          "2": 0.20292247708033298,
+          "3": 0.23753029611155993,
+          "4": 0.1518230355825635,
+          "5": 0.09435701991640029,
+          "6": 0.0681618602690646,
+          "7": 0.05410270820892901,
+          "8": 0.042195019143629914,
+          "9": 0.030357581931223437
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.1842505107607762,
+        "ks_statistic": 0.18247999390768488,
         "p_value": 0.0,
-        "n_transactions": 99127
+        "n_transactions": 113876
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.999992583075957,
+      "score": 0.9987907663581321,
       "details": {
         "worst_award_id": "SPE2DB22D2206",
-        "growth_ratio": 6144.672196063352,
+        "growth_ratio": 3968.6395993179904,
         "naics_code": "424210",
-        "naics_avg_ratio": 141.1786238430665,
-        "z_score": 13.811738719245053
+        "naics_avg_ratio": 163.13829672801134,
+        "z_score": 8.716558508500121
       }
     },
     {
       "name": "isolation",
-      "score": 0.8887974106332275,
+      "score": 0.9001381450714032,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 10.071742347923923,
-          "award_count": 99127.0,
+          "log_total_dollars": 10.130399050570706,
+          "award_count": 113876.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 4.0,
-          "competition_ratio": 0.9952888718512615,
-          "modification_frequency": 0.00016140910145570834
+          "competition_ratio": 0.9958990480873933,
+          "modification_frequency": 0.0001668481506199726
         },
-        "raw_anomaly_score": -0.7429118987356098,
+        "raw_anomaly_score": -0.7488393325270838,
         "contamination_param": 0.05
       }
     }
@@ -81,6 +81,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4837002997361939,
       "rank": 19
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4746966011833527,
+      "rank": 26
     }
   ],
   "flagged_contracts": [

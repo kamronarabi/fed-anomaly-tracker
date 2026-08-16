@@ -2,30 +2,30 @@
   "uei": "QN1BCFY7JDJ5",
   "name": "RTX CORPORATION",
   "agency": "Department of Defense",
-  "naics_code": "541715",
-  "naics_description": "RESEARCH AND DEVELOPMENT IN THE PHYSICAL, ENGINEERING, AND LIFE SCIENCES (EXCEPT NANOTECHNOLOGY AND BIOTECHNOLOGY)",
-  "lifetime_total": 47021922255.34999,
-  "lifetime_awards": 1904,
-  "score_date": "2026-05-29",
-  "composite_score": 0.48837471205546995,
-  "composite_score_delta": -0.242376,
-  "composite_percentile_rank": 0.9976232917409389,
-  "brief_text": "Three detectors fired for RTX Corporation. Benford's Law analysis found significant deviation in the leading-digit distribution of award amounts, with observed frequencies departing notably from expected natural patterns across all nine digits. Modification growth on contract SPE4AX20DR001 expanded at a rate far exceeding peers in the same industry code, suggesting unusually aggressive contract value escalation. Isolation Forest flagged the entity as a multivariate outlier based on its combined profile of total dollars, award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.094 with p-value 4.1e-15 across 1,904 transactions. The worst-performing contract showed a modification growth ratio of 7,504.6 compared to a NAICS average of 30.2, producing a z-score of 20.18. The Isolation Forest anomaly score was 0.934 on a scale where higher values indicate greater statistical deviation from typical peer behavior.\n\nThese signals reflect statistical anomalies rather than proof of misconduct. RTX is a major defense contractor with $47 billion in lifetime obligations and 1,904 awards, primarily from a single agency. The scale and concentration of activity, combined with the nature of large-scale defense R&D contracting involving frequent modifications, may naturally produce patterns that diverge from smaller-peer baselines. The Benford deviation warrants review but does not inherently indicate fraud in high-volume contract environments.",
+  "naics_code": "336414",
+  "naics_description": "GUIDED MISSILE AND SPACE VEHICLE MANUFACTURING",
+  "lifetime_total": 45602665800.0,
+  "lifetime_awards": 1968,
+  "score_date": "2026-07-29",
+  "composite_score": 0.48667090177460154,
+  "composite_score_delta": -0.001704,
+  "composite_percentile_rank": 0.9971379507727532,
+  "brief_text": "Three detectors fired for RTX Corporation. Benford's Law analysis found the leading-digit distribution of award amounts significantly deviates from expected natural frequencies, with digit 1 appearing in only 20.8 percent of transactions versus the expected 30.1 percent. A modification-growth detector identified one parent contract that experienced extraordinary dollar expansion relative to peers in guided-missile manufacturing, growing at a ratio 172 times the industry average. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of massive total obligated value, high award count, concentration with a single agency, and elevated modification frequency.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.095 with p-value below 1e-15 across 1,968 transactions. The modification-growth z-score reached 16.64 sigma, with contract SPE4AX16D9476 showing a growth ratio of 5,995 compared to the NAICS average of 34.85. The Isolation Forest anomaly score was 0.908 on a 0-to-1 scale. RTX's lifetime obligated total is 45.6 billion dollars across 1,968 awards, all from the Department of Defense.\n\nThese statistical signals reflect RTX's position as a dominant prime contractor in aerospace and defense, not necessarily fraud indicators. The Benford deviation and modification patterns are consistent with large, established firms managing complex, long-running programs with frequent adjustments. The single-agency concentration is expected for a major defense industrial base player. The detectors are sensitive to scale and market structure; RTX's size and role in the defense supply chain naturally produce outlier statistics. No evidence of intentional manipulation is present in the data alone.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9999999999999959,
+      "score": 0.9999999999999992,
       "details": {
         "observed_distribution": {
-          "1": 0.20745798319327732,
-          "2": 0.17542016806722688,
-          "3": 0.17489495798319327,
-          "4": 0.13130252100840337,
-          "5": 0.07983193277310924,
-          "6": 0.06827731092436974,
-          "7": 0.06985294117647059,
-          "8": 0.03939075630252101,
-          "9": 0.05357142857142857
+          "1": 0.20782520325203252,
+          "2": 0.17428861788617886,
+          "3": 0.17479674796747968,
+          "4": 0.12804878048780488,
+          "5": 0.07876016260162602,
+          "6": 0.07215447154471545,
+          "7": 0.06758130081300813,
+          "8": 0.04217479674796748,
+          "9": 0.05436991869918699
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.09424310345915826,
-        "p_value": 4.096659094526833e-15,
-        "n_transactions": 1904
+        "ks_statistic": 0.09500743358145108,
+        "p_value": 7.437608220462353e-16,
+        "n_transactions": 1968
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999873120636,
+      "score": 0.9999995594820887,
       "details": {
-        "worst_award_id": "SPE4AX20DR001",
-        "growth_ratio": 7504.565425171119,
-        "naics_code": "332510",
-        "naics_avg_ratio": 30.22656711866116,
-        "z_score": 20.182614180112612
+        "worst_award_id": "SPE4AX16D9476",
+        "growth_ratio": 5995.497795239052,
+        "naics_code": "332722",
+        "naics_avg_ratio": 34.854384882033685,
+        "z_score": 16.63531429060927
       }
     },
     {
       "name": "isolation",
-      "score": 0.9344375608493065,
+      "score": 0.9076558191768164,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 10.672300379102559,
-          "award_count": 1904.0,
+          "log_total_dollars": 10.658990231006323,
+          "award_count": 1968.0,
           "unique_agencies_count": 1.0,
-          "naics_diversity": 13.0,
-          "competition_ratio": 0.4023109243697479,
-          "modification_frequency": 0.5126050420168067
+          "naics_diversity": 14.0,
+          "competition_ratio": 0.3907520325203252,
+          "modification_frequency": 0.4811991869918699
         },
-        "raw_anomaly_score": -0.7622106105888561,
+        "raw_anomaly_score": -0.751954015088288,
         "contamination_param": 0.05
       }
     }
@@ -81,16 +81,21 @@
       "date": "2026-05-29",
       "composite_score": 0.48837471205546995,
       "rank": 17
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.48667090177460154,
+      "rank": 21
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE4AX20DR001",
+      "award_id": "SPE4AX16D9476",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX20DR001"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4AX16D9476"
     }
   ]
 }

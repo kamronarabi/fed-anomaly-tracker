@@ -1,0 +1,115 @@
+{
+  "uei": "JM2PSZ26CGJ6",
+  "name": "US FOODS INC",
+  "agency": "Department of Defense",
+  "naics_code": "311999",
+  "naics_description": "ALL OTHER MISCELLANEOUS FOOD MANUFACTURING",
+  "lifetime_total": 109950397.98999998,
+  "lifetime_awards": 2431,
+  "score_date": "2026-07-29",
+  "composite_score": 0.49192879251022,
+  "composite_score_delta": 0.087162,
+  "composite_percentile_rank": 0.9975672581568402,
+  "brief_text": "Four detectors flagged US Foods Inc. The Benford test found severe digit-frequency anomalies in award amounts, with leading digits 2, 3, and 4 appearing far more often than expected and digit 1 nearly absent. A modification-growth detector identified one parent contract that expanded 1,291 times in value, roughly 12 times faster than peers in the same food-manufacturing sector. An isolation-forest multivariate analysis scored the entity as a statistical outlier, driven by concentration in a single agency and extremely high sole-source award prevalence. Finally, sole-source concentration showed 92.8 percent of awards were non-competitive, compared to a median of 22 percent among 31 peer firms.\n\nThe Benford KS statistic reached 0.288 with p-value near zero across 2,431 transactions. The modification-growth z-score was 4.38 for contract SPE30025D3000, with a growth ratio of 1,291 versus a peer average of 105. The isolation score was 0.73 on a 0-to-1 scale. Sole-source concentration z-score was 2.06, reflecting 2,256 sole-source awards out of 2,431 total, against a peer median of 22 percent and standard deviation of 0.34.\n\nThese statistical signals warrant scrutiny but do not prove fraud. US Foods is a large, established food distributor with $110 million in lifetime DoD obligations, which may legitimately involve high modification frequency and sole-source awards in defense supply chains where vendor continuity is critical. The Benford anomaly could reflect rounding or pricing conventions in bulk food contracts. The peer group for this NAICS is small (31 firms), limiting statistical power. A compliance review should examine the contract modifications and sole-source justifications directly.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.01316330728095434,
+          "2": 0.2011517893870835,
+          "3": 0.3183874948580831,
+          "4": 0.1834635952283011,
+          "5": 0.13039901275195392,
+          "6": 0.07075277663512958,
+          "7": 0.04401480872069107,
+          "8": 0.028794734677087618,
+          "9": 0.009872480460715755
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.28786668838302687,
+        "p_value": 2.106578000403122e-175,
+        "n_transactions": 2431
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9150612210288441,
+      "details": {
+        "worst_award_id": "SPE30025D3000",
+        "growth_ratio": 1290.8924221457978,
+        "naics_code": "311999",
+        "naics_avg_ratio": 104.58410692394236,
+        "z_score": 4.377060221676129
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7286061551464857,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.041196805725441,
+          "award_count": 2431.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 2.0,
+          "competition_ratio": 0.07198683669271905,
+          "modification_frequency": 0.0
+        },
+        "raw_anomaly_score": -0.6777711151215047,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.7424475775273688,
+      "details": {
+        "total_awards": 2431,
+        "sole_source_awards": 2256,
+        "ss_frac": 0.928013163307281,
+        "primary_naics": "311999",
+        "naics_peer_count": 31,
+        "naics_median_ss": 0.2222222222222222,
+        "naics_std_ss": 0.3428284862477141,
+        "z_score": 2.0587289837259397
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6356091528256649,
+      "rank": 44
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.40476649315155827,
+      "rank": 86
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.49192879251022,
+      "rank": 18
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE30025D3000",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30025D3000"
+    }
+  ]
+}

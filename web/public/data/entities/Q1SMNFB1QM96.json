@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "423450",
   "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
-  "lifetime_total": 10954828.150000002,
-  "lifetime_awards": 251,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4593171444431297,
-  "composite_score_delta": 0.012632,
-  "composite_percentile_rank": 0.9956922162804517,
-  "brief_text": "Three detectors fired for KLS-Martin Limited Partnership. The Benford's Law test identified severe anomalies in the leading-digit distribution of award amounts, with a p-value near zero indicating the observed pattern is extremely unlikely under normal circumstances. The Isolation Forest algorithm flagged the entity as a multivariate outlier, scoring 0.755 on a scale where higher values indicate greater statistical isolation from peer entities. Most significantly, the sole-source concentration detector found that this entity receives nearly all its awards through sole-source procurement, a pattern far exceeding industry norms.\n\nThe entity received 251 lifetime awards totaling approximately 10.95 million dollars. Of these, 250 awards were sole-source procurements, representing 99.6 percent of its portfolio. The Benford test showed a z-score of 3.37 for sole-source concentration, meaning the entity's reliance on non-competitive awards deviates 3.37 standard deviations above the median for its NAICS peer group, where the typical sole-source fraction is only 1.4 percent. The Isolation Forest raw anomaly score was -0.686, reflecting extreme deviation across multiple dimensions including competition ratio and modification patterns.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Medical equipment wholesalers may legitimately receive sole-source awards for specialized or proprietary items where competition is infeasible. The entity's peer group contains 113 firms, providing reasonable statistical power. However, the combination of near-universal sole-source procurement with Benford anomalies suggests procurement patterns merit compliance review to verify that sole-source justifications are documented and defensible.",
+  "lifetime_total": 12808215.629999999,
+  "lifetime_awards": 299,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4540502316769979,
+  "composite_score_delta": -0.005267,
+  "composite_percentile_rank": 0.9939896966227818,
+  "brief_text": "Three detectors fired for KLS-Martin Limited Partnership. The Benford test identified a severe anomaly in the leading-digit distribution of award amounts, with digits 2 and 3 appearing far more frequently than expected and digit 1 appearing much less often. The sole-source concentration detector found that 298 of 299 awards were sole-source, placing the entity at 3.37 standard deviations above the median for its NAICS peer group. The Isolation Forest algorithm flagged the entity as a multivariate outlier with a score of 0.71, driven by its combination of high award count, zero competition ratio, and concentration among just two agencies.\n\nThe Benford test showed a KS statistic of 0.264 with a p-value of 1.47e-18 across 299 transactions. Sole-source awards comprised 99.7 percent of the portfolio compared to a median of 1.2 percent among 122 peers in medical equipment wholesale. The entity's feature vector included 12.8 million dollars in lifetime obligations, 299 awards, and activity with only two agencies.\n\nThese statistical signals indicate unusual patterns but do not prove fraud. Medical equipment wholesalers may legitimately operate with high sole-source concentrations if they supply specialized or proprietary items to specific agencies. The Benford anomaly warrants scrutiny but can arise from legitimate business practices such as tiered pricing or contract structures. The small peer group and specialized nature of the NAICS code may partially explain the deviation from typical competition patterns.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9999999999999925,
+      "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.043824701195219126,
-          "2": 0.3187250996015936,
-          "3": 0.33067729083665337,
-          "4": 0.1593625498007968,
-          "5": 0.043824701195219126,
-          "6": 0.043824701195219126,
-          "7": 0.027888446215139442,
-          "8": 0.027888446215139442,
-          "9": 0.00398406374501992
+          "1": 0.03678929765886288,
+          "2": 0.3210702341137124,
+          "3": 0.3311036789297659,
+          "4": 0.17391304347826086,
+          "5": 0.04013377926421405,
+          "6": 0.04013377926421405,
+          "7": 0.023411371237458192,
+          "8": 0.023411371237458192,
+          "9": 0.010033444816053512
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,39 +38,39 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.25720529446876206,
-        "p_value": 7.555930088014382e-15,
-        "n_transactions": 251
+        "ks_statistic": 0.2642406980051183,
+        "p_value": 1.470257062686335e-18,
+        "n_transactions": 299
       }
     },
     {
       "name": "isolation",
-      "score": 0.7546969737688177,
+      "score": 0.7146338320332204,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 7.039605569108764,
-          "award_count": 251.0,
+          "log_total_dollars": 7.1074886304455065,
+          "award_count": 299.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 2.0,
           "competition_ratio": 0.0,
           "modification_frequency": 0.0
         },
-        "raw_anomaly_score": -0.6862081920609341,
+        "raw_anomaly_score": -0.671982176876754,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9146261550892087,
+      "score": 0.914422492217639,
       "details": {
-        "total_awards": 251,
-        "sole_source_awards": 250,
-        "ss_frac": 0.9960159362549801,
+        "total_awards": 299,
+        "sole_source_awards": 298,
+        "ss_frac": 0.9966555183946488,
         "primary_naics": "423450",
-        "naics_peer_count": 113,
-        "naics_median_ss": 0.01384083044982699,
-        "naics_std_ss": 0.2913190592288794,
-        "z_score": 3.37147561990955
+        "naics_peer_count": 122,
+        "naics_median_ss": 0.012461744040691409,
+        "naics_std_ss": 0.2921435703425944,
+        "z_score": 3.3688702208979007
       }
     }
   ],
@@ -84,6 +84,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4593171444431297,
       "rank": 30
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4540502316769979,
+      "rank": 43
     }
   ],
   "flagged_contracts": []

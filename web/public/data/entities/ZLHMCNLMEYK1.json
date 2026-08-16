@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "336413",
   "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
-  "lifetime_total": 632075208.1400002,
-  "lifetime_awards": 2082,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4511475007554113,
-  "composite_score_delta": -0.23891,
-  "composite_percentile_rank": 0.994949494949495,
-  "brief_text": "Four detectors flagged Honeywell International for statistical anomalies. Benford's Law analysis of leading digits in award amounts shows significant deviation from expected frequency, with digit 1 appearing 19.5% of the time versus the expected 30.1%, and digit 5 appearing 9.5% versus expected 7.9%. A parent contract modification grew at a rate 4,427 times its initial value, vastly outpacing the 62-fold average growth ratio for peers in aircraft parts manufacturing. The entity also scores as a multivariate outlier, driven partly by concentration of all 2,082 awards from a single agency. Additionally, sole-source awards comprise 92.2% of its portfolio, substantially above the 45.5% median for comparable manufacturers.\n\nThe modification detector registered a z-score of 5.35 sigmas, indicating very unusual growth concentration. Benford's test yielded a Kolmogorov-Smirnov statistic of 0.111 with p-value 1.45e-22 across 2,082 transactions. The isolation forest anomaly score was 0.785 on a 0-to-1 scale. Sole-source concentration z-score was 1.21 sigmas, with 1,920 of 2,082 awards awarded without competition.\n\nThese statistical signals warrant scrutiny but do not prove misconduct. Honeywell is a major defense contractor with legitimate reasons for high sole-source work on specialized aircraft components and long-term production contracts subject to frequent modifications. The single-agency concentration reflects its primary DoD relationship. The Benford deviation may reflect genuine clustering of contract values around standard price points in aerospace manufacturing rather than manipulation. The peer group for this NAICS includes 322 firms of vastly different scales, potentially limiting comparability.",
+  "lifetime_total": 716871184.8300002,
+  "lifetime_awards": 2254,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4566553343190816,
+  "composite_score_delta": 0.005508,
+  "composite_percentile_rank": 0.9941327990841442,
+  "brief_text": "Four detectors flagged Honeywell International for statistical anomalies. Benford's law analysis found the leading digits of award amounts deviate significantly from expected frequency, with digit 1 appearing in only 19.5% of transactions versus the expected 30.1%. Modification growth on contract SPE4A122G0014 expanded at a rate 6,857 times the initial value, vastly exceeding the typical 74-fold growth ratio for peer firms in aircraft parts manufacturing. An isolation forest algorithm identified the entity as a multivariate outlier based on its concentration profile. Finally, sole-source awards comprise 91.6% of the entity's portfolio, substantially above the 45.2% median for comparable manufacturers.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.108 with p-value 4.5e-23 across 2,254 transactions. The modification growth z-score reached 6.62 sigmas, indicating extreme deviation. The isolation forest anomaly score was 0.74 on a 0-to-1 scale. Sole-source concentration z-score was 1.19 sigmas, with 2,064 of 2,254 awards issued without competition. Honeywell's lifetime obligated value totals $716.9 million across a single awarding agency.\n\nThese statistical signals warrant scrutiny but do not establish fraud. Benford deviations can reflect legitimate business practices in specialized procurement. Honeywell's massive scale, long operating history, and exclusive DoD relationship may naturally produce sole-source awards and concentrated modification patterns. The peer group for aircraft parts manufacturing contains 328 firms of varying sizes, potentially masking legitimate differences in contract structure and customer relationships. Digit-frequency anomalies in large datasets sometimes reflect rounding conventions or contract-bundling practices rather than manipulation.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.19500480307396734,
-          "2": 0.17146974063400577,
-          "3": 0.18587896253602307,
-          "4": 0.12728146013448607,
-          "5": 0.09462055715658022,
-          "6": 0.06820365033621517,
-          "7": 0.07204610951008646,
-          "8": 0.04707012487992315,
-          "9": 0.03842459173871278
+          "1": 0.19520851818988466,
+          "2": 0.1743566992014197,
+          "3": 0.18278615794143743,
+          "4": 0.12599822537710736,
+          "5": 0.09627329192546584,
+          "6": 0.06610470275066549,
+          "7": 0.07009760425909495,
+          "8": 0.050576752440106475,
+          "9": 0.0385980479148181
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.11064671101168932,
-        "p_value": 1.4498189285146816e-22,
-        "n_transactions": 2082
+        "ks_statistic": 0.10755603732835811,
+        "p_value": 4.493817953218634e-23,
+        "n_transactions": 2254
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9660703629615891,
+      "score": 0.9902862890067045,
       "details": {
         "worst_award_id": "SPE4A122G0014",
-        "growth_ratio": 4427.329923410008,
+        "growth_ratio": 6857.252060187533,
         "naics_code": "336413",
-        "naics_avg_ratio": 61.827543016556355,
-        "z_score": 5.348947789690522
+        "naics_avg_ratio": 74.18417960540526,
+        "z_score": 6.624455690223019
       }
     },
     {
       "name": "isolation",
-      "score": 0.7850244227995842,
+      "score": 0.743803546667842,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.800768756347146,
-          "award_count": 2082.0,
+          "log_total_dollars": 8.855441123947436,
+          "award_count": 2254.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 4.0,
-          "competition_ratio": 0.006243996157540826,
-          "modification_frequency": 0.37848222862632086
+          "competition_ratio": 0.006211180124223602,
+          "modification_frequency": 0.3518189884649512
         },
-        "raw_anomaly_score": -0.6990320039309174,
+        "raw_anomaly_score": -0.6840676171623788,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.552489572290116,
+      "score": 0.5478572088074354,
       "details": {
-        "total_awards": 2082,
-        "sole_source_awards": 1920,
-        "ss_frac": 0.9221902017291066,
+        "total_awards": 2254,
+        "sole_source_awards": 2064,
+        "ss_frac": 0.9157054125998225,
         "primary_naics": "336413",
-        "naics_peer_count": 322,
-        "naics_median_ss": 0.45454545454545453,
-        "naics_std_ss": 0.38624872937147114,
-        "z_score": 1.2107347199423382
+        "naics_peer_count": 328,
+        "naics_median_ss": 0.45227272727272727,
+        "naics_std_ss": 0.3887803807865096,
+        "z_score": 1.1920166454633403
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4511475007554113,
       "rank": 35
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4566553343190816,
+      "rank": 42
     }
   ],
   "flagged_contracts": [

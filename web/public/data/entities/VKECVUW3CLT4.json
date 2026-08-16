@@ -1,0 +1,101 @@
+{
+  "uei": "VKECVUW3CLT4",
+  "name": "COASTAL PACIFIC FOOD DISTRIBUTORS, INC.",
+  "agency": "Department of Defense",
+  "naics_code": "311999",
+  "naics_description": "ALL OTHER MISCELLANEOUS FOOD MANUFACTURING",
+  "lifetime_total": 261664337.8099999,
+  "lifetime_awards": 2430,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4478250109245876,
+  "composite_score_delta": 0.032767,
+  "composite_percentile_rank": 0.9929879793932455,
+  "brief_text": "Three detectors fired for Coastal Pacific Food Distributors. Benford's Law analysis found significant deviation in the leading-digit distribution of award amounts, with a Kolmogorov-Smirnov statistic of 0.171 and p-value near zero across 2,430 transactions. The modification growth detector identified one contract, SPE30024DA044, whose modifications grew at a ratio of 1,495 times the baseline, far exceeding the NAICS peer average of 81 times. The Isolation Forest multivariate outlier test scored the entity at 0.806, indicating it occupies an unusual position in the feature space relative to comparable contractors.\n\nThe Benford deviation shows the entity's leading digits skew toward 2 and 3 (17.4% and 22.0% respectively) while digit 1 appears only 13.1% of the time, compared to the expected 30.1%. The modification growth z-score of 6.25 sigmas represents extreme deviation from peers in NAICS 311991. The entity has accumulated 2,430 awards totaling $261.7 million, all from a single agency, with only one unique awarding source and four NAICS codes represented.\n\nThese statistical anomalies warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a specific industry. The extreme modification growth on one contract may reflect legitimate scope changes or a large, complex delivery schedule. The isolation score reflects the entity's concentration with a single agency and high award velocity, which could indicate either a preferred vendor relationship or concerning dependency. The small peer group in this NAICS code may limit statistical power.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 1.0,
+      "details": {
+        "observed_distribution": {
+          "1": 0.13127572016460906,
+          "2": 0.17448559670781894,
+          "3": 0.21975308641975308,
+          "4": 0.16666666666666666,
+          "5": 0.0897119341563786,
+          "6": 0.0728395061728395,
+          "7": 0.059670781893004114,
+          "8": 0.044032921810699586,
+          "9": 0.04156378600823045
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.1713599378472344,
+        "p_value": 2.1028076185603405e-62,
+        "n_transactions": 2430
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9859381636213774,
+      "details": {
+        "worst_award_id": "SPE30024DA044",
+        "growth_ratio": 1495.38548496609,
+        "naics_code": "311991",
+        "naics_avg_ratio": 81.21132052722274,
+        "z_score": 6.250129150258458
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8057759750083422,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.417744536748774,
+          "award_count": 2430.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 4.0,
+          "competition_ratio": 0.6761316872427984,
+          "modification_frequency": 0.00041152263374485596
+        },
+        "raw_anomaly_score": -0.7097437024942296,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6658163165871919,
+      "rank": 27
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.41505794917894967,
+      "rank": 71
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4478250109245876,
+      "rank": 50
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "SPE30024DA044",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024DA044"
+    }
+  ]
+}

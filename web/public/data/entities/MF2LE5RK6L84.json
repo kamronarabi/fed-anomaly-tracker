@@ -1,0 +1,115 @@
+{
+  "uei": "MF2LE5RK6L84",
+  "name": "THE BOEING COMPANY",
+  "agency": "Department of Defense",
+  "naics_code": "334511",
+  "naics_description": "SEARCH, DETECTION, NAVIGATION, GUIDANCE, AERONAUTICAL, AND NAUTICAL SYSTEM AND INSTRUMENT MANUFACTURING",
+  "lifetime_total": 12978660257.609995,
+  "lifetime_awards": 3334,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4632668729625631,
+  "composite_score_delta": 0.085231,
+  "composite_percentile_rank": 0.9951345163136806,
+  "brief_text": "Four detectors flagged Boeing. Benford's law analysis found the distribution of leading digits in award amounts deviated significantly from expected frequencies, with digit 1 appearing less often than predicted and digits 2\u20133 more often. Modification growth on contract N0038317GA301 expanded at a rate vastly exceeding peers in the same industry sector. An Isolation Forest multivariate analysis identified the entity as a statistical outlier based on its combination of total dollars, award count, agency concentration, and modification frequency. Sole-source awards comprised a notably higher fraction of the portfolio than typical for the manufacturing sector.\n\nThe Benford test yielded a p-value of 0.001 across 3,334 transactions. The modification contract grew at a ratio of 10,662 compared to a sector median of 74, producing a z-score of 10.34. Sole-source awards accounted for 2,883 of 3,334 total awards (86.5%), versus a sector median of 45.2% and standard deviation of 0.39. The Isolation Forest raw anomaly score was \u22120.77 with a contamination parameter of 0.05.\n\nThese statistical signals reflect Boeing's unique position as a dominant defense contractor with a $13 billion lifetime obligation and 3,334 awards concentrated in a single agency. The high sole-source fraction and modification growth are consistent with long-term prime contractor relationships on major weapons systems, where competitive awards are less common and contract modifications accumulate over years. The Benford deviation may reflect the distribution of large, round-dollar modifications typical of defense contracts rather than fraud. The peer group for this NAICS comprises 328 entities of vastly different scales; Boeing's outlier status is expected given its market position.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9990093827027375,
+      "details": {
+        "observed_distribution": {
+          "1": 0.26724655068986203,
+          "2": 0.1799640071985603,
+          "3": 0.16826634673065388,
+          "4": 0.09628074385122976,
+          "5": 0.08548290341931614,
+          "6": 0.06628674265146971,
+          "7": 0.05728854229154169,
+          "8": 0.04169166166766647,
+          "9": 0.03749250149970006
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.03378344497411917,
+        "p_value": 0.0009906172972625157,
+        "n_transactions": 3334
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9997613645799089,
+      "details": {
+        "worst_award_id": "N0038317GA301",
+        "growth_ratio": 10662.102210139465,
+        "naics_code": "336413",
+        "naics_avg_ratio": 74.18417960540526,
+        "z_score": 10.340334945751252
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9604130026356635,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.113229864054725,
+          "award_count": 3334.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 30.0,
+          "competition_ratio": 0.01979604079184163,
+          "modification_frequency": 0.39862027594481103
+        },
+        "raw_anomaly_score": -0.7738120894066733,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.5152185110673354,
+      "details": {
+        "total_awards": 3334,
+        "sole_source_awards": 2883,
+        "ss_frac": 0.8647270545890822,
+        "primary_naics": "336413",
+        "naics_peer_count": 328,
+        "naics_median_ss": 0.45227272727272727,
+        "naics_std_ss": 0.3887803807865096,
+        "z_score": 1.0608928528799537
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.694135376488113,
+      "rank": 15
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.3780362876954075,
+      "rank": 129
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4632668729625631,
+      "rank": 35
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N0038317GA301",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0038317GA301"
+    }
+  ]
+}

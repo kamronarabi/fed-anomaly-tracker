@@ -1,0 +1,118 @@
+{
+  "uei": "WKMCZLH1KJM4",
+  "name": "GUIDEHOUSE DIGITAL LLC",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541690",
+  "naics_description": "OTHER SCIENTIFIC AND TECHNICAL CONSULTING SERVICES",
+  "lifetime_total": 719197180.95,
+  "lifetime_awards": 456,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4939945169484567,
+  "composite_score_delta": 0.164385,
+  "composite_percentile_rank": 0.9977103606182025,
+  "brief_text": "Four detectors flagged Guidehouse Digital LLC. Benford's Law analysis of 448 award amounts shows the leading digit distribution deviates significantly from expected patterns, with digit 1 appearing 32% of the time versus the expected 30%, and digit 2 appearing 24% versus 18%. Modification growth on contract GS35F0373X is extreme: the contract grew by a factor of 1,343 in total value, roughly 38 times faster than peers in the same NAICS code. Award velocity has accelerated sharply, with 65 awards in the past 90 days compared to a historical baseline rate that would predict 40. The entity also registers as a multivariate outlier, driven primarily by concentration with a single agency and high modification frequency.\n\nThe Benford test yielded a KS statistic of 0.085 with p-value 0.0029. The modification growth z-score reached 7.21, with the worst contract showing a 1,343x growth ratio against a peer average of 35x. Recent award velocity is 0.72 awards per day versus a baseline of 0.45 per day, producing a z-score of 3.91. The isolation forest anomaly score was 0.70 on a 0-1 scale. Lifetime obligated value is 719 million across 456 awards, all concentrated with HHS.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate clustering in contract values or procurement practices. The extreme modification growth may reflect scope expansion on a large, multi-year effort rather than improper inflation. Award velocity acceleration could reflect genuine increased demand or a successful ramp-up. Critically, all 448 awards come from a single agency, which constrains the peer comparison group and may explain some anomalies through HHS-specific contracting patterns rather than entity misconduct.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9970861260622202,
+      "details": {
+        "observed_distribution": {
+          "1": 0.32142857142857145,
+          "2": 0.24107142857142858,
+          "3": 0.11160714285714286,
+          "4": 0.08482142857142858,
+          "5": 0.05357142857142857,
+          "6": 0.0625,
+          "7": 0.05580357142857143,
+          "8": 0.026785714285714284,
+          "9": 0.04241071428571429
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.08537874528033756,
+        "p_value": 0.0029138739377797982,
+        "n_transactions": 448
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9945654291886399,
+      "details": {
+        "worst_award_id": "GS35F0373X",
+        "growth_ratio": 1342.7254102564102,
+        "naics_code": "541511",
+        "naics_avg_ratio": 35.223953056995406,
+        "z_score": 7.209525337265206
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.7011358433887793,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 8.856847976416693,
+          "award_count": 448.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 6.0,
+          "competition_ratio": 0.9977678571428571,
+          "modification_frequency": 0.6049107142857143
+        },
+        "raw_anomaly_score": -0.6663897623543021,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.8707480890926221,
+      "details": {
+        "recent_count": 65,
+        "baseline_count": 286,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.7222222222222222,
+        "baseline_rate_per_day": 0.446875,
+        "expected_recent_count": 40.21875,
+        "z_score": 3.907589416827854,
+        "earliest_award": "2023-12-29",
+        "latest_award": "2026-07-02",
+        "as_of": "2026-07-04"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.573889603467885,
+      "rank": 87
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.329609789414734,
+      "rank": 214
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4939945169484567,
+      "rank": 17
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "GS35F0373X",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=GS35F0373X"
+    }
+  ]
+}

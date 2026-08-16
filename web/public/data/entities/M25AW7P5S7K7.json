@@ -2,30 +2,30 @@
   "uei": "M25AW7P5S7K7",
   "name": "THE BOEING COMPANY",
   "agency": "Department of Defense",
-  "naics_code": "336413",
-  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
-  "lifetime_total": 8885035654.659998,
-  "lifetime_awards": 308,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4919336632641412,
-  "composite_score_delta": 0.223179,
-  "composite_percentile_rank": 0.9980689245395128,
-  "brief_text": "Four detectors flagged Boeing. Modification growth showed extreme anomaly: one contract grew by a factor of 17,973 compared to a peer median of 62, yielding a z-score of 21.95. Sole-source concentration was elevated at 89 percent of awards versus a peer median of zero percent, with z-score 2.84. Isolation Forest scored the entity at 0.81, indicating multivariate outlier status driven by high modification frequency, low competition ratio, and concentration across a single agency. Benford's law test on leading digits was unremarkable with p-value 0.91.\n\nThe worst contract, FA810616D0002, experienced modification growth of 17,973 times its initial value within the aircraft parts NAICS. Boeing holds 308 lifetime awards totaling 8.9 billion dollars, all from the Department of Defense. Of those 308 awards, 275 were sole-source. The isolation anomaly score was 0.81 on a scale where higher indicates greater outlier status.\n\nThese signals reflect statistical deviations from peer norms, not proof of misconduct. Boeing's profile\u2014massive scale, exclusive DoD relationship, and heavy reliance on contract modifications\u2014is consistent with a prime defense contractor's normal operating pattern. The peer group for sole-source concentration includes 633 entities in a broad NAICS code; Boeing's specialization may explain divergence. Modification growth, while extreme in statistical terms, is common in large multi-year defense programs subject to scope changes and repricing.",
+  "naics_code": "541330",
+  "naics_description": "ENGINEERING SERVICES",
+  "lifetime_total": 7594030329.009998,
+  "lifetime_awards": 333,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4581808317347029,
+  "composite_score_delta": -0.033753,
+  "composite_percentile_rank": 0.9944190040068689,
+  "brief_text": "Four detectors flagged Boeing. Benford's law analysis of leading digits in 333 award amounts showed a p-value of 0.9999, indicating the distribution aligns with expected patterns and poses no concern. Modification growth on contract FA810616D0002 revealed a 17,919-fold increase in obligated value, vastly exceeding the 74-fold median for engineering-services peers, with a z-score of 17.43. Isolation Forest identified the entity as a multivariate outlier with a score of 0.81, driven by concentration in a single agency, high modification frequency at 80 percent, and low competition ratio of 13 percent. Sole-source concentration showed 288 of 333 awards were sole-source, representing 86.5 percent, compared to a peer median of zero percent.\n\nThe modification growth signal is the most acute: one contract grew from baseline to approximately 7.6 billion dollars lifetime across all awards. The sole-source fraction of 86.5 percent deviates 2.76 sigmas above the engineering-services peer standard. Boeing's entire award portfolio concentrates under a single awarding agency despite operating across ten NAICS codes.\n\nThese patterns reflect Boeing's status as a major defense contractor with established relationships and specialized capabilities rather than fraud indicators. The sole-source concentration and single-agency focus are consistent with how large primes operate in defense contracting. The modification growth, while statistically extreme, aligns with how major platform contracts accumulate obligations over years. The peer group of 657 engineering-services firms includes vastly smaller entities, limiting direct comparability.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.08882541189853077,
+      "score": 3.2867484986986994e-06,
       "details": {
         "observed_distribution": {
-          "1": 0.32792207792207795,
-          "2": 0.16233766233766234,
-          "3": 0.1266233766233766,
-          "4": 0.10714285714285714,
-          "5": 0.07142857142857142,
-          "6": 0.07142857142857142,
-          "7": 0.06818181818181818,
-          "8": 0.03571428571428571,
-          "9": 0.02922077922077922
+          "1": 0.3153153153153153,
+          "2": 0.16816816816816818,
+          "3": 0.12012012012012012,
+          "4": 0.1021021021021021,
+          "5": 0.07207207207207207,
+          "6": 0.07507507507507508,
+          "7": 0.06606606606606606,
+          "8": 0.04804804804804805,
+          "9": 0.03303303303303303
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.031974948072991394,
-        "p_value": 0.9111745881014692,
-        "n_transactions": 308
+        "ks_statistic": 0.01582893192697532,
+        "p_value": 0.9999967132515013,
+        "n_transactions": 333
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999978242462,
+      "score": 0.9999998005469144,
       "details": {
         "worst_award_id": "FA810616D0002",
-        "growth_ratio": 17972.796552845262,
+        "growth_ratio": 17919.1493603791,
         "naics_code": "336413",
-        "naics_avg_ratio": 61.827543016556355,
-        "z_score": 21.94589070129062
+        "naics_avg_ratio": 74.18417960540526,
+        "z_score": 17.427686588839325
       }
     },
     {
       "name": "isolation",
-      "score": 0.8099555202643248,
+      "score": 0.8071249921534551,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.948659174920277,
-          "award_count": 308.0,
+          "log_total_dollars": 9.880472327290924,
+          "award_count": 333.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 10.0,
-          "competition_ratio": 0.1038961038961039,
-          "modification_frequency": 0.8474025974025974
+          "competition_ratio": 0.13213213213213212,
+          "modification_frequency": 0.7957957957957958
         },
-        "raw_anomaly_score": -0.7095739952232186,
+        "raw_anomaly_score": -0.7103026200686989,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.8634217865856005,
+      "score": 0.8537466028000266,
       "details": {
-        "total_awards": 308,
-        "sole_source_awards": 275,
-        "ss_frac": 0.8928571428571429,
+        "total_awards": 333,
+        "sole_source_awards": 288,
+        "ss_frac": 0.8648648648648649,
         "primary_naics": "541330",
-        "naics_peer_count": 633,
+        "naics_peer_count": 657,
         "naics_median_ss": 0.0,
-        "naics_std_ss": 0.3139434946712311,
-        "z_score": 2.844005873707189
+        "naics_std_ss": 0.3128701047555202,
+        "z_score": 2.7642937171663586
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4919336632641412,
       "rank": 14
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4581808317347029,
+      "rank": 40
     }
   ],
   "flagged_contracts": [

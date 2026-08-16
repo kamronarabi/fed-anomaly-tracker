@@ -1,0 +1,115 @@
+{
+  "uei": "NPM2J7MSCF61",
+  "name": "THE PENNSYLVANIA STATE UNIVERSITY",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541715",
+  "naics_description": "RESEARCH AND DEVELOPMENT IN THE PHYSICAL, ENGINEERING, AND LIFE SCIENCES (EXCEPT NANOTECHNOLOGY AND BIOTECHNOLOGY)",
+  "lifetime_total": 1300334281.87,
+  "lifetime_awards": 460,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5280027528375568,
+  "composite_score_delta": 0.143019,
+  "composite_percentile_rank": 0.9987120778477389,
+  "brief_text": "Four detectors flagged Pennsylvania State University. Benford's law analysis of leading digits in award amounts showed a p-value of 0.78, indicating the distribution aligns with expected patterns and poses no concern. Modification growth on contract N0002418D6401 revealed extreme deviation: the contract's modifications grew at a ratio of 21,554 times, compared to a peer median of 78 times in the same NAICS code, yielding a z-score of 27.05. Isolation Forest identified the entity as a multivariate outlier with a score of 0.84, reflecting its unusual combination of high total dollars, large award count, concentration among few agencies, and frequent modifications. Sole-source concentration showed 415 of 460 awards were sole-source, representing 90 percent of the portfolio versus a peer median of 7 percent, with a z-score of 3.47.\n\nThe entity has received 1.3 billion dollars across 460 lifetime awards. The worst-performing contract grew modifications by a factor of 21,554 relative to a peer average of 78. Sole-source awards comprise 90 percent of the portfolio compared to 7 percent for typical peers in research and development. The isolation anomaly score of 0.84 reflects concentration among only two awarding agencies despite 460 awards.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Universities conducting federally funded research commonly receive sole-source awards and frequent modifications as projects evolve, which may explain the concentration and growth patterns. The Benford test showed no digit anomalies. The small peer group of 340 entities in this specialized NAICS code may amplify apparent deviations from typical commercial contracting behavior.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.21593553410002908,
+      "details": {
+        "observed_distribution": {
+          "1": 0.3065217391304348,
+          "2": 0.16956521739130434,
+          "3": 0.15217391304347827,
+          "4": 0.09347826086956522,
+          "5": 0.08695652173913043,
+          "6": 0.05434782608695652,
+          "7": 0.05652173913043478,
+          "8": 0.04565217391304348,
+          "9": 0.034782608695652174
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.030544401790269404,
+        "p_value": 0.7840644658999709,
+        "n_transactions": 460
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999999999867901,
+      "details": {
+        "worst_award_id": "N0002418D6401",
+        "growth_ratio": 21553.971020999998,
+        "naics_code": "541715",
+        "naics_avg_ratio": 77.91381164463401,
+        "z_score": 27.05006430404204
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8379826765733756,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.114055012390967,
+          "award_count": 460.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 9.0,
+          "competition_ratio": 0.09782608695652174,
+          "modification_frequency": 0.6217391304347826
+        },
+        "raw_anomaly_score": -0.7230874109753256,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.9222394314421923,
+      "details": {
+        "total_awards": 460,
+        "sole_source_awards": 415,
+        "ss_frac": 0.9021739130434783,
+        "primary_naics": "541715",
+        "naics_peer_count": 340,
+        "naics_median_ss": 0.06666666666666667,
+        "naics_std_ss": 0.24056039552862135,
+        "z_score": 3.4731704050486765
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.504593773215815,
+      "rank": 147
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.3849839088416647,
+      "rank": 121
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5280027528375568,
+      "rank": 10
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N0002418D6401",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0002418D6401"
+    }
+  ]
+}

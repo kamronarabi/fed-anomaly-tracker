@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "332994",
   "naics_description": "SMALL ARMS, ORDNANCE, AND ORDNANCE ACCESSORIES MANUFACTURING",
-  "lifetime_total": 1064045404.1500001,
-  "lifetime_awards": 463,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5271269987022505,
-  "composite_score_delta": -0.054609,
-  "composite_percentile_rank": 0.9986631016042782,
-  "brief_text": "BAE Systems GCS International Limited triggered four detectors. The benford test found the distribution of leading digits in award amounts slightly deviates from expected frequencies, though the p-value of 0.066 suggests this is borderline. The mod_growth detector identified one contract (W15QKN23D0029) whose modifications grew at a ratio of 3618, roughly 104 times faster than the median peer in small arms manufacturing. The isolation forest flagged the entity as a multivariate outlier, driven primarily by concentration with a single agency and high modification frequency relative to award count. The sole_source_concentration detector found that 85.5 percent of awards were sole-source, compared to a median of 2 percent among 43 peers in the same NAICS code.\n\nThe mod_growth z-score of 15.07 is exceptionally high, indicating the contract modification pattern is a severe statistical anomaly. The entity holds 463 lifetime awards totaling 1.06 billion dollars, all from the Department of Defense. Sole-source awards account for 396 of those 463 contracts. The isolation score of 0.728 reflects extreme concentration: only one awarding agency and just two NAICS codes across the portfolio.\n\nThese signals warrant scrutiny but require context. BAE Systems is a major defense contractor, and sole-source awards to established primes on classified or specialized ordnance work are common and often justified. The single-agency concentration reflects the entity's role as a dedicated DoD supplier. The extreme modification growth on one contract may reflect legitimate scope changes on a long-term development program rather than fraud. The benford p-value of 0.066 is not statistically significant. Industry norms and contract documentation should be reviewed to distinguish anomaly from legitimate practice.",
+  "lifetime_total": 1097715280.57,
+  "lifetime_awards": 494,
+  "score_date": "2026-07-29",
+  "composite_score": 0.49521601240803625,
+  "composite_score_delta": -0.031911,
+  "composite_percentile_rank": 0.9978534630795649,
+  "brief_text": "BAE Systems GCS International Limited triggered four detectors. Benford's Law analysis of 494 award amounts shows a leading-digit distribution that deviates from expected frequencies, particularly an excess of awards starting with 1 or 2 (p-value 0.049). Modification growth on contract W15QKN13D0028 expanded at a ratio of 170.7, roughly 23 times faster than the median peer in its NAICS code. The entity scores as a multivariate outlier via Isolation Forest, driven by concentration in a single agency and high modification frequency. Finally, 86.4 percent of its awards are sole-source, compared to a median of 2.6 percent among 44 peers in the small arms manufacturing sector.\n\nThe modification growth z-score of 6.66 is the most extreme signal. The entity holds 494 lifetime awards totaling 1.1 billion dollars, all from the Department of Defense. Its sole-source award count is 427 of 494. The Benford KS statistic is 0.061 with 494 transactions sampled. The Isolation Forest anomaly score of 0.708 reflects a feature vector dominated by single-agency concentration and a 29.6 percent modification frequency.\n\nThese detectors identify statistical anomalies common in large defense contractors with long-standing relationships and specialized manufacturing roles. BAE Systems is a known global defense prime; the sole-source concentration and DoD-only portfolio reflect legitimate sole-source justifications in ordnance manufacturing. The Benford deviation is marginal (p=0.049) and may reflect genuine business patterns rather than manipulation. However, the extreme modification growth ratio warrants review of contract W15QKN13D0028 to confirm whether scope changes justify the 170-fold expansion.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9338610849346206,
+      "score": 0.9514104117451407,
       "details": {
         "observed_distribution": {
-          "1": 0.3369330453563715,
-          "2": 0.20086393088552915,
-          "3": 0.1079913606911447,
-          "4": 0.08423326133909287,
-          "5": 0.06479481641468683,
-          "6": 0.047516198704103674,
-          "7": 0.06911447084233262,
-          "8": 0.04103671706263499,
-          "9": 0.047516198704103674
+          "1": 0.3360323886639676,
+          "2": 0.20242914979757085,
+          "3": 0.10526315789473684,
+          "4": 0.08502024291497975,
+          "5": 0.06275303643724696,
+          "6": 0.048582995951417005,
+          "7": 0.06882591093117409,
+          "8": 0.044534412955465584,
+          "9": 0.0465587044534413
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.06067572152223816,
-        "p_value": 0.0661389150653794,
-        "n_transactions": 463
+        "ks_statistic": 0.061340283741876,
+        "p_value": 0.04858958825485926,
+        "n_transactions": 494
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999978888279244,
+      "score": 0.9906664762510841,
       "details": {
-        "worst_award_id": "W15QKN23D0029",
-        "growth_ratio": 3618.188426944598,
-        "naics_code": "332994",
-        "naics_avg_ratio": 34.61980618308438,
-        "z_score": 15.068265167412859
+        "worst_award_id": "W15QKN13D0028",
+        "growth_ratio": 170.7349813435787,
+        "naics_code": "332999",
+        "naics_avg_ratio": 7.34699523865133,
+        "z_score": 6.664765301991436
       }
     },
     {
       "name": "isolation",
-      "score": 0.7284743813397825,
+      "score": 0.7076415597832002,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.026960160243881,
-          "award_count": 463.0,
+          "log_total_dollars": 9.040489709775224,
+          "award_count": 494.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 2.0,
-          "competition_ratio": 0.1447084233261339,
-          "modification_frequency": 0.3282937365010799
+          "competition_ratio": 0.13562753036437247,
+          "modification_frequency": 0.29554655870445345
         },
-        "raw_anomaly_score": -0.6751200985087182,
+        "raw_anomaly_score": -0.6690851760045496,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.8159437895358775,
+      "score": 0.8004590932176737,
       "details": {
-        "total_awards": 463,
-        "sole_source_awards": 396,
-        "ss_frac": 0.8552915766738661,
+        "total_awards": 494,
+        "sole_source_awards": 427,
+        "ss_frac": 0.8643724696356275,
         "primary_naics": "332994",
-        "naics_peer_count": 43,
-        "naics_median_ss": 0.02040816326530612,
-        "naics_std_ss": 0.3354152034846111,
-        "z_score": 2.4891042646099506
+        "naics_peer_count": 44,
+        "naics_median_ss": 0.026129032258064518,
+        "naics_std_ss": 0.3508518782374878,
+        "z_score": 2.389166167752892
       }
     }
   ],
@@ -95,16 +95,21 @@
       "date": "2026-05-29",
       "composite_score": 0.5271269987022505,
       "rank": 10
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.49521601240803625,
+      "rank": 16
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "W15QKN23D0029",
+      "award_id": "W15QKN13D0028",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=W15QKN23D0029"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=W15QKN13D0028"
     }
   ]
 }

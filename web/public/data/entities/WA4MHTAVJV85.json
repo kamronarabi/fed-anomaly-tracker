@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "311999",
   "naics_description": "ALL OTHER MISCELLANEOUS FOOD MANUFACTURING",
-  "lifetime_total": 118996535.54000002,
-  "lifetime_awards": 2710,
-  "score_date": "2026-05-29",
-  "composite_score": 0.470098046819393,
-  "composite_score_delta": -0.181473,
-  "composite_percentile_rank": 0.9964349376114082,
-  "brief_text": "Four detectors flagged Reinhart Foodservice. Benford's law analysis found severe distortion in leading-digit frequencies across 2,710 transactions, with digits 2 and 3 appearing far more often than expected and digit 1 appearing rarely. A parent contract modification grew at 1,920 times its initial value, vastly outpacing the 109-fold average growth ratio for peers in food manufacturing. Isolation Forest identified the entity as a multivariate outlier, driven partly by concentration of all awards from a single agency despite operating in a diverse industry. The entity also pursues sole-source contracts at nearly 70 percent of its awards, well above the median of 22 percent for comparable firms.\n\nThe Benford detector registered a Kolmogorov-Smirnov statistic of 0.272 with p-value near zero, indicating extreme digit-distribution anomaly. The modification-growth z-score reached 5.99 sigmas, with award SPE30024D3013 showing a 1,920-fold modification ratio versus a peer average of 109. Sole-source awards numbered 1,887 of 2,710 total, yielding a 69.6 percent concentration rate compared to a peer median of 22.2 percent and standard deviation of 0.35. The Isolation Forest anomaly score was 0.78 on a 0-to-1 scale.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a large, mature vendor. The entity's 119 million dollar lifetime total and 2,710 awards reflect an established supplier, not a fly-by-night operator. However, the combination of extreme modification growth, high sole-source reliance, and single-agency concentration is unusual and merits document review of contract justifications and pricing practices.",
+  "lifetime_total": 135912378.51000002,
+  "lifetime_awards": 3082,
+  "score_date": "2026-07-29",
+  "composite_score": 0.47357243335735805,
+  "composite_score_delta": 0.003474,
+  "composite_percentile_rank": 0.9962793360045792,
+  "brief_text": "Four detectors flagged Reinhart Foodservice. Benford's law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 2, 3, and 4 rather than the expected natural distribution. Modification growth on one contract vastly outpaced peer norms in the food manufacturing sector. An isolation forest algorithm identified the entity as a multivariate outlier based on its concentrated agency relationships and award patterns. Finally, sole-source awards comprised a substantially larger share of the portfolio than typical for competitors in the same industry classification.\n\nThe Benford test yielded a KS statistic of 0.273 with p-value near zero across 3,082 transactions. The worst contract modification grew at a ratio of 1,739 times, compared to a peer median of 105, producing a z-score of 6.03. The isolation score was 0.725 on a 0-to-1 scale. Sole-source awards totaled 2,259 of 3,082 awards (73 percent), versus a peer median of 22 percent, yielding a z-score of 1.49. Lifetime obligated value reached $135.9 million.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a large, mature vendor. The modification growth spike may reflect a single large-dollar contract's natural scaling rather than systematic inflation. Sole-source concentration in food service can reflect specialized supplier relationships or GSA schedule dynamics. The entity's 3,082 awards and single-agency focus suggest a long-standing prime contractor relationship, which may explain clustering patterns that appear anomalous in cross-sector peer comparisons.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.02915129151291513,
-          "2": 0.24280442804428043,
-          "3": 0.3328413284132841,
-          "4": 0.17638376383763837,
-          "5": 0.1014760147601476,
-          "6": 0.05387453874538745,
-          "7": 0.03099630996309963,
-          "8": 0.020664206642066422,
-          "9": 0.011808118081180811
+          "1": 0.027579493835171966,
+          "2": 0.23588578844905905,
+          "3": 0.3319273199221285,
+          "4": 0.17715768981181051,
+          "5": 0.10253082414016872,
+          "6": 0.05937702790395847,
+          "7": 0.031148604802076575,
+          "8": 0.022388059701492536,
+          "9": 0.012005191434133679
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.2718787041510661,
-        "p_value": 2.0283689626913553e-174,
-        "n_transactions": 2710
+        "ks_statistic": 0.27345050182880926,
+        "p_value": 1.3444366220415133e-200,
+        "n_transactions": 3082
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9817660819473633,
+      "score": 0.9825654978988306,
       "details": {
-        "worst_award_id": "SPE30024D3013",
-        "growth_ratio": 1920.02551366942,
+        "worst_award_id": "SPE30025D3016",
+        "growth_ratio": 1739.3513583606577,
         "naics_code": "311999",
-        "naics_avg_ratio": 108.7997816313729,
-        "z_score": 5.98606958527671
+        "naics_avg_ratio": 104.58410692394236,
+        "z_score": 6.031715883761884
       }
     },
     {
       "name": "isolation",
-      "score": 0.781168443011115,
+      "score": 0.7250822611281974,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.075534317545783,
-          "award_count": 2710.0,
+          "log_total_dollars": 8.133259012830862,
+          "award_count": 3082.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 2.0,
-          "competition_ratio": 0.303690036900369,
+          "competition_ratio": 0.26703439325113565,
           "modification_frequency": 0.0
         },
-        "raw_anomaly_score": -0.6974015219430778,
+        "raw_anomaly_score": -0.6763111141833965,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.5868937867034275,
+      "score": 0.6200576022916626,
       "details": {
-        "total_awards": 2710,
-        "sole_source_awards": 1887,
-        "ss_frac": 0.696309963099631,
+        "total_awards": 3082,
+        "sole_source_awards": 2259,
+        "ss_frac": 0.7329656067488644,
         "primary_naics": "311999",
         "naics_peer_count": 31,
         "naics_median_ss": 0.2222222222222222,
-        "naics_std_ss": 0.35088003284158675,
-        "z_score": 1.3511391259229821
+        "naics_std_ss": 0.3428284862477141,
+        "z_score": 1.489792724393385
       }
     }
   ],
@@ -95,16 +95,21 @@
       "date": "2026-05-29",
       "composite_score": 0.470098046819393,
       "rank": 25
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.47357243335735805,
+      "rank": 27
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE30024D3013",
+      "award_id": "SPE30025D3016",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024D3013"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30025D3016"
     }
   ]
 }

@@ -1,0 +1,101 @@
+{
+  "uei": "E3HYKKLT5ZT1",
+  "name": "GENERAL ELECTRIC COMPANY",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "334510",
+  "naics_description": "ELECTROMEDICAL AND ELECTROTHERAPEUTIC APPARATUS MANUFACTURING",
+  "lifetime_total": 8212033366.679999,
+  "lifetime_awards": 1174,
+  "score_date": "2026-07-29",
+  "composite_score": 0.46304958575782157,
+  "composite_score_delta": 0.170821,
+  "composite_percentile_rank": 0.9949914138523182,
+  "brief_text": "Three detectors fired for General Electric Company. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency patterns, with the first digit \"1\" appearing less often than predicted and several other digits appearing more frequently. Modification growth on a single parent contract expanded at an extreme rate relative to peers in the same industry classification. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of contract volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a p-value of 0.0011 across 1,174 transactions. The modification growth detector identified award H9224121D0002 with a growth ratio of 2,323.79, compared to a NAICS average of 19.57, producing a z-score of 18.07. The Isolation Forest anomaly score was 0.878 on a scale where higher values indicate greater deviation from typical patterns. General Electric's lifetime portfolio includes 1,174 awards totaling 8.2 billion dollars across only two awarding agencies.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Large, established contractors like General Electric routinely manage complex modification histories and high contract volumes that can naturally produce outlier statistics. The extreme concentration in two agencies and low competition ratio may reflect legitimate sole-source relationships in specialized medical device manufacturing rather than improper conduct. The small peer group in this specific NAICS code limits the statistical power of comparative benchmarks.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9989082166414103,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2444633730834753,
+          "2": 0.1839863713798978,
+          "3": 0.16780238500851788,
+          "4": 0.11499148211243612,
+          "5": 0.09028960817717206,
+          "6": 0.054514480408858604,
+          "7": 0.06643952299829642,
+          "8": 0.036626916524701875,
+          "9": 0.04088586030664395
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.056566622580505904,
+        "p_value": 0.0010917833585897205,
+        "n_transactions": 1174
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999998954269234,
+      "details": {
+        "worst_award_id": "H9224121D0002",
+        "growth_ratio": 2323.7935139665196,
+        "naics_code": "811310",
+        "naics_avg_ratio": 19.56813286574739,
+        "z_score": 18.073379608434458
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.878209386400222,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.91445070530347,
+          "award_count": 1174.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 7.0,
+          "competition_ratio": 0.016183986371379896,
+          "modification_frequency": 0.3313458262350937
+        },
+        "raw_anomaly_score": -0.7397539264208517,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5499494585953986,
+      "rank": 102
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.2922282652730514,
+      "rank": 324
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.46304958575782157,
+      "rank": 36
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "H9224121D0002",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=H9224121D0002"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "uei": "DD2QET4D27T3",
+  "name": "SIERRA NEVADA COMPANY, LLC",
+  "agency": "Department of Defense",
+  "naics_code": "488190",
+  "naics_description": "OTHER SUPPORT ACTIVITIES FOR AIR TRANSPORTATION",
+  "lifetime_total": 4686258339.21,
+  "lifetime_awards": 340,
+  "score_date": "2026-07-29",
+  "composite_score": 0.4653497740340424,
+  "composite_score_delta": 0.135975,
+  "composite_percentile_rank": 0.9954207212364052,
+  "brief_text": "Four detectors flagged Sierra Nevada Company. Modification growth showed extreme anomaly: a single parent contract grew by a factor of 45,248 in dollar value, roughly 263 times faster than peers in the same industry code. Sole-source concentration is severe: 95 percent of the entity's 340 awards were sole-source, compared to a median of 28 percent for competitors in air transportation support. The isolation detector identified the entity as a multivariate outlier, driven by concentration of all work within a single agency despite substantial dollar volume and high modification frequency. Benford's law analysis of leading digits showed no statistical anomaly.\n\nThe worst-performing contract, FA862016G3013, had a modification growth ratio of 45,248 versus a peer average of 172, yielding a z-score of 22.5 standard deviations above the mean. Sole-source awards numbered 323 of 340 total, with a z-score of 1.65 relative to peer distribution. The entity's lifetime obligated total is 4.7 billion dollars across 340 awards, all from the Department of Defense. The isolation score of 0.87 reflects concentration in a single agency and high modification frequency relative to award count.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Sole-source concentration and modification growth can reflect legitimate specialized contracting in defense aerospace, where competition may be limited by security clearance or technical requirements. The entity's 340-award history and multi-billion-dollar portfolio suggest an established contractor rather than a fly-by-night operator. However, the magnitude of modification growth on a single contract and the extreme sole-source ratio relative to industry peers merit investigation into contract justifications and competitive process documentation.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.6524107192109339,
+      "details": {
+        "observed_distribution": {
+          "1": 0.27647058823529413,
+          "2": 0.15,
+          "3": 0.15,
+          "4": 0.13823529411764707,
+          "5": 0.09411764705882353,
+          "6": 0.047058823529411764,
+          "7": 0.05588235294117647,
+          "8": 0.041176470588235294,
+          "9": 0.047058823529411764
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.05065066648436828,
+        "p_value": 0.3475892807890661,
+        "n_transactions": 340
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.999999998774513,
+      "details": {
+        "worst_award_id": "FA862016G3013",
+        "growth_ratio": 45247.93651383136,
+        "naics_code": "541990",
+        "naics_avg_ratio": 172.0095638590414,
+        "z_score": 22.519927516637367
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.8673145166755377,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.670826226258557,
+          "award_count": 340.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 18.0,
+          "competition_ratio": 0.047058823529411764,
+          "modification_frequency": 0.8147058823529412
+        },
+        "raw_anomaly_score": -0.7352400222182698,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.6574584936870137,
+      "details": {
+        "total_awards": 340,
+        "sole_source_awards": 323,
+        "ss_frac": 0.95,
+        "primary_naics": "541990",
+        "naics_peer_count": 140,
+        "naics_median_ss": 0.2820716829582481,
+        "naics_std_ss": 0.404317703537686,
+        "z_score": 1.6519887979119743
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.4104078408222793,
+      "rank": 323
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.32937516045336784,
+      "rank": 215
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.4653497740340424,
+      "rank": 33
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "FA862016G3013",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=FA862016G3013"
+    }
+  ]
+}

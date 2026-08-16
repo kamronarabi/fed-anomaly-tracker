@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "336413",
   "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
-  "lifetime_total": 32056561806.639996,
-  "lifetime_awards": 3271,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5016059585534017,
-  "composite_score_delta": -0.231777,
-  "composite_percentile_rank": 0.9982174688057042,
-  "brief_text": "Sikorsky Aircraft Corporation triggered four detectors. Benford's law analysis found the leading-digit distribution of its 3,271 awards significantly deviates from expected frequencies, with digits 2 and 3 appearing more often than predicted and digit 1 substantially less often. Modification growth on contract N0038320GX901 expanded at a rate nearly 16,000 times the initial award value, far exceeding the typical 62-fold ratio for peers in aircraft parts manufacturing. The isolation forest algorithm flagged the entity as a multivariate outlier, driven primarily by its concentration with a single awarding agency and exceptionally high modification frequency. Sole-source awards comprise 89 percent of its portfolio, substantially above the 45 percent median for comparable manufacturers.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.117 with p-value 4.2e-39 across 3,271 transactions. The worst modification contract grew at a z-score of 19.5 sigmas above peer norms. The isolation score of 0.94 indicates strong multivariate anomaly. Sole-source concentration reached a z-score of 1.13, with 2,920 of 3,271 awards awarded without competition. Lifetime obligated value totals 32 billion dollars across a single awarding agency.\n\nThese statistical signals warrant scrutiny but require contextual interpretation. Sikorsky is a major defense contractor with deep, long-standing relationships with the Department of Defense, which naturally explains single-agency concentration and high modification frequency on large production contracts. The Benford deviation and modification growth, while extreme statistically, may reflect legitimate patterns in large-scale defense procurement where contract values cluster around specific thresholds and engineering changes drive substantial modifications. The peer group for sole-source concentration includes 322 manufacturers of varying scale; Sikorsky's dominance and strategic importance may justify higher non-competitive award rates.",
+  "lifetime_total": 27974581920.989994,
+  "lifetime_awards": 3531,
+  "score_date": "2026-07-29",
+  "composite_score": 0.45380011509947943,
+  "composite_score_delta": -0.047806,
+  "composite_percentile_rank": 0.9938465941614195,
+  "brief_text": "Four detectors flagged Sikorsky Aircraft Corporation. Benford's law analysis found the leading-digit distribution of award amounts significantly deviates from expected frequencies, with digit 1 appearing 18% of the time versus the expected 30%, and digit 2 appearing 21% versus expected 18%. The modification growth detector identified contract SPE4A122G0005 with a growth ratio 69 times the NAICS peer average, indicating unusually aggressive modification spending. An isolation forest multivariate analysis scored the entity as a substantial outlier based on its feature profile. The sole-source concentration detector found that 89% of awards were sole-source, well above the peer median of 45%.\n\nThe Benford test produced a Kolmogorov-Smirnov statistic of 0.119 with p-value 1.34e-43 across 3,531 transactions. The modification growth z-score was 4.94 sigmas, with the flagged contract showing a 5,137-fold growth ratio against a peer average of 74. The isolation forest raw anomaly score was -0.758. Sole-source awards totaled 3,160 of 3,531 (z-score 1.14), compared to a peer median of 45% and standard deviation of 0.39.\n\nBenford deviations can reflect legitimate business practices in specialized manufacturing rather than fraud. Sikorsky is a major defense contractor with $28 billion in lifetime obligations and 3,531 awards, primarily from a single agency, which explains concentration patterns. The modification growth signal warrants review but may reflect contract complexity or scope changes typical in aerospace. The peer group for this NAICS contains 328 entities of varying size, potentially limiting comparability for a prime contractor of Sikorsky's scale.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.1843472944053806,
-          "2": 0.20635891164781411,
-          "3": 0.21094466523998778,
-          "4": 0.12198104555181902,
-          "5": 0.08865790278202385,
-          "6": 0.05992051360440232,
-          "7": 0.05411189238764904,
-          "8": 0.040354631611128094,
-          "9": 0.03332314276979517
+          "1": 0.18238459359954687,
+          "2": 0.2064570943075616,
+          "3": 0.20900594732370434,
+          "4": 0.12404418011894647,
+          "5": 0.09147550269045596,
+          "6": 0.059190031152647975,
+          "7": 0.0540923251203625,
+          "8": 0.040498442367601244,
+          "9": 0.03285188331917304
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.11668270125860059,
-        "p_value": 4.160349005623332e-39,
-        "n_transactions": 3271
+        "ks_statistic": 0.11864540206443433,
+        "p_value": 1.3423594019143343e-43,
+        "n_transactions": 3531
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999749923025,
+      "score": 0.949994486463465,
       "details": {
-        "worst_award_id": "N0038320GX901",
-        "growth_ratio": 15979.933369819477,
+        "worst_award_id": "SPE4A122G0005",
+        "growth_ratio": 5136.891139334383,
         "naics_code": "336413",
-        "naics_avg_ratio": 61.827543016556355,
-        "z_score": 19.504082132847998
+        "naics_avg_ratio": 74.18417960540526,
+        "z_score": 4.944322910775601
       }
     },
     {
       "name": "isolation",
-      "score": 0.9411276920238845,
+      "score": 0.9211344693597188,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 10.505916940710692,
-          "award_count": 3271.0,
+          "log_total_dollars": 10.446763604735192,
+          "award_count": 3531.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 14.0,
-          "competition_ratio": 0.0623662488535616,
-          "modification_frequency": 0.2959339651482727
+          "competition_ratio": 0.05805720758991787,
+          "modification_frequency": 0.2715944491645426
         },
-        "raw_anomaly_score": -0.7650394994769806,
+        "raw_anomaly_score": -0.7575384174026991,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.5335413647136977,
+      "score": 0.5345898671582539,
       "details": {
-        "total_awards": 3271,
-        "sole_source_awards": 2920,
-        "ss_frac": 0.8926933659431366,
+        "total_awards": 3531,
+        "sole_source_awards": 3160,
+        "ss_frac": 0.8949306145567828,
         "primary_naics": "336413",
-        "naics_peer_count": 322,
-        "naics_median_ss": 0.45454545454545453,
-        "naics_std_ss": 0.38624872937147114,
-        "z_score": 1.1343672563290101
+        "naics_peer_count": 328,
+        "naics_median_ss": 0.45227272727272727,
+        "naics_std_ss": 0.3887803807865096,
+        "z_score": 1.1385808265030009
       }
     }
   ],
@@ -95,16 +95,21 @@
       "date": "2026-05-29",
       "composite_score": 0.5016059585534017,
       "rank": 13
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.45380011509947943,
+      "rank": 44
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "N0038320GX901",
+      "award_id": "SPE4A122G0005",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N0038320GX901"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE4A122G0005"
     }
   ]
 }

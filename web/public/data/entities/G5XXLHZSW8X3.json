@@ -4,13 +4,13 @@
   "agency": "Department of Health and Human Services",
   "naics_code": "621999",
   "naics_description": "ALL OTHER MISCELLANEOUS AMBULATORY HEALTH CARE SERVICES",
-  "lifetime_total": 548704308.5,
+  "lifetime_total": 548865252.9,
   "lifetime_awards": 36,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4783184052818066,
-  "composite_score_delta": 0.013534,
-  "composite_percentile_rank": 0.9970291146761736,
-  "brief_text": "Four detectors flagged OptumServe Health Services. Modification growth showed the most extreme signal: a single parent contract grew by a factor of 429 times, roughly 36 standard deviations above peers in the same industry code. Sole-source concentration also fired strongly, with 67 percent of awards issued without competition compared to a median of zero percent among 42 comparable ambulatory health care providers. The isolation detector identified the entity as a multivariate outlier based on its combination of high dollar volume, award frequency, and modification patterns. Benford's law analysis of leading digits in award amounts showed no statistical anomaly.\n\nThe worst contract, HT001119D0002, grew at a ratio of 428.71 against a peer average of 12.00, yielding a z-score of 10.998. OptumServe received 24 sole-source awards out of 36 total, a rate 4.51 standard deviations above the peer median. The entity accumulated 548.7 million dollars across 36 awards, with 89 percent of awards modified and work spanning five NAICS codes across two agencies.\n\nThese signals reflect statistical extremes within the ambulatory health care services sector, but context matters. OptumServe is a large, established subsidiary of a major health services corporation, which may legitimately explain high modification frequency and sole-source awards in specialized health services delivery. The peer group of 42 entities may include smaller or differently structured providers, limiting direct comparability. Modification growth and sole-source concentration warrant closer review of contract justifications and pricing, but neither signal alone proves misconduct.",
+  "score_date": "2026-07-29",
+  "composite_score": 0.5010804639768729,
+  "composite_score_delta": 0.022762,
+  "composite_percentile_rank": 0.9979965655409272,
+  "brief_text": "OptumServe Health Services received a contract modification on award HT001119D0002 that grew 429 times in value, vastly exceeding the 11.5-fold average growth rate for peers in the same NAICS code. The entity also concentrates heavily on sole-source awards, winning 24 of 36 total awards without competition, compared to a median of zero sole-source awards among 47 peer organizations in ambulatory health services. A multivariate outlier detection flagged the entity as moderately anomalous based on its combination of high total dollars, award count, modification frequency, and low competition ratio. Benford's law analysis of leading digits showed no significant deviation from expected patterns.\n\nThe modification growth z-score reached 12.19 sigma, indicating extreme statistical rarity. The entity's sole-source concentration z-score was 4.58 sigma, placing it in the 97th percentile of suspicion. Over its lifetime, OptumServe accumulated 548.9 million dollars across 36 awards, with 88.9 percent of awards receiving modifications. The isolation forest anomaly score was 0.649 on a 0-to-1 scale. Benford's test yielded a p-value of 0.41, showing no digit-frequency concern.\n\nThese detectors identify statistical outliers, not confirmed fraud. The extreme modification growth may reflect legitimate contract scope expansion in healthcare services delivery, particularly given HHS's role in pandemic response and emergency health initiatives. The high sole-source concentration warrants scrutiny but could reflect specialized service requirements or incumbent advantages. The small peer group of 47 entities in this NAICS category limits the robustness of comparative benchmarks.",
   "detectors": [
     {
       "name": "benford",
@@ -18,8 +18,8 @@
       "details": {
         "observed_distribution": {
           "1": 0.3055555555555556,
-          "2": 0.19444444444444445,
-          "3": 0.25,
+          "2": 0.16666666666666666,
+          "3": 0.2777777777777778,
           "4": 0.05555555555555555,
           "5": 0.05555555555555555,
           "6": 0.0,
@@ -45,43 +45,43 @@
     },
     {
       "name": "mod_growth",
-      "score": 0.9998764551503047,
+      "score": 0.9999623591296082,
       "details": {
         "worst_award_id": "HT001119D0002",
-        "growth_ratio": 428.70585801714276,
+        "growth_ratio": 428.69487929436485,
         "naics_code": "621111",
-        "naics_avg_ratio": 12.000357367542401,
-        "z_score": 10.998782759911823
+        "naics_avg_ratio": 11.533939197481098,
+        "z_score": 12.187382477817998
       }
     },
     {
       "name": "isolation",
-      "score": 0.6263133528080568,
+      "score": 0.64925718564101,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.739338370348127,
+          "log_total_dollars": 8.739465737701911,
           "award_count": 36.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 5.0,
           "competition_ratio": 0.3333333333333333,
           "modification_frequency": 0.8888888888888888
         },
-        "raw_anomaly_score": -0.631921812724583,
+        "raw_anomaly_score": -0.6448956741137242,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9708596424722361,
+      "score": 0.9729517539989007,
       "details": {
         "total_awards": 36,
         "sole_source_awards": 24,
         "ss_frac": 0.6666666666666666,
         "primary_naics": "621111",
-        "naics_peer_count": 42,
+        "naics_peer_count": 47,
         "naics_median_ss": 0.0,
-        "naics_std_ss": 0.14794898125560618,
-        "z_score": 4.506057838376666
+        "naics_std_ss": 0.1454742558148205,
+        "z_score": 4.582712335818998
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4783184052818066,
       "rank": 21
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5010804639768729,
+      "rank": 15
     }
   ],
   "flagged_contracts": [

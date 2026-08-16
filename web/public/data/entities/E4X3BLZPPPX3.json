@@ -1,0 +1,115 @@
+{
+  "uei": "E4X3BLZPPPX3",
+  "name": "NORTHROP GRUMMAN SYSTEMS CORPORATION",
+  "agency": "Department of Defense",
+  "naics_code": "334511",
+  "naics_description": "SEARCH, DETECTION, NAVIGATION, GUIDANCE, AERONAUTICAL, AND NAUTICAL SYSTEM AND INSTRUMENT MANUFACTURING",
+  "lifetime_total": 5312728243.889999,
+  "lifetime_awards": 351,
+  "score_date": "2026-07-29",
+  "composite_score": 0.48058771208767953,
+  "composite_score_delta": 0.086434,
+  "composite_percentile_rank": 0.9968517458500286,
+  "brief_text": "Four detectors flagged Northrop Grumman Systems Corporation. The modification growth detector identified a single contract that expanded at 1,249 times its initial value, far exceeding the 36-fold average for peers in engineering services. The sole-source concentration detector found that 341 of 351 awards were non-competitive, placing the entity 3.1 standard deviations above the median for its industry. The isolation forest algorithm scored the entity as a multivariate outlier, driven by extreme concentration in a single agency, high modification frequency, and minimal competition. Benford's law analysis of leading digits showed no significant anomaly.\n\nThe worst-performing contract, N6893617D0017, grew at a z-score of 4.27 sigmas above peer norms. Sole-source awards comprise 97.2 percent of the entity's portfolio versus a median of zero percent among 657 peers in NAICS 541330. The entity has received 351 lifetime awards totaling 5.3 billion dollars, all from the Department of Defense. Modification frequency stands at 85.2 percent, and competition ratio is 2.8 percent.\n\nThese statistical signals reflect patterns common to large, specialized defense contractors with long-standing sole-source relationships rather than indicators of fraud. Northrop Grumman's scale, single-agency concentration, and high modification rates are consistent with its role as a prime systems integrator on multi-year development programs. The peer group for NAICS 541330 includes many smaller firms with different contracting profiles, limiting direct comparability. Benford's test yielded no concern, and the entity's 351-award history provides robust data.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.5104271863041581,
+      "details": {
+        "observed_distribution": {
+          "1": 0.2962962962962963,
+          "2": 0.1737891737891738,
+          "3": 0.10541310541310542,
+          "4": 0.07977207977207977,
+          "5": 0.08262108262108261,
+          "6": 0.06267806267806268,
+          "7": 0.09686609686609686,
+          "8": 0.06837606837606838,
+          "9": 0.03418803418803419
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.044528239444456275,
+        "p_value": 0.48957281369584194,
+        "n_transactions": 351
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9064392791301568,
+      "details": {
+        "worst_award_id": "N6893617D0017",
+        "growth_ratio": 1249.3691478689038,
+        "naics_code": "541330",
+        "naics_avg_ratio": 36.34055332612022,
+        "z_score": 4.27091339751068
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.874533152195004,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.725317601492746,
+          "award_count": 351.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 20.0,
+          "competition_ratio": 0.02849002849002849,
+          "modification_frequency": 0.8518518518518519
+        },
+        "raw_anomaly_score": -0.7382308087105948,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "sole_source_concentration",
+      "score": 0.8914031473322821,
+      "details": {
+        "total_awards": 351,
+        "sole_source_awards": 341,
+        "ss_frac": 0.9715099715099715,
+        "primary_naics": "541330",
+        "naics_peer_count": 657,
+        "naics_median_ss": 0.0,
+        "naics_std_ss": 0.3128701047555202,
+        "z_score": 3.105154365160964
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5854742272744287,
+      "rank": 79
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.39415411659235805,
+      "rank": 102
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.48058771208767953,
+      "rank": 23
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "N6893617D0017",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=N6893617D0017"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "uei": "Y3FCQR7FW2E1",
+  "name": "KELLY SERVICES, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541690",
+  "naics_description": "OTHER SCIENTIFIC AND TECHNICAL CONSULTING SERVICES",
+  "lifetime_total": 1214815839.08,
+  "lifetime_awards": 656,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5322404623905337,
+  "composite_score_delta": 0.140027,
+  "composite_percentile_rank": 0.9988551803091013,
+  "brief_text": "Four detectors flagged Kelly Services for statistical anomalies. Benford's law analysis of leading digits in award amounts showed a near-borderline distribution match with a p-value of 0.080, suggesting the digit frequencies are largely consistent with natural patterns. Modification growth on one contract deviated sharply from peer norms in the scientific consulting sector. An Isolation Forest multivariate analysis identified the entity as a moderate outlier based on its profile of high dollar volume, concentrated agency relationships, and frequent modifications. Award velocity spiked significantly in recent months compared to the entity's own historical baseline.\n\nThe modification growth detector registered a z-score of 14.03 on contract 75N95021D00012, where modifications grew at a ratio of 43,070 versus a sector average of 304. Recent award velocity reached 96 contracts over 90 days (1.07 per day) against a historical rate of 0.57 per day, yielding a z-score of 6.21. The Isolation Forest score of 0.68 reflects an entity with 1.2 billion dollars obligated across 651 awards, concentrated with a single agency, yet showing high modification frequency at 0.80. Benford's KS statistic was 0.050 across 651 transactions.\n\nThese signals reflect statistical deviations from peer behavior, not evidence of fraud. Kelly Services is a large, established staffing and consulting firm with legitimate reasons for high contract velocity and frequent modifications in government work. The single-agency concentration and modification patterns may reflect the nature of long-term service contracts rather than misconduct. The Benford result was not statistically significant at conventional thresholds, and the peer group for scientific consulting is diverse, which can amplify apparent anomalies for large, active contractors.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9204049366554298,
+      "details": {
+        "observed_distribution": {
+          "1": 0.32565284178187404,
+          "2": 0.2012288786482335,
+          "3": 0.1152073732718894,
+          "4": 0.09216589861751152,
+          "5": 0.09062980030721966,
+          "6": 0.04608294930875576,
+          "7": 0.053763440860215055,
+          "8": 0.043010752688172046,
+          "9": 0.03225806451612903
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.04976046571044507,
+        "p_value": 0.07959506334457024,
+        "n_transactions": 651
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.999994058289234,
+      "details": {
+        "worst_award_id": "75N95021D00012",
+        "growth_ratio": 43069.60776000002,
+        "naics_code": "541690",
+        "naics_avg_ratio": 303.7021513173333,
+        "z_score": 14.033507516611015
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.6809990836161194,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.084510445725812,
+          "award_count": 651.0,
+          "unique_agencies_count": 1.0,
+          "naics_diversity": 4.0,
+          "competition_ratio": 0.9969278033794163,
+          "modification_frequency": 0.7972350230414746
+        },
+        "raw_anomaly_score": -0.6580468076553347,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9853298542501278,
+      "details": {
+        "recent_count": 96,
+        "baseline_count": 366,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 1.0666666666666667,
+        "baseline_rate_per_day": 0.571875,
+        "expected_recent_count": 51.46875,
+        "z_score": 6.207161935185636,
+        "earliest_award": "2023-10-26",
+        "latest_award": "2026-07-02",
+        "as_of": "2026-07-04"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.562173037654109,
+      "rank": 92
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.3922136299546796,
+      "rank": 106
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5322404623905337,
+      "rank": 9
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75N95021D00012",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75N95021D00012"
+    }
+  ]
+}

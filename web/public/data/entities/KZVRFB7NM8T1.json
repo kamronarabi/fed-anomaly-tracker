@@ -1,31 +1,31 @@
 {
   "uei": "KZVRFB7NM8T1",
   "name": "ZIMMER US INC",
-  "agency": "Department of Health and Human Services",
-  "naics_code": "339113",
-  "naics_description": "SURGICAL APPLIANCE AND SUPPLIES MANUFACTURING",
-  "lifetime_total": 17505839.919999998,
-  "lifetime_awards": 331,
-  "score_date": "2026-05-29",
-  "composite_score": 0.46927003541746387,
-  "composite_score_delta": 0.001427,
-  "composite_percentile_rank": 0.996286393345217,
-  "brief_text": "Three detectors fired for Zimmer US Inc. The Benford test found the leading digits of award amounts deviate sharply from expected natural frequencies, with far fewer awards starting in 1 and far more in 2, 3, and 4. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its feature profile. The sole-source concentration detector identified that this entity receives an unusually high fraction of awards without competition compared to peers in surgical appliance manufacturing.\n\nThe Benford test showed a KS statistic of 0.246 with p-value near zero across 330 transactions. Sole-source awards comprised 322 of 330 total awards, or 97.6 percent, versus a median of 1.4 percent for the 113 peer firms in NAICS 423450. The sole-source z-score was 3.30 sigmas above peer mean. The Isolation Forest anomaly score was 0.788 on a 0-to-1 scale, driven by very low competition ratio and high modification frequency relative to the entity's size and award count.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Benford deviations can arise from legitimate clustering in contract values or procurement practices. Sole-source concentration may reflect specialized manufacturing expertise or long-standing relationships with HHS. The entity's 331 lifetime awards and $17.5 million obligated total suggest an established vendor rather than a fly-by-night operation. However, the combination of digit anomalies and extreme sole-source reliance relative to peers merits closer examination of award justifications and pricing.",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 18347576.490000002,
+  "lifetime_awards": 351,
+  "score_date": "2026-07-29",
+  "composite_score": 0.46555609333288045,
+  "composite_score_delta": -0.003714,
+  "composite_percentile_rank": 0.9955638236977675,
+  "brief_text": "Three detectors fired for Zimmer US Inc. The Benford test found the leading digits of award amounts deviate significantly from expected natural frequencies, with digits 2, 3, and 4 appearing far more often than theory predicts and digit 1 appearing much less frequently. The Isolation Forest algorithm flagged the entity as a multivariate outlier based on its feature profile. The sole-source concentration detector identified that this entity wins awards through sole-source procurement at a rate dramatically exceeding its peer group in medical equipment wholesale.\n\nThe Benford test showed a KS statistic of 0.244 with p-value of 1.65e-18 across 350 transactions. Sole-source awards comprised 342 of 351 lifetime awards, or 97.7 percent, compared to a median of 1.2 percent among 122 peers in the same NAICS code, yielding a z-score of 3.30. The Isolation Forest anomaly score was 0.759 on a scale where higher indicates greater outlier status. The entity has accumulated 18.3 million dollars across its lifetime award history.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. Medical equipment suppliers may legitimately receive sole-source awards due to specialized product requirements or existing supply relationships with DoD. The Benford deviation could reflect genuine business practices in pricing or contract structuring rather than manipulation. The small peer group size and industry-specific procurement patterns should be considered when evaluating whether these anomalies reflect actual misconduct or normal variation in this sector.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.05454545454545454,
-          "2": 0.24545454545454545,
-          "3": 0.2636363636363636,
-          "4": 0.2606060606060606,
-          "5": 0.05757575757575758,
-          "6": 0.02727272727272727,
-          "7": 0.024242424242424242,
-          "8": 0.048484848484848485,
-          "9": 0.01818181818181818
+          "1": 0.05714285714285714,
+          "2": 0.2542857142857143,
+          "3": 0.26285714285714284,
+          "4": 0.2571428571428571,
+          "5": 0.05714285714285714,
+          "6": 0.025714285714285714,
+          "7": 0.022857142857142857,
+          "8": 0.045714285714285714,
+          "9": 0.017142857142857144
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,39 +38,39 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.24648454111852666,
-        "p_value": 7.703106642694798e-18,
-        "n_transactions": 330
+        "ks_statistic": 0.24388713852112406,
+        "p_value": 1.653713589440409e-18,
+        "n_transactions": 350
       }
     },
     {
       "name": "isolation",
-      "score": 0.7881302415838268,
+      "score": 0.7590576572377137,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 7.243182952797156,
-          "award_count": 330.0,
+          "log_total_dollars": 7.263578706924367,
+          "award_count": 350.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 4.0,
-          "competition_ratio": 0.012121212121212121,
-          "modification_frequency": 0.021212121212121213
+          "competition_ratio": 0.011428571428571429,
+          "modification_frequency": 0.017142857142857144
         },
-        "raw_anomaly_score": -0.7003452840472563,
+        "raw_anomaly_score": -0.6903876187363296,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9090372099658005,
+      "score": 0.909049064513264,
       "details": {
-        "total_awards": 330,
-        "sole_source_awards": 322,
-        "ss_frac": 0.9757575757575757,
+        "total_awards": 350,
+        "sole_source_awards": 342,
+        "ss_frac": 0.9771428571428571,
         "primary_naics": "423450",
-        "naics_peer_count": 113,
-        "naics_median_ss": 0.01384083044982699,
-        "naics_std_ss": 0.2913190592288794,
-        "z_score": 3.3019355062244786
+        "naics_peer_count": 122,
+        "naics_median_ss": 0.012461744040691409,
+        "naics_std_ss": 0.2921435703425944,
+        "z_score": 3.3020788784462787
       }
     }
   ],
@@ -84,6 +84,11 @@
       "date": "2026-05-29",
       "composite_score": 0.46927003541746387,
       "rank": 26
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.46555609333288045,
+      "rank": 32
     }
   ],
   "flagged_contracts": []

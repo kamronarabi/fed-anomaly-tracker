@@ -1,0 +1,101 @@
+{
+  "uei": "MMLKPW9JLX64",
+  "name": "SCIENCE APPLICATIONS INTERNATIONAL CORPORATION",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541512",
+  "naics_description": "COMPUTER SYSTEMS DESIGN SERVICES",
+  "lifetime_total": 17788843447.82,
+  "lifetime_awards": 1963,
+  "score_date": "2026-07-29",
+  "composite_score": 0.46230636964221034,
+  "composite_score_delta": 0.040855,
+  "composite_percentile_rank": 0.9947052089295935,
+  "brief_text": "Three detectors fired for Science Applications International Corporation. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency patterns, with the first digit \"1\" appearing more often than predicted. A parent contract modification grew at an extraordinary rate compared to peers in computer systems design services, expanding 4,622 times its baseline while the industry average was 36 times. An Isolation Forest multivariate analysis flagged the entity as a statistical outlier based on its combined profile of total dollars, award volume, agency concentration, and modification patterns.\n\nThe Benford test yielded a p-value of 0.0038 across 1,959 transactions, with a Kolmogorov-Smirnov statistic of 0.040. The worst-performing contract modification (HC102812D0024) achieved a growth ratio of 4,622.51 versus a NAICS 541330 peer average of 36.34, producing a z-score of 16.15 standard deviations above the mean. The Isolation Forest raw anomaly score was -0.78 with a 0.05 contamination parameter, placing the entity in the 99.47th percentile of suspicion across the dataset.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. SAIC is a large, established contractor with 1,963 lifetime awards totaling $17.8 billion, which may legitimately explain high modification frequency and agency concentration. The Benford deviation, while significant, is modest in absolute terms and could reflect legitimate business practices in large-scale federal contracting. The extreme modification growth on a single contract deserves investigation but may reflect scope changes on a major program rather than improper billing.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.9962341521251356,
+      "details": {
+        "observed_distribution": {
+          "1": 0.28024502297090353,
+          "2": 0.16283818274629913,
+          "3": 0.12506380806533945,
+          "4": 0.10005104645227157,
+          "5": 0.06993363961204696,
+          "6": 0.07401735579377233,
+          "7": 0.07656967840735068,
+          "8": 0.05053598774885146,
+          "9": 0.06074527820316488
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.040019550536782855,
+        "p_value": 0.003765847874864442,
+        "n_transactions": 1959
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.9999992823526346,
+      "details": {
+        "worst_award_id": "HC102812D0024",
+        "growth_ratio": 4622.507210443306,
+        "naics_code": "541330",
+        "naics_avg_ratio": 36.34055332612022,
+        "z_score": 16.147286805288672
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.9756385841430311,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 10.250147713089119,
+          "award_count": 1959.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 35.0,
+          "competition_ratio": 0.9586523736600306,
+          "modification_frequency": 0.7697805002552323
+        },
+        "raw_anomaly_score": -0.7801202709719055,
+        "contamination_param": 0.05
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.6729112306309628,
+      "rank": 25
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.4214513124019101,
+      "rank": 63
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.46230636964221034,
+      "rank": 38
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "HC102812D0024",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=HC102812D0024"
+    }
+  ]
+}

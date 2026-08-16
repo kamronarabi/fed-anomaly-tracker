@@ -2,30 +2,30 @@
   "uei": "FGYNNDFFUPV3",
   "name": "PENN POWER GROUP LLC",
   "agency": "Department of Defense",
-  "naics_code": "336390",
-  "naics_description": "OTHER MOTOR VEHICLE PARTS MANUFACTURING",
-  "lifetime_total": 21796923.15,
-  "lifetime_awards": 135,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5155126335112141,
-  "composite_score_delta": -0.122887,
-  "composite_percentile_rank": 0.9985145573380868,
-  "brief_text": "Penn Power Group LLC shows multiple statistical anomalies across four detectors. Benford's Law analysis reveals severe digit-frequency distortion in award amounts, with leading digits heavily skewed toward 2, 3, and 4 while digit 1 appears far less often than expected. Modification growth on a single contract vastly outpaced peer norms in the motor vehicle parts sector. The entity also concentrates heavily on sole-source awards relative to competitors and registers as a multivariate outlier across financial and contracting patterns.\n\nThe Benford test produced a p-value of 4.8e-08 across 135 transactions, with a Kolmogorov-Smirnov statistic of 0.255. One contract (SPE7LX20D0136) showed modification growth of 234.77x, compared to a sector median of 4.51x, yielding a z-score of 14.64. Sole-source awards comprised 74 percent of the entity's 135 total awards, versus a median of 8 percent among 25 peers in NAICS 336390, producing a z-score of 1.92. The Isolation Forest anomaly score was 0.70, flagging the entity as an outlier in its multivariate profile.\n\nThese detectors surface statistical red flags rather than proof of misconduct. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in specific industries. The sole-source concentration and modification growth may reflect specialized defense contracting roles or long-term strategic partnerships. However, the entity's exclusive reliance on a single awarding agency and the magnitude of the modification spike warrant closer examination of contract justifications and pricing rationale.",
+  "naics_code": "336350",
+  "naics_description": "MOTOR VEHICLE TRANSMISSION AND POWER TRAIN PARTS MANUFACTURING",
+  "lifetime_total": 18990567.32,
+  "lifetime_awards": 151,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5230671565732065,
+  "composite_score_delta": 0.007555,
+  "composite_percentile_rank": 0.9985689753863766,
+  "brief_text": "Four detectors flagged Penn Power Group LLC. Benford's Law analysis of leading digits in 151 award amounts shows a highly significant deviation, with digit 3 appearing far more frequently than expected and digit 1 much less frequently. Modification growth on a single contract exceeded peer norms dramatically, with one award experiencing a 277-fold modification ratio compared to a 5.2-fold average for similar manufacturers. The entity also concentrates heavily on sole-source awards, winning 110 of 151 contracts without competition, roughly nine times the median rate for its NAICS peers. Isolation Forest flagged the entity as a multivariate outlier, though with moderate anomaly intensity.\n\nThe Benford test yielded a KS statistic of 0.259 with p-value of 3.4e-09 across 151 transactions. The modification growth z-score reached 14.3 sigma on contract SPE7LX20D0136, where modifications grew 277 times faster than the 5.2-fold peer average. Sole-source awards comprised 72.8 percent of the entity's portfolio versus a 7.7 percent median for the 29 NAICS peers, producing a z-score of 2.04. The Isolation Forest raw anomaly score was -0.66 with a 0.05 contamination parameter.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, contract structures, or small sample clustering. The modification growth spike may reflect a single large contract's legitimate scope changes or a specialized supplier relationship with DoD. Sole-source concentration is notable but not uncommon for niche manufacturers serving defense supply chains where few competitors exist. The entity's 151 lifetime awards and $19 million total obligated amount suggest an established vendor rather than a fly-by-night operation.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.999999951886467,
+      "score": 0.9999999965996421,
       "details": {
         "observed_distribution": {
-          "1": 0.06666666666666667,
-          "2": 0.15555555555555556,
-          "3": 0.3037037037037037,
-          "4": 0.2222222222222222,
-          "5": 0.13333333333333333,
-          "6": 0.02962962962962963,
-          "7": 0.014814814814814815,
-          "8": 0.05185185185185185,
-          "9": 0.022222222222222223
+          "1": 0.0728476821192053,
+          "2": 0.1456953642384106,
+          "3": 0.304635761589404,
+          "4": 0.23178807947019867,
+          "5": 0.13245033112582782,
+          "6": 0.039735099337748346,
+          "7": 0.013245033112582781,
+          "8": 0.033112582781456956,
+          "9": 0.026490066225165563
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.2548990324974402,
-        "p_value": 4.8113533058687224e-08,
-        "n_transactions": 135
+        "ks_statistic": 0.25857820836204654,
+        "p_value": 3.400357883409847e-09,
+        "n_transactions": 151
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999967738502009,
+      "score": 0.9999955334792342,
       "details": {
         "worst_award_id": "SPE7LX20D0136",
-        "growth_ratio": 234.7737340078153,
+        "growth_ratio": 277.3646071875582,
         "naics_code": "336390",
-        "naics_avg_ratio": 4.506959336090821,
-        "z_score": 14.644217918256764
+        "naics_avg_ratio": 5.174717074796668,
+        "z_score": 14.31889633803296
       }
     },
     {
       "name": "isolation",
-      "score": 0.6987253021803795,
+      "score": 0.6820559233181015,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 7.33839519299519,
-          "award_count": 135.0,
+          "log_total_dollars": 7.27853793894793,
+          "award_count": 151.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 10.0,
-          "competition_ratio": 0.2222222222222222,
-          "modification_frequency": 0.08888888888888889
+          "competition_ratio": 0.23178807947019867,
+          "modification_frequency": 0.059602649006622516
         },
-        "raw_anomaly_score": -0.6625408474791178,
+        "raw_anomaly_score": -0.6584846718329508,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.7154344284860507,
+      "score": 0.738291237004474,
       "details": {
-        "total_awards": 135,
-        "sole_source_awards": 100,
-        "ss_frac": 0.7407407407407407,
+        "total_awards": 151,
+        "sole_source_awards": 110,
+        "ss_frac": 0.7284768211920529,
         "primary_naics": "336390",
-        "naics_peer_count": 25,
-        "naics_median_ss": 0.08333333333333333,
-        "naics_std_ss": 0.34205652250608054,
-        "z_score": 1.9219262436246074
+        "naics_peer_count": 29,
+        "naics_median_ss": 0.07692307692307693,
+        "naics_std_ss": 0.31984281511583207,
+        "z_score": 2.037106082977083
       }
     }
   ],
@@ -94,6 +94,11 @@
     {
       "date": "2026-05-29",
       "composite_score": 0.5155126335112141,
+      "rank": 11
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5230671565732065,
       "rank": 11
     }
   ],

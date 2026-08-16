@@ -2,30 +2,30 @@
   "uei": "ZMXAHH8M8VL8",
   "name": "OSHKOSH DEFENSE LLC",
   "agency": "Department of Defense",
-  "naics_code": "336211",
-  "naics_description": "MOTOR VEHICLE BODY MANUFACTURING",
-  "lifetime_total": 10754794407.879995,
-  "lifetime_awards": 1540,
-  "score_date": "2026-05-29",
-  "composite_score": 0.6315464316354339,
-  "composite_score_delta": -0.080715,
-  "composite_percentile_rank": 1.0,
-  "brief_text": "Four detectors flagged Oshkosh Defense. Benford's law analysis found the leading-digit distribution of award amounts significantly deviates from expected patterns, with digit 2 and 3 appearing far more frequently than natural. Modification growth on contract SPE7LX24D0096 expanded at 777.7 times its initial value, vastly outpacing the 24-fold median growth rate for motor vehicle manufacturers. The entity also concentrates heavily on sole-source awards at 45 percent, compared to zero median for peers in its NAICS code. Multivariate isolation analysis flagged it as a statistical outlier given its extreme scale, single-agency focus, and modification intensity.\n\nThe Benford test yielded a KS statistic of 0.128 with p-value 3.2e-22 across 1,540 transactions. The modification growth z-score reached 7.24 sigmas. Sole-source concentration z-score was 4.02 sigmas, with 695 of 1,540 awards sole-sourced versus a peer median of zero. The isolation anomaly score was 0.985 on a 0-to-1 scale. Lifetime obligated value totals 10.75 billion dollars.\n\nThese statistical signals warrant scrutiny but do not prove misconduct. Oshkosh Defense is a major defense contractor with legitimate reasons for high modification frequency and sole-source awards in specialized vehicle manufacturing. The single-agency concentration reflects its primary DoD customer base. Benford deviations can arise from contract-bundling practices or tiered pricing structures common in large defense programs. The peer group for sole-source comparison is small (33 entities), limiting statistical power.",
+  "naics_code": "333613",
+  "naics_description": "MECHANICAL POWER TRANSMISSION EQUIPMENT MANUFACTURING",
+  "lifetime_total": 10658974287.619999,
+  "lifetime_awards": 1683,
+  "score_date": "2026-07-29",
+  "composite_score": 0.654972904071457,
+  "composite_score_delta": 0.023426,
+  "composite_percentile_rank": 0.9998568975386376,
+  "brief_text": "Four detectors flagged Oshkosh Defense. Benford's Law analysis found the leading digits of award amounts deviate significantly from expected frequency, with digit 2 appearing 21 percent of the time versus an expected 18 percent, and digit 1 appearing only 17 percent versus expected 30 percent. Modification growth on contract SPE7LX22D0076 expanded at a rate 1,453 times the initial award value, vastly exceeding the 16-fold median growth ratio for mechanical equipment manufacturers. The entity also concentrates heavily on sole-source awards at 45 percent of its portfolio, compared to zero median for its 35-firm peer group. Multivariate analysis flagged it as a statistical outlier given its scale, single-agency focus, and modification patterns.\n\nOshkosh Defense has received 1,683 awards totaling 10.7 billion dollars lifetime, all from the Department of Defense. The Benford test yielded a KS statistic of 0.131 with p-value 1.5e-25 across all transactions. The worst-performing contract showed a modification growth z-score of 15.67, nearly 91 standard deviations above peer norms. Sole-source awards comprised 755 of 1,683 total awards, producing a z-score of 4.11 relative to peers. The Isolation Forest anomaly score was 0.963 on a 0-to-1 scale.\n\nThese statistical signals reflect genuine anomalies but do not prove fraud. Oshkosh Defense is a large, established defense contractor with deep DoD relationships and specialized manufacturing expertise; concentration in sole-source awards and high modification frequency may reflect legitimate sole-source justifications and contract evolution rather than misconduct. The Benford deviation, while statistically significant, is modest in practical terms. The peer group for mechanical equipment manufacturing is small (35 firms), limiting statistical power. Digit-frequency tests are sensitive to rounding and contract-bundling practices common in defense procurement.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.17337662337662338,
-          "2": 0.20454545454545456,
-          "3": 0.20974025974025973,
-          "4": 0.11753246753246753,
-          "5": 0.08701298701298701,
-          "6": 0.06818181818181818,
-          "7": 0.05389610389610389,
-          "8": 0.05389610389610389,
-          "9": 0.031818181818181815
+          "1": 0.16993464052287582,
+          "2": 0.20974450386215093,
+          "3": 0.20380273321449793,
+          "4": 0.12180629827688651,
+          "5": 0.0855614973262032,
+          "6": 0.06654783125371361,
+          "7": 0.05466428995840761,
+          "8": 0.052881758764111705,
+          "9": 0.035056446821152706
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.12765337228735782,
-        "p_value": 3.190693147841638e-22,
-        "n_transactions": 1540
+        "ks_statistic": 0.13109535514110537,
+        "p_value": 1.50640341237511e-25,
+        "n_transactions": 1683
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9947300669491386,
+      "score": 0.9999988475535962,
       "details": {
-        "worst_award_id": "SPE7LX24D0096",
-        "growth_ratio": 777.7095391067655,
-        "naics_code": "336211",
-        "naics_avg_ratio": 23.999841850708496,
-        "z_score": 7.24045375220337
+        "worst_award_id": "SPE7LX22D0076",
+        "growth_ratio": 1453.1746974672105,
+        "naics_code": "332510",
+        "naics_avg_ratio": 15.99138429416836,
+        "z_score": 15.673622415078551
       }
     },
     {
       "name": "isolation",
-      "score": 0.9851411143214648,
+      "score": 0.9626796139980155,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 10.03160211268939,
-          "award_count": 1540.0,
+          "log_total_dollars": 10.027715414572418,
+          "award_count": 1683.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 40.0,
-          "competition_ratio": 0.4714285714285714,
-          "modification_frequency": 0.22142857142857142
+          "competition_ratio": 0.47831253713606653,
+          "modification_frequency": 0.21152703505644682
         },
-        "raw_anomaly_score": -0.783650357473171,
+        "raw_anomaly_score": -0.7747511797136423,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9536199011456853,
+      "score": 0.9572107531392283,
       "details": {
-        "total_awards": 1540,
-        "sole_source_awards": 695,
-        "ss_frac": 0.4512987012987013,
+        "total_awards": 1683,
+        "sole_source_awards": 755,
+        "ss_frac": 0.44860368389780153,
         "primary_naics": "332510",
-        "naics_peer_count": 33,
+        "naics_peer_count": 35,
         "naics_median_ss": 0.0,
-        "naics_std_ss": 0.11216863735346173,
-        "z_score": 4.023394702358604
+        "naics_std_ss": 0.10920945280976319,
+        "z_score": 4.107736760472963
       }
     }
   ],
@@ -95,16 +95,21 @@
       "date": "2026-05-29",
       "composite_score": 0.6315464316354339,
       "rank": 1
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.654972904071457,
+      "rank": 2
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE7LX24D0096",
+      "award_id": "SPE7LX22D0076",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE7LX24D0096"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE7LX22D0076"
     }
   ]
 }

@@ -1,0 +1,118 @@
+{
+  "uei": "NVUWAFWQ57S5",
+  "name": "WESTAT, INC.",
+  "agency": "Department of Health and Human Services",
+  "naics_code": "541611",
+  "naics_description": "ADMINISTRATIVE MANAGEMENT AND GENERAL MANAGEMENT CONSULTING SERVICES",
+  "lifetime_total": 1997228242.22,
+  "lifetime_awards": 211,
+  "score_date": "2026-07-29",
+  "composite_score": 0.44906066660030414,
+  "composite_score_delta": 0.083808,
+  "composite_percentile_rank": 0.9932741843159701,
+  "brief_text": "Four detectors flagged Westat for statistical anomalies. Benford's law analysis of leading digits in award amounts showed no significant deviation from expected frequency patterns. Modification growth on one contract substantially exceeded peer norms in the management consulting sector. An isolation forest algorithm identified the entity as a multivariate outlier based on its combination of high total dollars, award count, agency concentration, and modification frequency. Award velocity spiked dramatically in the past 90 days relative to the entity's historical baseline.\n\nThe modification growth detector recorded a z-score of 3.57 for contract 75Q80124D00001, with a growth ratio of 35.89 compared to a sector average of 6.74. Recent award velocity reached 43 awards in 90 days versus an expected 16.9 based on historical rates, yielding a z-score of 6.36. The isolation forest raw anomaly score was -0.73 on a feature set including 1.997 billion dollars lifetime obligated across 193 awards, concentrated with only two agencies, and a 94 percent modification frequency.\n\nThese signals reflect statistical deviations from peer behavior, not confirmed fraud. Westat is a large, established consulting firm with substantial HHS relationships, which may explain concentration in few agencies and high modification rates on ongoing contracts. The recent velocity spike warrants context\u2014it could reflect legitimate contract acceleration or portfolio shifts rather than misconduct. The peer group for sole-source and growth metrics is limited to firms in NAICS 541910, which may not fully capture Westat's diversified service profile.",
+  "detectors": [
+    {
+      "name": "benford",
+      "score": 0.4540803875839572,
+      "details": {
+        "observed_distribution": {
+          "1": 0.30569948186528495,
+          "2": 0.20725388601036268,
+          "3": 0.12435233160621761,
+          "4": 0.11917098445595854,
+          "5": 0.06735751295336788,
+          "6": 0.06217616580310881,
+          "7": 0.05181347150259067,
+          "8": 0.03626943005181347,
+          "9": 0.025906735751295335
+        },
+        "expected_distribution": {
+          "1": 0.3010299956639812,
+          "2": 0.17609125905568124,
+          "3": 0.12493873660829993,
+          "4": 0.09691001300805642,
+          "5": 0.07918124604762482,
+          "6": 0.06694678963061322,
+          "7": 0.05799194697768673,
+          "8": 0.05115252244738129,
+          "9": 0.04575749056067514
+        },
+        "ks_statistic": 0.05750667960180489,
+        "p_value": 0.5459196124160428,
+        "n_transactions": 193
+      }
+    },
+    {
+      "name": "mod_growth",
+      "score": 0.8272194187872118,
+      "details": {
+        "worst_award_id": "75Q80124D00001",
+        "growth_ratio": 35.89258304178198,
+        "naics_code": "541910",
+        "naics_avg_ratio": 6.7359497729983095,
+        "z_score": 3.5660475059873042
+      }
+    },
+    {
+      "name": "isolation",
+      "score": 0.848224540672721,
+      "details": {
+        "feature_vector": {
+          "log_total_dollars": 9.300427698657646,
+          "award_count": 193.0,
+          "unique_agencies_count": 2.0,
+          "naics_diversity": 13.0,
+          "competition_ratio": 0.8704663212435233,
+          "modification_frequency": 0.9430051813471503
+        },
+        "raw_anomaly_score": -0.7273307653768531,
+        "contamination_param": 0.05
+      }
+    },
+    {
+      "name": "award_velocity",
+      "score": 0.9873786960416733,
+      "details": {
+        "recent_count": 43,
+        "baseline_count": 120,
+        "recent_window_days": 90,
+        "baseline_window_days": 640,
+        "recent_rate_per_day": 0.4777777777777778,
+        "baseline_rate_per_day": 0.1875,
+        "expected_recent_count": 16.875,
+        "z_score": 6.359667473254429,
+        "earliest_award": "2023-10-31",
+        "latest_award": "2026-07-01",
+        "as_of": "2026-07-04"
+      }
+    }
+  ],
+  "score_history": [
+    {
+      "date": "2026-05-28",
+      "composite_score": 0.5788595137317751,
+      "rank": 84
+    },
+    {
+      "date": "2026-05-29",
+      "composite_score": 0.36525263112334044,
+      "rank": 146
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.44906066660030414,
+      "rank": 48
+    }
+  ],
+  "flagged_contracts": [
+    {
+      "award_id": "75Q80124D00001",
+      "amount": null,
+      "date": null,
+      "competition_type": null,
+      "triggered_detector": "mod_growth",
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=75Q80124D00001"
+    }
+  ]
+}

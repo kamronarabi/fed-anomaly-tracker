@@ -2,30 +2,30 @@
   "uei": "VUNJK3HWKJY7",
   "name": "OCEAN FAIR INTERNATIONAL SHIP CHANDLEING LLC",
   "agency": "Department of Defense",
-  "naics_code": "311812",
-  "naics_description": "COMMERCIAL BAKERIES",
-  "lifetime_total": 249767322.31000006,
-  "lifetime_awards": 3304,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5724303853089586,
-  "composite_score_delta": -0.073476,
-  "composite_percentile_rank": 0.9994058229352347,
-  "brief_text": "Four detectors flagged this entity. Benford's Law analysis found severe digit-frequency anomalies in award amounts, with leading digits heavily skewed toward 3 and 4 while digit 1 appeared far less often than expected. Modification growth on a single parent contract exceeded peer norms dramatically, suggesting unusually aggressive scope expansion. Isolation Forest identified the entity as a multivariate outlier based on its feature profile. Sole-source concentration showed all 3,304 awards were sole-source, vastly exceeding the median of zero sole-source awards among 23 peers in the same NAICS code.\n\nThe Benford test yielded a KS statistic of 0.189 with p-value 6.4e-103 across 3,304 transactions. The worst modification contract (SPE30024DA054) grew at a ratio of 1,009.5 compared to a peer average of 65.3, producing a z-score of 5.36. The isolation anomaly score was 0.767 on a 0\u20131 scale. Sole-source awards comprised 100 percent of the portfolio, with a z-score of 2.90 relative to peers whose median sole-source fraction was zero and standard deviation 0.34.\n\nThese statistical signals warrant scrutiny but do not prove fraud. The entity's NAICS classification as \"Commercial Bakeries\" appears inconsistent with its name and DoD contracting pattern, which may reflect data quality issues rather than misconduct. The peer group for sole-source comparison is small (23 entities), limiting statistical power. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions. The modification growth spike on a single contract requires investigation into whether scope changes were properly justified and competed.",
+  "naics_code": "311991",
+  "naics_description": "PERISHABLE PREPARED FOOD MANUFACTURING",
+  "lifetime_total": 268241833.35000002,
+  "lifetime_awards": 3544,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5513965059746133,
+  "composite_score_delta": -0.021034,
+  "composite_percentile_rank": 0.9994275901545506,
+  "brief_text": "Four detectors flagged Ocean Fair International Ship Chandlering LLC. Benford's Law analysis revealed severe distortion in leading-digit frequencies across 3,544 transactions, with digits 3 and 4 appearing far more often than expected and digit 1 substantially underrepresented. Modification growth on contract SPE30024D4004 expanded at 2,952 times its initial value, roughly 12 times faster than peer companies in perishable food manufacturing. An Isolation Forest multivariate analysis scored the entity as a statistical outlier, driven primarily by extreme concentration in a single awarding agency and near-zero competitive bidding. Sole-source awards comprised 98.1 percent of all transactions, compared to a peer median of zero percent.\n\nThe Benford test yielded a KS statistic of 0.188 with p-value 4.1e-109 across all 3,544 awards. The modification growth z-score reached 4.59 sigmas, with the flagged contract growing at a ratio of 2,952 versus a NAICS average of 237. Sole-source concentration deviated 2.84 sigmas above the peer group norm. Lifetime obligated value totaled 268.2 million dollars.\n\nThese statistical anomalies warrant scrutiny but do not confirm fraud. The entity's NAICS classification as perishable food manufacturing appears misaligned with its name referencing ship chandlering, which may explain some peer-group comparisons. The single-agency concentration and high sole-source ratio could reflect legitimate specialized contracting relationships with DoD. The small peer cohort of 23 entities in this NAICS code limits statistical power. Benford deviations can arise from genuine business patterns rather than manipulation.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.14437046004842616,
-          "2": 0.14376513317191283,
-          "3": 0.24303874092009686,
-          "4": 0.1952179176755448,
-          "5": 0.07687651331719128,
-          "6": 0.07052058111380145,
-          "7": 0.048728813559322036,
-          "8": 0.040859564164648914,
-          "9": 0.03662227602905569
+          "1": 0.14446952595936793,
+          "2": 0.14475169300225735,
+          "3": 0.2440744920993228,
+          "4": 0.19582392776523702,
+          "5": 0.077313769751693,
+          "6": 0.06715575620767494,
+          "7": 0.04909706546275395,
+          "8": 0.040632054176072234,
+          "9": 0.03668171557562077
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.18898566149932344,
-        "p_value": 6.365275098032508e-103,
-        "n_transactions": 3304
+        "ks_statistic": 0.18790003575803715,
+        "p_value": 4.149521345997398e-109,
+        "n_transactions": 3544
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9665793122675005,
+      "score": 0.9304204526010986,
       "details": {
-        "worst_award_id": "SPE30024DA054",
-        "growth_ratio": 1009.5370826492789,
-        "naics_code": "311991",
-        "naics_avg_ratio": 65.3148883214486,
-        "z_score": 5.364588255176843
+        "worst_award_id": "SPE30024D4004",
+        "growth_ratio": 2952.2798086466028,
+        "naics_code": "311812",
+        "naics_avg_ratio": 237.13037903332312,
+        "z_score": 4.5931659186080465
       }
     },
     {
       "name": "isolation",
-      "score": 0.7667009209575598,
+      "score": 0.7344083081892557,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.397535617910101,
-          "award_count": 3304.0,
+          "log_total_dollars": 8.428526508699422,
+          "award_count": 3544.0,
           "unique_agencies_count": 1.0,
           "naics_diversity": 2.0,
-          "competition_ratio": 0.0,
+          "competition_ratio": 0.019187358916478554,
           "modification_frequency": 0.0
         },
-        "raw_anomaly_score": -0.6912840017767291,
+        "raw_anomaly_score": -0.6801750321637107,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.8700685910713208,
+      "score": 0.8625740167196473,
       "details": {
-        "total_awards": 3304,
-        "sole_source_awards": 3304,
-        "ss_frac": 1.0,
+        "total_awards": 3544,
+        "sole_source_awards": 3476,
+        "ss_frac": 0.9808126410835214,
         "primary_naics": "311812",
         "naics_peer_count": 23,
         "naics_median_ss": 0.0,
-        "naics_std_ss": 0.3446415556753173,
-        "z_score": 2.9015653612650474
+        "naics_std_ss": 0.3457418110845035,
+        "z_score": 2.8368354929563284
       }
     }
   ],
@@ -95,16 +95,21 @@
       "date": "2026-05-29",
       "composite_score": 0.5724303853089586,
       "rank": 5
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5513965059746133,
+      "rank": 5
     }
   ],
   "flagged_contracts": [
     {
-      "award_id": "SPE30024DA054",
+      "award_id": "SPE30024D4004",
       "amount": null,
       "date": null,
       "competition_type": null,
       "triggered_detector": "mod_growth",
-      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024DA054"
+      "usaspending_url": "https://www.usaspending.gov/search/?hash=&keyword=SPE30024D4004"
     }
   ]
 }

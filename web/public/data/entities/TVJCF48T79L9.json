@@ -1,31 +1,31 @@
 {
   "uei": "TVJCF48T79L9",
   "name": "JOHNSON & JOHNSON HEALTH CARE SYSTEMS INC.",
-  "agency": "Department of Health and Human Services",
-  "naics_code": "339112",
-  "naics_description": "SURGICAL AND MEDICAL INSTRUMENT MANUFACTURING",
-  "lifetime_total": 61433189.87000002,
-  "lifetime_awards": 1074,
-  "score_date": "2026-05-29",
-  "composite_score": 0.5946140367398006,
-  "composite_score_delta": 0.085525,
-  "composite_percentile_rank": 0.9998514557338087,
-  "brief_text": "Four detectors flagged Johnson & Johnson Health Care Systems Inc. for statistical anomalies. Benford's Law analysis of leading digits in award amounts showed a severe departure from expected frequency patterns, with digit 3 appearing far more often than natural. Modification growth on a single parent contract expanded at 737 times its initial value, vastly outpacing peers in the medical instrument sector. The entity also registered as a multivariate outlier across multiple dimensions including award concentration and competition patterns. Finally, sole-source awards comprised 98 percent of its portfolio, compared to a median of 1.4 percent among comparable firms.\n\nThe Benford test yielded a Kolmogorov-Smirnov statistic of 0.228 with p-value near zero across 1,073 transactions. The worst modification contract grew at a ratio of 737.6 versus a peer average of 55.5, producing a z-score of 5.1. The isolation forest score reached 0.87 on a 0-to-1 scale. Sole-source awards totaled 1,052 of 1,073 awards, a 98 percent concentration; peers in NAICS 423450 averaged 1.4 percent with standard deviation of 0.29, yielding a z-score of 3.3.\n\nThese statistical signals warrant scrutiny but do not prove fraud. Johnson & Johnson's scale\u201461.4 million lifetime obligated value across 1,074 awards\u2014and its position as an established medical device manufacturer may explain some patterns. However, the extreme sole-source concentration and Benford deviation are unusual even for large incumbents and merit investigation into contract justifications and pricing practices.",
+  "agency": "Department of Defense",
+  "naics_code": "423450",
+  "naics_description": "MEDICAL, DENTAL, AND HOSPITAL EQUIPMENT AND SUPPLIES MERCHANT WHOLESALERS",
+  "lifetime_total": 67594662.73000002,
+  "lifetime_awards": 1183,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5619473598764348,
+  "composite_score_delta": -0.032667,
+  "composite_percentile_rank": 0.9997137950772752,
+  "brief_text": "Four detectors flagged Johnson & Johnson Health Care Systems Inc. for statistical anomalies. Benford's Law analysis revealed the leading digits of award amounts deviate sharply from expected frequency, with digit 3 appearing far more often than natural. Modification growth on contract SPE2DE22DA014 expanded at roughly 10 times the rate typical for medical equipment wholesalers. The entity scored as a multivariate outlier, driven by extreme concentration in sole-source awards and minimal competition exposure. Sole-source awards comprise 98 percent of its portfolio, compared to a median of 1.2 percent among 122 peer firms in the same NAICS code.\n\nThe Benford test yielded a KS statistic of 0.231 with p-value below 1e-50 across 1,182 transactions. The modification growth z-score reached 3.55 sigmas, with one contract showing a 602-fold modification ratio versus a peer average of 58. The isolation forest anomaly score was 0.86 on a 0-to-1 scale. Sole-source concentration z-score was 3.32 sigmas, reflecting 1,160 sole-source awards of 1,182 total.\n\nThese statistical patterns warrant scrutiny but do not confirm fraud. Medical equipment wholesalers may legitimately receive sole-source awards when supplying specialized hospital systems or emergency inventory. The entity's large lifetime total of 67.6 million dollars across 1,183 awards suggests an established vendor rather than a fly-by-night operator. However, the combination of extreme sole-source reliance, digit anomalies, and outsized modification growth relative to peers merits compliance review.",
   "detectors": [
     {
       "name": "benford",
       "score": 1.0,
       "details": {
         "observed_distribution": {
-          "1": 0.07269338303821063,
-          "2": 0.23299161230195714,
-          "3": 0.315004659832246,
-          "4": 0.15936626281453867,
-          "5": 0.07362534948741846,
-          "6": 0.05312208760484623,
-          "7": 0.036346691519105315,
-          "8": 0.02982292637465051,
-          "9": 0.02702702702702703
+          "1": 0.07021996615905245,
+          "2": 0.233502538071066,
+          "3": 0.3164128595600677,
+          "4": 0.1598984771573604,
+          "5": 0.07445008460236886,
+          "6": 0.05414551607445008,
+          "7": 0.03553299492385787,
+          "8": 0.030456852791878174,
+          "9": 0.025380710659898477
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.22833661262577057,
-        "p_value": 5.116694071251953e-49,
-        "n_transactions": 1073
+        "ks_statistic": 0.23081002950492874,
+        "p_value": 4.044337185945473e-55,
+        "n_transactions": 1182
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9569979838990825,
+      "score": 0.8249315840878388,
       "details": {
         "worst_award_id": "SPE2DE22DA014",
-        "growth_ratio": 737.6423361891879,
+        "growth_ratio": 601.5695779928926,
         "naics_code": "423450",
-        "naics_avg_ratio": 55.477210838964545,
-        "z_score": 5.102554284099918
+        "naics_avg_ratio": 57.793377251975265,
+        "z_score": 3.550123608924834
       }
     },
     {
       "name": "isolation",
-      "score": 0.8699784234405239,
+      "score": 0.8619609310784578,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 7.788403066303967,
-          "award_count": 1073.0,
+          "log_total_dollars": 7.829912405432472,
+          "award_count": 1182.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 6.0,
-          "competition_ratio": 0.0130475302889096,
-          "modification_frequency": 0.008387698042870456
+          "competition_ratio": 0.012690355329949238,
+          "modification_frequency": 0.008460236886632826
         },
-        "raw_anomaly_score": -0.7349543830507914,
+        "raw_anomaly_score": -0.7330219532430355,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.9103544048643348,
+      "score": 0.9102432068950485,
       "details": {
-        "total_awards": 1073,
-        "sole_source_awards": 1052,
-        "ss_frac": 0.9804287045666356,
+        "total_awards": 1182,
+        "sole_source_awards": 1160,
+        "ss_frac": 0.9813874788494078,
         "primary_naics": "423450",
-        "naics_peer_count": 113,
-        "naics_median_ss": 0.01384083044982699,
-        "naics_std_ss": 0.2913190592288794,
-        "z_score": 3.3179699147572546
+        "naics_peer_count": 122,
+        "naics_median_ss": 0.012461744040691409,
+        "naics_std_ss": 0.2921435703425944,
+        "z_score": 3.316608110431679
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.5946140367398006,
       "rank": 2
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5619473598764348,
+      "rank": 3
     }
   ],
   "flagged_contracts": [

@@ -4,28 +4,28 @@
   "agency": "Department of Health and Human Services",
   "naics_code": "334516",
   "naics_description": "ANALYTICAL LABORATORY INSTRUMENT MANUFACTURING",
-  "lifetime_total": 130626401.07999995,
-  "lifetime_awards": 1655,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4735954573471453,
-  "composite_score_delta": -0.238089,
-  "composite_percentile_rank": 0.9967320261437909,
-  "brief_text": "Three detectors fired for Government Scientific Source Inc. Benford's Law analysis revealed significant deviation in the leading-digit distribution of award amounts, with a p-value of 1.66e-08 indicating the observed pattern is highly unlikely under natural conditions. Modification growth analysis flagged award SPE2DE24D0014, which experienced modifications growing at a ratio of 1404.57, roughly 25 times faster than the peer average of 55.48 for analytical laboratory instrument manufacturers. Isolation Forest identified the entity as a multivariate outlier with a score of 0.958, reflecting an unusual combination of high award volume, concentrated agency relationships, and elevated modification frequency.\n\nThe Benford detector observed 1628 transactions with leading digits skewed toward 2 (27.0%) and away from 1 (23.3%), compared to the expected 30.1% and 17.6% respectively. The modification growth z-score of 10.09 is extreme, indicating the flagged contract's growth trajectory deviates 10 standard deviations from peers. The isolation anomaly score of -0.772 places the entity in the top 5% of outliers across the federal contracting population.\n\nThese statistical signals warrant scrutiny but do not constitute proof of fraud. The entity's legitimate scale\u20141655 lifetime awards totaling $130.6 million\u2014may explain some patterns. However, the Benford deviation and modification growth are particularly notable given the entity's long operating history and substantial contract volume. The concentrated agency footprint (only 2 agencies) and high modification frequency relative to award count merit verification against contract documentation and performance records.",
+  "lifetime_total": 144603073.23999992,
+  "lifetime_awards": 1825,
+  "score_date": "2026-07-29",
+  "composite_score": 0.47253372157272616,
+  "composite_score_delta": -0.001062,
+  "composite_percentile_rank": 0.9961362335432169,
+  "brief_text": "Three detectors fired for Government Scientific Source Inc. Benford's Law analysis of 1,797 award amounts shows a statistically significant deviation from expected leading-digit frequencies, with digit 2 appearing far more often than natural (27.4% vs. 17.6% expected) and digit 1 appearing less often (22.1% vs. 30.1% expected), yielding a p-value near zero. Modification growth on contract SPE2DE24D0014 expanded at a rate 1,491 times the initial value, vastly exceeding the NAICS peer average of 58-fold growth. Isolation Forest flagged the entity as a multivariate outlier based on its combination of high total dollars, large award count, narrow agency concentration, and frequent modifications.\n\nThe Benford test produced a Kolmogorov-Smirnov statistic of 0.080 across 1,797 transactions. The modification growth z-score reached 9.36 sigmas, indicating extreme deviation from peers in NAICS 423450. The entity's feature profile shows $3.2 billion in lifetime obligations across 1,797 awards from only 2 agencies, with a 90.3% competition ratio and 9.3% modification frequency.\n\nThese statistical anomalies warrant scrutiny but do not confirm fraud. Benford deviations can arise from legitimate business practices, contract structures, or rounding conventions in a mature vendor's portfolio. The extreme modification growth on a single contract may reflect scope changes or performance adjustments rather than impropriety. The isolation score reflects the entity's unusual profile as a high-volume, long-standing supplier concentrated in two agencies\u2014a pattern consistent with a specialized government contractor rather than necessarily fraudulent behavior.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.9999999834366753,
+      "score": 0.9999999997347293,
       "details": {
         "observed_distribution": {
-          "1": 0.2328009828009828,
-          "2": 0.26965601965601965,
-          "3": 0.1732186732186732,
-          "4": 0.0988943488943489,
-          "5": 0.06756756756756757,
-          "6": 0.05466830466830467,
-          "7": 0.03931203931203931,
-          "8": 0.033169533169533166,
-          "9": 0.030712530712530713
+          "1": 0.221480244852532,
+          "2": 0.27378964941569284,
+          "3": 0.17306622148024486,
+          "4": 0.10294936004451864,
+          "5": 0.06789092932665554,
+          "6": 0.06176961602671119,
+          "7": 0.038953811908736785,
+          "8": 0.031163049526989426,
+          "9": 0.028937117417918753
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.0756000202340057,
-        "p_value": 1.6563324707353838e-08,
-        "n_transactions": 1628
+        "ks_statistic": 0.07954975081144919,
+        "p_value": 2.6527074896628044e-10,
+        "n_transactions": 1797
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9996938607531681,
+      "score": 0.9993629847273523,
       "details": {
         "worst_award_id": "SPE2DE24D0014",
-        "growth_ratio": 1404.5741510984922,
+        "growth_ratio": 1491.1803774513214,
         "naics_code": "423450",
-        "naics_avg_ratio": 55.477210838964545,
-        "z_score": 10.091164318394588
+        "naics_avg_ratio": 57.793377251975265,
+        "z_score": 9.358079708527296
       }
     },
     {
       "name": "isolation",
-      "score": 0.9581635560344945,
+      "score": 0.9555521758277615,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.116030961660293,
-          "award_count": 1628.0,
+          "log_total_dollars": 8.160177523089843,
+          "award_count": 1797.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 22.0,
-          "competition_ratio": 0.8968058968058968,
-          "modification_frequency": 0.09766584766584767
+          "competition_ratio": 0.902615470228158,
+          "modification_frequency": 0.09348914858096828
         },
-        "raw_anomaly_score": -0.7722430303408213,
+        "raw_anomaly_score": -0.7717981776196879,
         "contamination_param": 0.05
       }
     }
@@ -81,6 +81,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4735954573471453,
       "rank": 23
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.47253372157272616,
+      "rank": 28
     }
   ],
   "flagged_contracts": [

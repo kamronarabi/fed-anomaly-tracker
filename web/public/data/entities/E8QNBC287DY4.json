@@ -4,28 +4,28 @@
   "agency": "Department of Defense",
   "naics_code": "315210",
   "naics_description": "CUT AND SEW APPAREL CONTRACTORS",
-  "lifetime_total": 253122449.53,
-  "lifetime_awards": 236,
-  "score_date": "2026-05-29",
-  "composite_score": 0.43893719626411265,
-  "composite_score_delta": -0.072464,
-  "composite_percentile_rank": 0.9933155080213905,
-  "brief_text": "Four detectors flagged this entity. Benford's law analysis of leading digits in award amounts showed a modest deviation from expected frequency distribution, though the p-value of 0.29 suggests this is not statistically significant. Modification growth on a single contract reached a ratio of 457.75, roughly twelve times the NAICS peer average of 37.59, yielding a z-score of 4.12. An Isolation Forest multivariate analysis scored the entity at 0.85 as an outlier, driven by its concentration in two agencies, high modification frequency at 42 percent, and extremely low competition ratio of 0.021. Sole-source concentration was pronounced: 230 of 236 awards were sole-source, placing the entity 2.23 standard deviations above the NAICS median of zero percent.\n\nThe worst-performing contract, HQ003421D0011, saw modifications grow 457.74 times its initial value. Across its lifetime, the entity received 236 awards totaling 253.1 million dollars. The competition ratio of 0.021 indicates competitive awards were rare. Sole-source awards comprised 97.5 percent of the portfolio.\n\nThese signals warrant scrutiny but require context. National Industries for the Blind is a congressionally chartered nonprofit serving blind and severely disabled workers, which may legitimately justify sole-source awards and concentrated agency relationships under federal procurement law. The NAICS classification as apparel contractor may not fully capture its statutory role. The peer group of 25 entities in NAICS 561110 may include dissimilar commercial contractors, limiting comparability. Modification growth on a single contract deserves examination but could reflect legitimate scope changes on a long-term supply agreement.",
+  "lifetime_total": 271865814.88,
+  "lifetime_awards": 252,
+  "score_date": "2026-07-29",
+  "composite_score": 0.5080495454448536,
+  "composite_score_delta": 0.069112,
+  "composite_percentile_rank": 0.9981396680022896,
+  "brief_text": "National Industries for the Blind triggered four detectors. Benford's law analysis of leading digits in 252 award amounts showed no significant anomaly, with a p-value of 0.356. Modification growth on contract HQ003421D0011 was extreme: the parent award's modifications grew at a ratio of 957.66, roughly 25 times faster than the median ratio of 38.35 for peers in the same NAICS code, yielding a z-score of 7.74. Isolation Forest flagged the entity as a multivariate outlier with a score of 0.875, driven by its high modification frequency and concentration of awards among few agencies. Sole-source concentration was also elevated: 246 of 252 awards were sole-source, placing the entity 2.54 standard deviations above the median of zero for its 30-entity peer group.\n\nThe entity holds 271.9 million dollars across 252 lifetime awards, averaging 1.08 million per award. The worst-performing contract shows modifications totaling 957 times the initial award value. The isolation anomaly reflects a feature vector with log total dollars of 8.43, awards concentrated among only two agencies, and 37.7 percent of awards modified. Sole-source awards comprise 97.6 percent of the portfolio versus a peer median of zero percent.\n\nThese signals warrant scrutiny but require context. National Industries for the Blind is a congressionally chartered nonprofit employing blind workers, which may legitimately justify sole-source awards under federal procurement law. The modification growth spike on a single contract deserves investigation but could reflect legitimate scope changes on a large production contract. The small peer group of 30 entities in cut-and-sew apparel contracting may not capture comparable business models. The entity's 271-million-dollar lifetime portfolio and 252-award history suggest an established contractor rather than a fly-by-night operator.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.7102317958914526,
+      "score": 0.6437359183358393,
       "details": {
         "observed_distribution": {
-          "1": 0.25,
-          "2": 0.19915254237288135,
-          "3": 0.08898305084745763,
-          "4": 0.1228813559322034,
-          "5": 0.06779661016949153,
-          "6": 0.09322033898305085,
-          "7": 0.07627118644067797,
-          "8": 0.059322033898305086,
-          "9": 0.0423728813559322
+          "1": 0.25396825396825395,
+          "2": 0.1984126984126984,
+          "3": 0.09126984126984126,
+          "4": 0.11507936507936507,
+          "5": 0.07142857142857142,
+          "6": 0.0873015873015873,
+          "7": 0.07539682539682539,
+          "8": 0.06349206349206349,
+          "9": 0.04365079365079365
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,50 +38,50 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.0639243981076234,
-        "p_value": 0.2897682041085475,
-        "n_transactions": 236
+        "ks_statistic": 0.05840919767716879,
+        "p_value": 0.35626408166416074,
+        "n_transactions": 252
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.8926216102985852,
+      "score": 0.9967905716966363,
       "details": {
         "worst_award_id": "HQ003421D0011",
-        "growth_ratio": 457.74688535179433,
+        "growth_ratio": 957.6560614108544,
         "naics_code": "561110",
-        "naics_avg_ratio": 37.58774133859103,
-        "z_score": 4.1178038137889
+        "naics_avg_ratio": 38.35434451479622,
+        "z_score": 7.73844786677776
       }
     },
     {
       "name": "isolation",
-      "score": 0.8508570702083912,
+      "score": 0.8749746799606749,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 8.403330664615524,
-          "award_count": 236.0,
+          "log_total_dollars": 8.434354601694329,
+          "award_count": 252.0,
           "unique_agencies_count": 2.0,
           "naics_diversity": 16.0,
-          "competition_ratio": 0.0211864406779661,
-          "modification_frequency": 0.423728813559322
+          "competition_ratio": 0.01984126984126984,
+          "modification_frequency": 0.376984126984127
         },
-        "raw_anomaly_score": -0.7268690133812353,
+        "raw_anomaly_score": -0.7384137401349607,
         "contamination_param": 0.05
       }
     },
     {
       "name": "sole_source_concentration",
-      "score": 0.7730560292161828,
+      "score": 0.8237901378255491,
       "details": {
-        "total_awards": 236,
-        "sole_source_awards": 230,
-        "ss_frac": 0.9745762711864406,
-        "primary_naics": "561110",
-        "naics_peer_count": 25,
+        "total_awards": 252,
+        "sole_source_awards": 246,
+        "ss_frac": 0.9761904761904762,
+        "primary_naics": "315210",
+        "naics_peer_count": 30,
         "naics_median_ss": 0.0,
-        "naics_std_ss": 0.43788420752120694,
-        "z_score": 2.225648366501643
+        "naics_std_ss": 0.38398830458266736,
+        "z_score": 2.5422401269523975
       }
     }
   ],
@@ -95,6 +95,11 @@
       "date": "2026-05-29",
       "composite_score": 0.43893719626411265,
       "rank": 46
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.5080495454448536,
+      "rank": 14
     }
   ],
   "flagged_contracts": [

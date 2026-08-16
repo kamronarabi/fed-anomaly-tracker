@@ -2,30 +2,30 @@
   "uei": "J4Q3HP6NHK47",
   "name": "ROCKWELL COLLINS, INC.",
   "agency": "Department of Defense",
-  "naics_code": "541330",
-  "naics_description": "ENGINEERING SERVICES",
-  "lifetime_total": 4947278634.16,
-  "lifetime_awards": 762,
-  "score_date": "2026-05-29",
-  "composite_score": 0.4461168385315682,
-  "composite_score_delta": -0.22074,
-  "composite_percentile_rank": 0.9943553178847298,
-  "brief_text": "Three detectors fired for Rockwell Collins. Benford's Law analysis of leading digits in award amounts showed a statistically significant deviation from expected frequency distribution, with observed digit-1 frequency of 27.4% versus expected 30.1%, suggesting possible non-random award structuring. Modification growth on contract W15P7T16D0003 expanded at an extreme rate relative to engineering-services peers, with a growth ratio of 32,947 compared to a peer average of 124. The Isolation Forest multivariate test flagged the entity as a statistical outlier based on its combined profile of total dollars, award volume, and modification patterns.\n\nThe Benford test yielded a KS statistic of 0.051 with p-value 0.039 across 762 transactions. The modification-growth z-score reached 19.8 sigma, far exceeding the typical 3-sigma threshold for anomaly. The isolation anomaly score was 0.921 on a 0-to-1 scale, indicating strong multivariate deviation. The entity shows a 9.4% competition ratio and 63.9% modification frequency, with all 762 awards concentrated in a single awarding agency.\n\nThese statistical signals warrant scrutiny but do not confirm fraud. Rockwell Collins is a large, established defense contractor with $4.9 billion in lifetime obligations, which may explain high modification frequency and sole-agency concentration in legitimate program contexts. The Benford deviation is modest in absolute terms and may reflect industry-standard contract structures. The extreme modification-growth z-score on a single contract deserves investigation, though large defense programs routinely experience scope changes. Small peer-group size in specialized engineering services may inflate z-scores.",
+  "naics_code": "336413",
+  "naics_description": "OTHER AIRCRAFT PARTS AND AUXILIARY EQUIPMENT MANUFACTURING",
+  "lifetime_total": 4917394834.82,
+  "lifetime_awards": 805,
+  "score_date": "2026-07-29",
+  "composite_score": 0.44794812116335486,
+  "composite_score_delta": 0.001831,
+  "composite_percentile_rank": 0.9931310818546079,
+  "brief_text": "Three detectors fired for Rockwell Collins. Benford's Law analysis of leading digits in 805 award amounts showed a statistically significant deviation from expected frequency distribution, with a p-value of 0.030. Modification growth on contract W15P7T16D0003 expanded at an extreme rate relative to peers in aircraft parts manufacturing, with a z-score of 19.07 indicating the growth ratio of 32,316 far exceeds the NAICS average of 142. Isolation Forest flagged the entity as a multivariate outlier with a score of 0.89, driven by concentration of all awards from a single agency despite operating across 21 NAICS codes.\n\nThe Benford test observed 27.1 percent of amounts starting with digit 1 versus an expected 30.1 percent, with the KS statistic of 0.051 across 805 transactions. The modification growth ratio of 32,316 compares to a peer average of 142 in NAICS 334220. The isolation anomaly reflects a feature vector showing 9.7 billion in lifetime obligations, 805 awards, but only one unique awarding agency and a 0.086 competition ratio.\n\nThese statistical signals warrant scrutiny but do not establish fraud. Benford deviations can occur in legitimate datasets, particularly those with structural constraints or industry-specific pricing. The extreme modification growth may reflect legitimate contract expansion in defense manufacturing. The isolation score is driven primarily by single-agency concentration and low competition ratio, which could reflect Rockwell Collins' established position as a major DoD supplier rather than misconduct. The large peer group and long award history provide context that mitigates fly-by-night risk.",
   "detectors": [
     {
       "name": "benford",
-      "score": 0.961302487175191,
+      "score": 0.9698056544178857,
       "details": {
         "observed_distribution": {
-          "1": 0.2742782152230971,
-          "2": 0.15354330708661418,
-          "3": 0.12335958005249344,
-          "4": 0.1010498687664042,
-          "5": 0.0984251968503937,
-          "6": 0.07349081364829396,
-          "7": 0.07217847769028872,
-          "8": 0.05774278215223097,
-          "9": 0.045931758530183726
+          "1": 0.2708074534161491,
+          "2": 0.15527950310559005,
+          "3": 0.12919254658385093,
+          "4": 0.0968944099378882,
+          "5": 0.08819875776397515,
+          "6": 0.07701863354037267,
+          "7": 0.07329192546583851,
+          "8": 0.055900621118012424,
+          "9": 0.05341614906832298
         },
         "expected_distribution": {
           "1": 0.3010299956639812,
@@ -38,35 +38,35 @@
           "8": 0.05115252244738129,
           "9": 0.04575749056067514
         },
-        "ks_statistic": 0.05087888896575765,
-        "p_value": 0.03869751282480899,
-        "n_transactions": 762
+        "ks_statistic": 0.05103429819792332,
+        "p_value": 0.030194345582114365,
+        "n_transactions": 805
       }
     },
     {
       "name": "mod_growth",
-      "score": 0.9999999816444444,
+      "score": 0.9999999615805127,
       "details": {
         "worst_award_id": "W15P7T16D0003",
-        "growth_ratio": 32947.51626909239,
+        "growth_ratio": 32316.253654877473,
         "naics_code": "334220",
-        "naics_avg_ratio": 124.07085987790235,
-        "z_score": 19.813333532536152
+        "naics_avg_ratio": 142.454042136061,
+        "z_score": 19.074700988936332
       }
     },
     {
       "name": "isolation",
-      "score": 0.920747901444876,
+      "score": 0.8934676782407188,
       "details": {
         "feature_vector": {
-          "log_total_dollars": 9.69436637081909,
-          "award_count": 762.0,
+          "log_total_dollars": 9.691735080712219,
+          "award_count": 805.0,
           "unique_agencies_count": 1.0,
-          "naics_diversity": 20.0,
-          "competition_ratio": 0.09448818897637795,
-          "modification_frequency": 0.6391076115485564
+          "naics_diversity": 21.0,
+          "competition_ratio": 0.08571428571428572,
+          "modification_frequency": 0.591304347826087
         },
-        "raw_anomaly_score": -0.7564220057975837,
+        "raw_anomaly_score": -0.7460756603565033,
         "contamination_param": 0.05
       }
     }
@@ -81,6 +81,11 @@
       "date": "2026-05-29",
       "composite_score": 0.4461168385315682,
       "rank": 39
+    },
+    {
+      "date": "2026-07-29",
+      "composite_score": 0.44794812116335486,
+      "rank": 49
     }
   ],
   "flagged_contracts": [
