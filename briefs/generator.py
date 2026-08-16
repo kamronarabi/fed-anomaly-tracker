@@ -340,6 +340,14 @@ def _default_client():
 # ── Orchestration ────────────────────────────────────────────────────────
 
 
+# Safety ceiling on fresh (uncached) Anthropic calls per run, independent
+# of top_n -- e.g. if the brief cache ever regresses to near-0 hit rate
+# again (see detectors/isolation.py's ORDER BY fix), this bounds the
+# damage instead of silently paying for top_n fresh calls every run.
+# Overridable per-environment without a code change.
+DEFAULT_MAX_FRESH_CALLS = int(os.environ.get("MAX_FRESH_BRIEFS_PER_RUN", "60"))
+
+
 def generate_briefs(
     db_path: str,
     score_date: date,
@@ -348,12 +356,19 @@ def generate_briefs(
     client: Any = None,
     model: str = DEFAULT_MODEL,
     prompt_version: str = PROMPT_VERSION,
+    max_fresh_calls: int = DEFAULT_MAX_FRESH_CALLS,
 ) -> int:
     """For each of the top-N entities on `score_date`, write or forward-carry
     a brief into `entity_briefs`.
 
+    Stops making fresh API calls once `max_fresh_calls` is reached; any
+    remaining entities are simply left without a brief row for this
+    score_date (degraded, not fatal -- the dashboard just shows no brief
+    text for them today).
+
     Returns the number of fresh Anthropic API calls made (cache misses).
-    The total brief count written is `len(select_top_n(...))` regardless.
+    The total brief count written is `len(select_top_n(...))` regardless,
+    minus whatever was skipped by the cap.
     """
     picks = select_top_n(db_path, score_date=score_date, top_n=top_n)
     if not picks:
@@ -361,7 +376,13 @@ def generate_briefs(
         return 0
 
     api_calls = 0
-    for bi in picks:
+    for i, bi in enumerate(picks):
+        if api_calls >= max_fresh_calls:
+            logger.warning(
+                "max_fresh_calls cap (%d) reached; skipping remaining %d entities for %s",
+                max_fresh_calls, len(picks) - i, score_date,
+            )
+            break
         input_hash = compute_input_hash(bi, prompt_version=prompt_version)
         cached = find_cached_brief(
             db_path, uei=bi.uei, input_hash=input_hash, prompt_version=prompt_version,
