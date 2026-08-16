@@ -24,6 +24,7 @@ from export.publish import publish  # noqa: E402
 from ingestion.load_db import load_all_parquet, resolve_db_path  # noqa: E402
 from ingestion.pull_awards import pull_awards  # noqa: E402
 from scoring.composite import compute_composite_scores  # noqa: E402
+from scripts.backup import run_backup  # noqa: E402
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -47,6 +48,14 @@ def main() -> None:
     logger.info("seed: step 4/4 export.publish")
     counts = publish(db_path, score_date)
     logger.info("seed:   published %s", counts)
+
+    # Best-effort: a backup failure shouldn't fail a run that already
+    # succeeded at ingesting/scoring/publishing fresh data.
+    try:
+        key = run_backup(db_path, score_date=score_date)
+        logger.info("seed:   backed up to %s", key)
+    except Exception:
+        logger.exception("seed:   backup failed (non-fatal, continuing)")
 
     logger.info("seed: complete for %s", score_date)
 

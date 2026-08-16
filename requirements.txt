@@ -7,3 +7,4 @@ tenacity
 scipy
 scikit-learn
 anthropic
+boto3
