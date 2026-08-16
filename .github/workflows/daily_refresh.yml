@@ -11,10 +11,14 @@ jobs:
     steps:
       - name: Trigger daily pipeline refresh
         run: |
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+          RAILWAY_URL="${{ secrets.RAILWAY_URL }}"
+          RAILWAY_URL="${RAILWAY_URL%/}"           # strip a trailing slash, if any
+          [[ "$RAILWAY_URL" == http* ]] || RAILWAY_URL="https://$RAILWAY_URL"
+
+          RESPONSE=$(curl -sL -w "\n%{http_code}" -X POST \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json" \
-            "${{ secrets.RAILWAY_URL }}/api/refresh?mode=daily")
+            "$RAILWAY_URL/api/refresh?mode=daily")
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | sed '$d')
           echo "Response: $BODY"
