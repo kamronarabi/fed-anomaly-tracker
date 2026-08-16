@@ -25,8 +25,14 @@ COPY . .
 RUN npm run build --prefix web
 
 # Standalone output omits static assets by design — copy them in manually.
-RUN cp -r web/public web/.next/standalone/public \
-    && cp -r web/.next/static web/.next/standalone/.next/static
+# Next's own build tracer may have already created .next/standalone/public
+# (populated only with the specific files server code reads via fs, e.g.
+# leaderboard.json) — copying with a trailing `/.` merges into it instead
+# of nesting a `public/public/...` subdirectory when the destination
+# already exists.
+RUN mkdir -p web/.next/standalone/public web/.next/standalone/.next/static \
+    && cp -r web/public/. web/.next/standalone/public/ \
+    && cp -r web/.next/static/. web/.next/standalone/.next/static/
 
 ENV DB_PATH=/data/anomaly_radar.duckdb
 ENV NODE_ENV=production
