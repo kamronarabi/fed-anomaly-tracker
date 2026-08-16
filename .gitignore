@@ -51,3 +51,4 @@ ANOMALY_RADAR_BUILD_PLAN.md
 .claude/
 docs/superpowers/
 PROJECT_BACKLOG.md
+web/public/data/*

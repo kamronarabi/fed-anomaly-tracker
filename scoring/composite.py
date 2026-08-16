@@ -175,7 +175,13 @@ def compute_composite_scores(
                 wide_rows[uei][score_col] = 0.0
                 wide_rows[uei][details_col] = None
 
-    wide = pl.DataFrame(list(wide_rows.values()))
+    # infer_schema_length=None: scan every row, not just a sample. `universe`
+    # is a set, so its iteration order (and thus row order here) varies by
+    # process (string hash randomization) — a sampled inference can land on
+    # an all-None window for a sparsely-emitted detector's `*_details_raw`
+    # column (e.g. award_velocity, ~4% emission rate) and infer it as a
+    # null-only type, then crash on the first real value outside the sample.
+    wide = pl.DataFrame(list(wide_rows.values()), infer_schema_length=None)
 
     # 4. Per-detector percentile rank computed over **emitted entities only**.
     #    Normalization: `rank / emitted_count`. Highest emitted entity gets

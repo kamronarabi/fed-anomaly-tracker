@@ -42,3 +42,6 @@ next-env.d.ts
 
 AGENTS.md
 CLAUDE.md
+/public/data/*
+web/public/data/*
+

@@ -17,7 +17,17 @@ import { DetectorDots } from "@/components/DetectorDots";
 import { ScoreHistoryChart } from "@/components/ScoreHistoryChart";
 import { FlaggedContractsTable } from "@/components/FlaggedContractsTable";
 
-// Pre-render one page per top-N entity at build time.
+// Data comes from a plain fs.readFileSync (not fetch), which Next treats
+// as static-safe and bakes into the build by default. Force per-request
+// rendering so the nightly refresh's JSON actually shows up without a
+// rebuild+redeploy — this also covers entities that rotate onto the
+// leaderboard after the last build, which generateStaticParams below
+// wouldn't have known about anyway.
+export const dynamic = "force-dynamic";
+
+// Kept so a future rollback to static rendering has the entity list
+// readily available; force-dynamic above means this isn't used for
+// prerendering today.
 export async function generateStaticParams() {
   return loadAllEntityUeis().map((uei) => ({ uei }));
 }

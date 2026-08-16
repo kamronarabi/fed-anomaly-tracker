@@ -1,0 +1,25 @@
+name: Weekly Anomaly Refresh (USAspending incremental ingest)
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'   # Every Monday at 4am UTC
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger weekly pipeline refresh
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            "${{ secrets.RAILWAY_URL }}/api/refresh?mode=weekly")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          echo "Response: $BODY"
+          echo "Status: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Weekly pipeline refresh failed!"
+            exit 1
+          fi

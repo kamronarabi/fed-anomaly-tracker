@@ -4,6 +4,12 @@ import { EntityCard } from "@/components/EntityCard";
 import { RankingTable } from "@/components/RankingTable";
 import { formatDate, formatInt } from "@/lib/format";
 
+// Data comes from a plain fs.readFileSync (not fetch), which Next treats
+// as static-safe and bakes into the build by default. Force per-request
+// rendering so the nightly refresh's JSON actually shows up without a
+// rebuild+redeploy.
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   const data = loadLeaderboard();
 

@@ -1,0 +1,25 @@
+name: Daily Anomaly Refresh (rescore + rebrief)
+
+on:
+  schedule:
+    - cron: '0 5 * * *'   # Every day at 5am UTC (1 hour after the weekly ingest)
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger daily pipeline refresh
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            "${{ secrets.RAILWAY_URL }}/api/refresh?mode=daily")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          echo "Response: $BODY"
+          echo "Status: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Daily pipeline refresh failed!"
+            exit 1
+          fi
