@@ -8,8 +8,9 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Trigger daily pipeline refresh
+      - name: Trigger and wait for daily pipeline refresh
         run: |
           RAILWAY_URL="${{ secrets.RAILWAY_URL }}"
           RAILWAY_URL="${RAILWAY_URL%/}"           # strip a trailing slash, if any
@@ -21,12 +22,53 @@ jobs:
             "$RAILWAY_URL/api/refresh?mode=daily")
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | sed '$d')
-          echo "Response: $BODY"
-          echo "Status: $HTTP_CODE"
-          # 202 = pipeline was triggered and is now running in the background
-          # (see web/app/api/refresh/route.ts) -- this does NOT mean it has
-          # finished. Actual success/failure is only visible in `railway logs`.
+          echo "Trigger response: $BODY"
+          echo "Trigger status: $HTTP_CODE"
+          # 202 = the pipeline was spawned and is now running in the
+          # background (see web/app/api/refresh/route.ts) -- it does NOT
+          # mean the pipeline finished. Poll GET /api/refresh below for
+          # the real outcome.
           if [ "$HTTP_CODE" != "202" ]; then
             echo "Daily pipeline refresh failed to trigger!"
             exit 1
           fi
+
+          TRIGGER_PID=$(echo "$BODY" | jq -r '.pid // empty')
+          echo "Polling for completion (pid=$TRIGGER_PID)..."
+
+          for i in $(seq 1 30); do
+            sleep 20
+            STATUS_RESPONSE=$(curl -sL -w "\n%{http_code}" \
+              -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+              "$RAILWAY_URL/api/refresh")
+            STATUS_HTTP_CODE=$(echo "$STATUS_RESPONSE" | tail -n1)
+            STATUS_BODY=$(echo "$STATUS_RESPONSE" | sed '$d')
+
+            if [ "$STATUS_HTTP_CODE" != "200" ]; then
+              echo "[$i/30] status check returned $STATUS_HTTP_CODE, retrying..."
+              continue
+            fi
+
+            RUN_PID=$(echo "$STATUS_BODY" | jq -r '.pid // empty')
+            if [ "$RUN_PID" != "$TRIGGER_PID" ]; then
+              echo "[$i/30] status file doesn't reflect our run yet, retrying..."
+              continue
+            fi
+
+            RUN_STATUS=$(echo "$STATUS_BODY" | jq -r '.status // empty')
+            echo "[$i/30] status: $RUN_STATUS"
+
+            if [ "$RUN_STATUS" == "success" ]; then
+              echo "Daily pipeline completed successfully."
+              echo "$STATUS_BODY"
+              exit 0
+            elif [ "$RUN_STATUS" == "failed" ]; then
+              echo "Daily pipeline failed."
+              echo "$STATUS_BODY"
+              exit 1
+            fi
+            # still "running" -- keep polling
+          done
+
+          echo "Timed out waiting for daily pipeline to finish after 10 minutes."
+          exit 1
