@@ -78,6 +78,7 @@ def _build_features(db_path: str) -> pl.DataFrame:
               AND a.total_obligation IS NOT NULL
               AND a.total_obligation > 0
             GROUP BY a.recipient_uei
+            ORDER BY a.recipient_uei
             """
         ).fetchall()
     finally:

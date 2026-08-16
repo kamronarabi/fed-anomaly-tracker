@@ -23,7 +23,10 @@ jobs:
           BODY=$(echo "$RESPONSE" | sed '$d')
           echo "Response: $BODY"
           echo "Status: $HTTP_CODE"
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Daily pipeline refresh failed!"
+          # 202 = pipeline was triggered and is now running in the background
+          # (see web/app/api/refresh/route.ts) -- this does NOT mean it has
+          # finished. Actual success/failure is only visible in `railway logs`.
+          if [ "$HTTP_CODE" != "202" ]; then
+            echo "Daily pipeline refresh failed to trigger!"
             exit 1
           fi

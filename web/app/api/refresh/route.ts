@@ -1,13 +1,20 @@
 // Pipeline refresh trigger. Called by the weekly/daily GitHub Actions
-// crons (see .github/workflows/). Runs the Python orchestrator scripts
-// synchronously and returns once they've finished writing fresh
-// suspicion_scores + regenerating the static JSON the dashboard reads.
+// crons (see .github/workflows/). Spawns the Python orchestrator script
+// detached and returns immediately -- it does NOT wait for the pipeline
+// to finish. Railway's edge proxy has its own read-timeout independent of
+// anything configurable here, and the pipeline (esp. daily's ~50
+// sequential Anthropic calls) routinely runs several minutes; holding the
+// HTTP response open for that long raced the proxy timeout and produced
+// intermittent 502s even though the pipeline itself completed fine. Actual
+// completion/failure is only observable via `railway logs` (as it already
+// was in practice) or the entity_briefs/leaderboard.json output.
 //
 // mode=weekly -> scripts/seed.py  (incremental ingest + rescore + publish)
 // mode=daily  -> scripts/daily.py (rescore + rebrief + publish)
 
-import { execFileSync } from "node:child_process";
+import { spawn } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,7 +23,7 @@ const MODE_TO_SCRIPT: Record<string, string> = {
   daily: "daily.py",
 };
 
-const REFRESH_TIMEOUT_MS = 10 * 60 * 1000; // 10 min — incremental/daily runs are minutes, not the ~90 min full-seed case
+const LOCK_PATH = path.join(os.tmpdir(), "fraudhound-refresh.lock");
 
 // The Python pipeline (scripts/, export/publish.py's default output dir,
 // etc.) resolves several paths relative to the process's cwd rather than
@@ -63,35 +70,51 @@ export async function POST(request: NextRequest) {
   const repoRoot = findRepoRoot();
   const scriptPath = path.join(repoRoot, "scripts", scriptName);
 
-  try {
-    console.log(`refresh: starting pipeline (mode=${mode})...`);
-    const stdout = execFileSync("python3", [scriptPath], {
-      cwd: repoRoot,
-      encoding: "utf-8",
-      timeout: REFRESH_TIMEOUT_MS,
-      env: process.env,
-    });
-    console.log(`refresh: pipeline complete (mode=${mode})\n${stdout}`);
-    return NextResponse.json({
-      status: "refreshed",
-      mode,
-      timestamp: new Date().toISOString(),
-    });
-  } catch (err) {
-    const stderr =
-      err && typeof err === "object" && "stderr" in err
-        ? String((err as { stderr?: unknown }).stderr ?? "")
-        : "";
-    const message = err instanceof Error ? err.message : "Pipeline failed";
-    console.error(`refresh: pipeline failed (mode=${mode}): ${message}\n${stderr}`);
+  // A stale lock can only exist if the container was killed mid-run (no
+  // exit/error event fired to clean it up below) -- any normal completion
+  // or failure removes it. Treat "already running" as a 409, not something
+  // to force through: overlapping writers on the same DuckDB file is the
+  // failure mode we're avoiding.
+  if (fs.existsSync(LOCK_PATH)) {
     return NextResponse.json(
-      {
-        error: "Pipeline failed",
-        details: message,
-        // Tail, not head — Python tracebacks end with the actual exception.
-        stderr_tail: stderr.slice(-4000),
-      },
-      { status: 500 },
+      { error: "Refresh already in progress", mode },
+      { status: 409 },
     );
   }
+  fs.writeFileSync(LOCK_PATH, `${mode}:${new Date().toISOString()}`);
+
+  let child;
+  try {
+    child = spawn("python3", [scriptPath], {
+      cwd: repoRoot,
+      detached: true,
+      stdio: ["ignore", "inherit", "inherit"],
+      env: process.env,
+    });
+  } catch (err) {
+    fs.rmSync(LOCK_PATH, { force: true });
+    const message = err instanceof Error ? err.message : "Failed to spawn pipeline";
+    console.error(`refresh: failed to spawn pipeline (mode=${mode}): ${message}`);
+    return NextResponse.json({ error: "Failed to spawn pipeline", details: message }, { status: 500 });
+  }
+
+  console.log(`refresh: triggered pipeline (mode=${mode}, pid=${child.pid})`);
+  child.on("exit", (code) => {
+    fs.rmSync(LOCK_PATH, { force: true });
+    if (code === 0) {
+      console.log(`refresh: pipeline complete (mode=${mode}, pid=${child.pid})`);
+    } else {
+      console.error(`refresh: pipeline failed (mode=${mode}, pid=${child.pid}, exit=${code})`);
+    }
+  });
+  child.on("error", (err) => {
+    fs.rmSync(LOCK_PATH, { force: true });
+    console.error(`refresh: pipeline process error (mode=${mode}): ${err.message}`);
+  });
+  child.unref();
+
+  return NextResponse.json(
+    { status: "triggered", mode, pid: child.pid, timestamp: new Date().toISOString() },
+    { status: 202 },
+  );
 }
