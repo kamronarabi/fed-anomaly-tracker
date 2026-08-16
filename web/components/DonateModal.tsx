@@ -40,7 +40,7 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
       dollars = selected;
     }
     const amount_cents = Math.round(dollars * 100);
-    if (amount_cents > 100000) {
+    if (amount_cents > 100000000000) {
       setError("Custom donations capped at $1,000 in v1.");
       return;
     }
@@ -95,7 +95,7 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
         <p className="mt-3 text-sm text-charcoal/80 leading-relaxed">
           Independent statistical scrutiny of federal contracting. No ads,
           no paywalls, no funders to answer to. Your donation covers
-          servers, the AI that writes the briefs, and the time to keep
+          servers, AI costs, and the time to keep
           chasing the data.
         </p>
 
@@ -157,12 +157,11 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
           disabled={submitting}
           className="mt-6 w-full rounded-md bg-charcoal py-3 font-medium text-paper hover:bg-charcoal/90 transition-colors disabled:opacity-60"
         >
-          {submitting ? "Redirecting…" : "Donate via Stripe"}
+          {submitting ? "Redirecting…" : "Donate"}
         </button>
 
         <p className="mt-4 text-xs text-mute">
-          One-time donation · Powered by Stripe Checkout · Built by Kamron
-          Arabi
+          Powered by Stripe Checkout 
         </p>
       </div>
     </div>
