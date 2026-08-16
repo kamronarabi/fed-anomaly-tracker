@@ -24,14 +24,18 @@ COPY . .
 # Build Next.js in standalone mode (see web/next.config.ts: output: "standalone")
 RUN npm run build --prefix web
 
-# Standalone output omits static assets by design — copy them in manually.
-# Next's own build tracer may have already created .next/standalone/public
-# (populated only with the specific files server code reads via fs, e.g.
-# leaderboard.json) — copying with a trailing `/.` merges into it instead
-# of nesting a `public/public/...` subdirectory when the destination
-# already exists.
-RUN mkdir -p web/.next/standalone/public web/.next/standalone/.next/static \
-    && cp -r web/public/. web/.next/standalone/public/ \
+# Standalone output omits static assets by design. .next/static is
+# immutable build output, fine as a one-time copy. public/ is NOT a
+# one-time copy: it's where export.publish (run post-deploy, by the
+# refresh endpoint) writes fresh leaderboard/entity JSON, and it must
+# stay writable-and-visible for the life of the container — so it's a
+# symlink back to the source tree, not a copy. (Next's own build tracer
+# may have already created a `public/` here containing just the specific
+# files server code reads via fs at build time — rm it first so the
+# symlink can take its place.)
+RUN mkdir -p web/.next/standalone/.next/static \
+    && rm -rf web/.next/standalone/public \
+    && ln -s /app/web/public web/.next/standalone/public \
     && cp -r web/.next/static/. web/.next/standalone/.next/static/
 
 ENV DB_PATH=/data/anomaly_radar.duckdb

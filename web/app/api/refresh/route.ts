@@ -21,21 +21,29 @@ const REFRESH_TIMEOUT_MS = 10 * 60 * 1000; // 10 min — incremental/daily runs 
 // The Python pipeline (scripts/, export/publish.py's default output dir,
 // etc.) resolves several paths relative to the process's cwd rather than
 // __file__, so the subprocess must be spawned with cwd = repo root. But
-// process.cwd() for *this* Next process differs by environment: it's the
-// repo root in the Docker/Railway image (WORKDIR /app), but `web/` when
-// running `next dev` locally. Rather than assume one, find whichever
-// candidate actually contains scripts/.
+// process.cwd() for *this* Next process varies by environment and isn't
+// simply "one or two levels up": Next's generated standalone server.js
+// chdir's into its own directory (web/.next/standalone/) on startup, so
+// in the deployed container process.cwd() is actually three levels below
+// repo root; in local `next dev` (run from web/) it's one level below.
+// Rather than hardcode either, walk up looking for the marker that's
+// unambiguously the repo root.
 function findRepoRoot(): string {
-  const candidates = [process.cwd(), path.join(process.cwd(), "..")];
-  const found = candidates.find((dir) =>
-    fs.existsSync(path.join(dir, "scripts")),
-  );
-  if (!found) {
-    throw new Error(
-      `Could not locate repo root (checked: ${candidates.join(", ")})`,
-    );
+  let dir = process.cwd();
+  for (let i = 0; i < 8; i++) {
+    if (
+      fs.existsSync(path.join(dir, "scripts")) &&
+      fs.existsSync(path.join(dir, "requirements.txt"))
+    ) {
+      return dir;
+    }
+    const parent = path.dirname(dir);
+    if (parent === dir) break; // reached filesystem root
+    dir = parent;
   }
-  return found;
+  throw new Error(
+    `Could not locate repo root by walking up from ${process.cwd()}`,
+  );
 }
 
 export async function POST(request: NextRequest) {
