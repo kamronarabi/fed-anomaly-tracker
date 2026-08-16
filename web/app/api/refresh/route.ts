@@ -57,12 +57,6 @@ export async function POST(request: NextRequest) {
 
   try {
     console.log(`refresh: starting pipeline (mode=${mode})...`);
-    // Not `stdio: "inherit"` — that streams straight to Railway's log and
-    // discards it from the error object on failure, leaving nothing but a
-    // generic "Command failed" message to debug from. Capture instead, log
-    // it ourselves (so it still reaches Railway's logs), and surface the
-    // tail of stderr in the response so a failed cron run is diagnosable
-    // from the GitHub Actions output alone.
     const stdout = execFileSync("python3", [scriptPath], {
       cwd: repoRoot,
       encoding: "utf-8",
