@@ -1,0 +1,22 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Pipeline data — regenerated at runtime on the Railway volume, never baked in
+data/*
+!data/.gitkeep
+logs/
+
+# Node / Next.js — installed and built fresh inside the image
+web/node_modules/
+web/.next/
+
+# Misc
+.git/
+.DS_Store
+*.md
+docs/
+.claude/
