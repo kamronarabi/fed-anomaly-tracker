@@ -31,6 +31,10 @@ RUN cp -r web/public web/.next/standalone/public \
 ENV DB_PATH=/data/anomaly_radar.duckdb
 ENV NODE_ENV=production
 ENV PORT=3000
+# Next's standalone server binds to `localhost` unless told otherwise, which
+# is unreachable from outside the container (Railway/any reverse proxy) —
+# must bind all interfaces.
+ENV HOSTNAME=0.0.0.0
 EXPOSE 3000
 
 CMD ["node", "web/.next/standalone/server.js"]
