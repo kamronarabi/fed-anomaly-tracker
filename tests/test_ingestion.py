@@ -5,6 +5,7 @@ will round out (it owns Parquet → DuckDB load + dedup). For Task 1.2 we
 cover the pure parsing surface: extract_row + fiscal_year_window.
 """
 
+import asyncio
 from datetime import date, datetime
 from pathlib import Path
 
@@ -15,8 +16,10 @@ import pytest
 
 from ingestion.load_db import (
     effective_agency,
+    get_watermark,
     init_schema,
     load_all_parquet,
+    set_watermark,
 )
 from ingestion.pull_awards import (
     _apply_archive_filters,
@@ -29,6 +32,7 @@ from ingestion.pull_awards import (
     _select_prime_award_csvs,
     extract_row,
     fiscal_year_window,
+    pull_awards,
 )
 # SAM puller (ingestion.pull_entities) and its tests removed in 2026-05-27 pivot.
 
@@ -563,3 +567,140 @@ def test_apply_archive_filters_is_case_insensitive():
     agency = {"award_types": ["C"], "award_amount_min": 0}
     out = _apply_archive_filters(df.lazy(), agency).collect()
     assert out.height == 1
+
+
+# ── Ingest watermark (2026-08-24) ─────────────────────────────────────────
+#
+# The incremental window used to be derived from MAX(award_date), which
+# silently stalls whenever an agency's recent awards are sparse: the
+# watermark stops advancing, so every weekly run re-pulls a window that
+# grows by 7 days each week (it had reached ~3.5 months and a 58-minute
+# pull before this landed). The watermark is now recorded explicitly:
+# "we have pulled this agency through date X", regardless of whether that
+# window happened to contain any rows.
+
+
+def test_watermark_roundtrip(tmp_path: Path):
+    db_path = str(tmp_path / "wm.duckdb")
+    init_schema(db_path)
+
+    assert get_watermark(db_path, "Department of Defense") is None
+
+    set_watermark(db_path, "Department of Defense", date(2026, 8, 17))
+    assert get_watermark(db_path, "Department of Defense") == date(2026, 8, 17)
+
+    # Upsert, not a second row.
+    set_watermark(db_path, "Department of Defense", date(2026, 8, 24))
+    assert get_watermark(db_path, "Department of Defense") == date(2026, 8, 24)
+    assert get_watermark(db_path, "Department of Health and Human Services") is None
+
+
+def test_get_watermark_returns_none_for_missing_db(tmp_path: Path):
+    assert get_watermark(str(tmp_path / "nope.duckdb"), "DoD") is None
+
+
+@pytest.fixture
+def one_agency_config(monkeypatch) -> dict:
+    """Point pull_awards at a single-agency config so the incremental path
+    is exercised without touching the real config.yaml."""
+    config = {
+        "agencies": [
+            {"code": "097", "name": "Department of Defense", "short": "DoD",
+             "seed_strategy": "archive"},
+        ],
+        "fiscal_years": [2026],
+        "parquet_dir": "unused",
+        "db_path": "unused",
+        "award_types": ["A", "B", "C", "D"],
+        "award_amount_min": 0,
+        "seed_strategy": "paginate",
+    }
+    monkeypatch.setattr("ingestion.pull_awards.load_config", lambda: config)
+    return config
+
+
+@pytest.fixture
+def captured_windows(monkeypatch) -> list[tuple[date, date]]:
+    """Record every (start, end) pull_window is asked for, pulling nothing."""
+    windows: list[tuple[date, date]] = []
+
+    def fake_pull_window(agency, start, end, label, config, out_dir):
+        windows.append((start, end))
+        return []
+
+    monkeypatch.setattr("ingestion.pull_awards.pull_window", fake_pull_window)
+    return windows
+
+
+def test_incremental_window_starts_from_watermark(
+    tmp_path: Path, one_agency_config, captured_windows, monkeypatch
+):
+    """A stale MAX(award_date) must not drag the window back: the
+    watermark is the source of truth once it exists."""
+    db_path = str(tmp_path / "incr.duckdb")
+    init_schema(db_path)
+    con = duckdb.connect(db_path)
+    try:
+        # Newest award in the DB is 3 months old -- the exact condition
+        # that used to produce a 3-month re-pull every week.
+        con.execute(
+            "INSERT INTO awards (award_id, awarding_agency, award_date) VALUES (?, ?, ?)",
+            ["A1", "Department of Defense", date(2026, 5, 19)],
+        )
+    finally:
+        con.close()
+    set_watermark(db_path, "Department of Defense", date(2026, 8, 17))
+    monkeypatch.setattr("ingestion.pull_awards._today", lambda: date(2026, 8, 24))
+
+    result = asyncio.run(pull_awards(incremental=True, db_path=db_path))
+
+    assert captured_windows == [(date(2026, 8, 10), date(2026, 8, 24))]
+    # Watermark is *reported*, not committed -- seed.py commits it only
+    # after load_all_parquet has durably absorbed the Parquet.
+    assert result.pulled_through == {"Department of Defense": date(2026, 8, 24)}
+    assert get_watermark(db_path, "Department of Defense") == date(2026, 8, 17)
+
+
+def test_incremental_bootstraps_from_max_award_date_when_no_watermark(
+    tmp_path: Path, one_agency_config, captured_windows, monkeypatch
+):
+    """Existing deployments have awards but no watermark row yet; the
+    first run after this change bootstraps from the data it already has
+    rather than re-seeding from scratch."""
+    db_path = str(tmp_path / "bootstrap.duckdb")
+    init_schema(db_path)
+    con = duckdb.connect(db_path)
+    try:
+        con.execute(
+            "INSERT INTO awards (award_id, awarding_agency, award_date) VALUES (?, ?, ?)",
+            ["A1", "Department of Defense", date(2026, 5, 19)],
+        )
+    finally:
+        con.close()
+    monkeypatch.setattr("ingestion.pull_awards._today", lambda: date(2026, 8, 24))
+
+    asyncio.run(pull_awards(incremental=True, db_path=db_path))
+
+    assert captured_windows == [(date(2026, 5, 12), date(2026, 8, 24))]
+
+
+def test_incremental_falls_back_to_seed_when_db_is_empty(
+    tmp_path: Path, one_agency_config, captured_windows, monkeypatch
+):
+    db_path = str(tmp_path / "empty.duckdb")
+    init_schema(db_path)
+    seeded: list[str] = []
+
+    async def fake_seed(agency, config, out_dir):
+        seeded.append(agency["short"])
+        return []
+
+    monkeypatch.setattr("ingestion.pull_awards._seed_agency", fake_seed)
+
+    result = asyncio.run(pull_awards(incremental=True, db_path=db_path))
+
+    assert seeded == ["DoD"]
+    assert captured_windows == []
+    # Nothing to commit: a seed's coverage end date isn't knowable from
+    # here (archive snapshots lag), so the next run bootstraps instead.
+    assert result.pulled_through == {}

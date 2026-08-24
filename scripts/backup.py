@@ -1,10 +1,16 @@
 """Off-Railway DuckDB backup: EXPORT DATABASE -> tar -> upload to Cloudflare R2.
 
-Runs as the last step of the weekly orchestrator (scripts/seed.py), since
-that's when the data structurally changes most (new awards from the
-incremental ingest). Best-effort: a backup failure is logged loudly but
-does not fail the pipeline run that already succeeded at the far more
-important job of ingesting/scoring/publishing fresh data.
+Runs as its own process on its own cron (POST /api/refresh?mode=backup,
+driven by .github/workflows/backup.yml), scheduled after the weekly
+ingest -- that's when the data structurally changes most.
+
+It used to run inline as the last step of scripts/seed.py, wrapped in a
+try/except so a backup failure couldn't fail the run. That wrapper turned
+out to be no protection at all: on 2026-08-24 the backup step was killed
+by a signal (exit=null), which no `except` can catch, taking down a
+weekly run that had already finished ingesting, scoring and publishing.
+Isolating it in its own process is the actual guarantee the try/except
+was only pretending to give.
 
 Uses DuckDB's own EXPORT DATABASE rather than copying the raw .duckdb
 file: a raw file copy risks grabbing a torn snapshot if anything is
@@ -45,14 +51,25 @@ def _r2_client():
     )
 
 
+# EXPORT DATABASE will happily buffer as much as DuckDB's default limit
+# (a fraction of system RAM) allows. This process shares a container with
+# the Next.js server, so cap it and let DuckDB spill instead of racing the
+# container's memory ceiling. Overridable per-environment.
+DUCKDB_MEMORY_LIMIT = os.environ.get("BACKUP_DUCKDB_MEMORY_LIMIT", "512MB")
+
+
 def _export_and_tar(db_path: str, tar_path: Path) -> None:
     with tempfile.TemporaryDirectory() as export_dir:
+        logger.info("backup: exporting %s -> %s", db_path, export_dir)
         con = duckdb.connect(db_path, read_only=True)
         try:
+            con.execute(f"SET memory_limit = '{DUCKDB_MEMORY_LIMIT}'")
             con.execute(f"EXPORT DATABASE '{export_dir}' (FORMAT PARQUET, COMPRESSION ZSTD)")
         finally:
             con.close()
 
+        export_mb = sum(f.stat().st_size for f in Path(export_dir).rglob("*") if f.is_file())
+        logger.info("backup: exported %.1f MB, tarring", export_mb / (1024 * 1024))
         with tarfile.open(tar_path, "w") as tar:
             tar.add(export_dir, arcname="export")
 
@@ -79,6 +96,7 @@ def run_backup(db_path: str, score_date: date | None = None) -> str:
         size_mb = tar_path.stat().st_size / (1024 * 1024)
 
         client = _r2_client()
+        logger.info("backup: uploading %s (%.1f MB)", key, size_mb)
         client.upload_file(str(tar_path), bucket, key)
         logger.info("backup: uploaded %s (%.1f MB)", key, size_mb)
 

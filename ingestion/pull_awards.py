@@ -6,7 +6,7 @@ Parquet file per partition under `data/parquet/`.
 
 Run:
     python -m ingestion.pull_awards               # full seed
-    python -m ingestion.pull_awards --incremental # since last load
+    python -m ingestion.pull_awards --incremental # since the ingest watermark
 """
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ import shutil
 import tempfile
 import time
 import zipfile
+from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -35,7 +36,12 @@ from tenacity import (
     wait_exponential,
 )
 
-from ingestion.load_db import effective_agency, load_config, resolve_db_path
+from ingestion.load_db import (
+    effective_agency,
+    get_watermark,
+    load_config,
+    resolve_db_path,
+)
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -1217,39 +1223,85 @@ def _max_award_date_for(db_path: str, agency_name: str) -> date | None:
         con.close()
 
 
+# How far back each incremental window reaches behind the watermark.
+# USAspending backfills award records for a few days after the action
+# date, so re-asking for the recent past is how we pick up late arrivals;
+# the PK upsert in load_db makes the overlap free.
+INCREMENTAL_OVERLAP_DAYS = 7
+
+
+def _today() -> date:
+    """Indirection so tests can pin "now" without freezing the clock globally."""
+    return date.today()
+
+
+@dataclass
+class PullResult:
+    """What a pull produced.
+
+    `pulled_through` maps agency name -> the end of the window we
+    successfully pulled, for the caller to commit via
+    `load_db.set_watermark` *after* the Parquet has been loaded. It is
+    deliberately not committed here: the Parquet staging dir is on the
+    container filesystem, not the volume, so a watermark advanced at pull
+    time would skip a window that a redeploy then erased.
+    """
+
+    paths: list[Path]
+    pulled_through: dict[str, date] = field(default_factory=dict)
+
+
 async def pull_awards(
     incremental: bool = False, db_path: str | None = None
-) -> list[Path]:
+) -> PullResult:
     config = load_config()
     db_path = db_path or resolve_db_path(config)
     out_dir = Path(config["parquet_dir"])
 
     written: list[Path] = []
+    pulled_through: dict[str, date] = {}
     for raw_agency in config["agencies"]:
         agency = effective_agency(raw_agency, config)
         if incremental:
             # Incremental refreshes always paginate — the weekly window is
             # tiny relative to the API cap, so bulk download's job overhead
             # isn't worth it.
-            max_date = _max_award_date_for(db_path, agency["name"])
-            if max_date is None:
+            #
+            # The window start comes from the recorded watermark, not from
+            # MAX(award_date): an agency can go weeks without a new award
+            # date in our filter, and keying off the data would then hold
+            # the window open forever, re-pulling months of already-loaded
+            # awards every week (observed 2026-08-24: a 3.5-month window,
+            # 124K rows re-fetched for 7.7K new, 58 minutes).
+            since = get_watermark(db_path, agency["name"])
+            if since is None:
+                # Deployments that predate the watermark table still have
+                # awards loaded — bootstrap from them rather than re-seeding.
+                since = _max_award_date_for(db_path, agency["name"])
+                if since is not None:
+                    logger.info(
+                        "%s: no watermark yet, bootstrapping from max award_date %s",
+                        agency["short"], since,
+                    )
+            if since is None:
                 logger.info(
                     "%s: no prior data, falling back to seed for FYs %s",
                     agency["short"], config["fiscal_years"],
                 )
                 written.extend(await _seed_agency(agency, config, out_dir))
                 continue
-            start = max_date - timedelta(days=7)
-            end = date.today()
+            start = since - timedelta(days=INCREMENTAL_OVERLAP_DAYS)
+            end = _today()
             label = f"incr_{end.isoformat()}"
             written.extend(
                 await asyncio.to_thread(
                     pull_window, agency, start, end, label, config, out_dir
                 )
             )
+            pulled_through[agency["name"]] = end
         else:
             written.extend(await _seed_agency(agency, config, out_dir))
-    return written
+    return PullResult(paths=written, pulled_through=pulled_through)
 
 
 async def _seed_agency(
@@ -1297,10 +1349,18 @@ def main():
     parser.add_argument(
         "--incremental",
         action="store_true",
-        help="Pull only since the most recent award_date already loaded",
+        help="Pull only since the recorded ingest watermark",
     )
     args = parser.parse_args()
-    asyncio.run(pull_awards(incremental=args.incremental))
+    result = asyncio.run(pull_awards(incremental=args.incremental))
+    # Watermarks are deliberately not committed here: this CLI only
+    # stages Parquet, and the watermark may only advance once that
+    # Parquet is loaded. scripts/seed.py owns that pairing.
+    if result.pulled_through:
+        logger.info(
+            "pulled through %s -- load the Parquet, then set_watermark()",
+            {k: v.isoformat() for k, v in result.pulled_through.items()},
+        )
 
 
 if __name__ == "__main__":

@@ -6,69 +6,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Trigger and wait for weekly pipeline refresh
-        run: |
-          RAILWAY_URL="${{ secrets.RAILWAY_URL }}"
-          RAILWAY_URL="${RAILWAY_URL%/}"           # strip a trailing slash, if any
-          [[ "$RAILWAY_URL" == http* ]] || RAILWAY_URL="https://$RAILWAY_URL"
-
-          RESPONSE=$(curl -sL -w "\n%{http_code}" -X POST \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            -H "Content-Type: application/json" \
-            "$RAILWAY_URL/api/refresh?mode=weekly")
-          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          BODY=$(echo "$RESPONSE" | sed '$d')
-          echo "Trigger response: $BODY"
-          echo "Trigger status: $HTTP_CODE"
-          # 202 = the pipeline was spawned and is now running in the
-          # background (see web/app/api/refresh/route.ts) -- it does NOT
-          # mean the pipeline finished. Poll GET /api/refresh below for
-          # the real outcome.
-          if [ "$HTTP_CODE" != "202" ]; then
-            echo "Weekly pipeline refresh failed to trigger!"
-            exit 1
-          fi
-
-          TRIGGER_PID=$(echo "$BODY" | jq -r '.pid // empty')
-          echo "Polling for completion (pid=$TRIGGER_PID)..."
-
-          for i in $(seq 1 30); do
-            sleep 20
-            STATUS_RESPONSE=$(curl -sL -w "\n%{http_code}" \
-              -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-              "$RAILWAY_URL/api/refresh")
-            STATUS_HTTP_CODE=$(echo "$STATUS_RESPONSE" | tail -n1)
-            STATUS_BODY=$(echo "$STATUS_RESPONSE" | sed '$d')
-
-            if [ "$STATUS_HTTP_CODE" != "200" ]; then
-              echo "[$i/30] status check returned $STATUS_HTTP_CODE, retrying..."
-              continue
-            fi
-
-            RUN_PID=$(echo "$STATUS_BODY" | jq -r '.pid // empty')
-            if [ "$RUN_PID" != "$TRIGGER_PID" ]; then
-              echo "[$i/30] status file doesn't reflect our run yet, retrying..."
-              continue
-            fi
-
-            RUN_STATUS=$(echo "$STATUS_BODY" | jq -r '.status // empty')
-            echo "[$i/30] status: $RUN_STATUS"
-
-            if [ "$RUN_STATUS" == "success" ]; then
-              echo "Weekly pipeline completed successfully."
-              echo "$STATUS_BODY"
-              exit 0
-            elif [ "$RUN_STATUS" == "failed" ]; then
-              echo "Weekly pipeline failed."
-              echo "$STATUS_BODY"
-              exit 1
-            fi
-            # still "running" -- keep polling
-          done
-
-          echo "Timed out waiting for weekly pipeline to finish after 10 minutes."
-          exit 1
+  weekly:
+    uses: ./.github/workflows/refresh.yml
+    secrets: inherit
+    with:
+      mode: weekly
+      # A steady-state incremental window is ~7 days and finishes in
+      # minutes. The budget is sized for the outlier instead: a window
+      # that has to catch up on months of backlog (recursive day-splits
+      # against the API's 10K/day cap, WAF warmups, 90s retry sleeps)
+      # measured 58 minutes on 2026-08-24.
+      poll_minutes: 90
+      # Nothing else should be holding the lock at 4am.
+      busy_wait_minutes: 15

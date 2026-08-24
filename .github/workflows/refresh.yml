@@ -1,0 +1,132 @@
+name: Pipeline refresh (reusable)
+
+# Shared trigger-and-poll job behind the weekly/daily/backup crons. All
+# three do exactly the same thing against POST/GET /api/refresh, so the
+# only per-cron differences are the mode and how long that mode is
+# allowed to take.
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        description: 'Refresh mode: weekly | daily | backup'
+        required: true
+        type: string
+      poll_minutes:
+        description: >
+          How long to wait for the pipeline to finish before giving up.
+          Must exceed the run's realistic worst case -- a budget shorter
+          than the pipeline reports a failure for a run that goes on to
+          succeed, which is what happened on 2026-08-24 (10-minute
+          budget, 58-minute ingest).
+        required: true
+        type: number
+      busy_wait_minutes:
+        description: >
+          How long to keep retrying a 409 (another mode holds the
+          pipeline lock) before giving up on triggering at all.
+        required: false
+        default: 45
+        type: number
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # Generous margin over the poll budget: the job timeout is the
+    # backstop for a wedged runner, not the thing that decides a run.
+    timeout-minutes: ${{ inputs.poll_minutes + inputs.busy_wait_minutes + 10 }}
+    steps:
+      - name: Trigger and wait for ${{ inputs.mode }} pipeline refresh
+        shell: bash
+        env:
+          MODE: ${{ inputs.mode }}
+          POLL_MINUTES: ${{ inputs.poll_minutes }}
+          BUSY_WAIT_MINUTES: ${{ inputs.busy_wait_minutes }}
+          RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -uo pipefail
+
+          URL="${RAILWAY_URL%/}"                    # strip a trailing slash, if any
+          [[ "$URL" == http* ]] || URL="https://$URL"
+
+          POLL_INTERVAL=30
+          POLL_ATTEMPTS=$(( POLL_MINUTES * 60 / POLL_INTERVAL ))
+          BUSY_RETRY_INTERVAL=60
+
+          # -- Trigger --------------------------------------------------
+          # 202 = the pipeline was spawned and is now running in the
+          # background (see web/app/api/refresh/route.ts) -- it does NOT
+          # mean the pipeline finished. Poll GET /api/refresh below for
+          # the real outcome.
+          #
+          # 409 = another mode's run holds the pipeline lock (only one
+          # writer on the DuckDB file at a time). That's transient, not a
+          # failure: wait it out rather than dropping this refresh.
+          BUSY_DEADLINE=$(( SECONDS + BUSY_WAIT_MINUTES * 60 ))
+          while :; do
+            RESPONSE=$(curl -sL -w "\n%{http_code}" -X POST \
+              -H "Authorization: Bearer $CRON_SECRET" \
+              -H "Content-Type: application/json" \
+              "$URL/api/refresh?mode=$MODE")
+            HTTP_CODE=$(tail -n1 <<<"$RESPONSE")
+            BODY=$(sed '$d' <<<"$RESPONSE")
+            echo "Trigger response: $BODY"
+            echo "Trigger status: $HTTP_CODE"
+
+            [[ "$HTTP_CODE" == "202" ]] && break
+
+            if [[ "$HTTP_CODE" == "409" && $SECONDS -lt $BUSY_DEADLINE ]]; then
+              echo "Pipeline busy with another run; retrying in ${BUSY_RETRY_INTERVAL}s"
+              sleep "$BUSY_RETRY_INTERVAL"
+              continue
+            fi
+
+            echo "::error::$MODE refresh failed to trigger (HTTP $HTTP_CODE)"
+            exit 1
+          done
+
+          TRIGGER_PID=$(jq -r '.pid // empty' <<<"$BODY")
+          echo "Polling for completion (pid=$TRIGGER_PID, budget=${POLL_MINUTES}m)..."
+
+          # -- Poll -----------------------------------------------------
+          for i in $(seq 1 "$POLL_ATTEMPTS"); do
+            sleep "$POLL_INTERVAL"
+            STATUS_RESPONSE=$(curl -sL -w "\n%{http_code}" \
+              -H "Authorization: Bearer $CRON_SECRET" \
+              "$URL/api/refresh")
+            STATUS_HTTP_CODE=$(tail -n1 <<<"$STATUS_RESPONSE")
+            STATUS_BODY=$(sed '$d' <<<"$STATUS_RESPONSE")
+
+            if [[ "$STATUS_HTTP_CODE" != "200" ]]; then
+              echo "[$i/$POLL_ATTEMPTS] status check returned $STATUS_HTTP_CODE, retrying..."
+              continue
+            fi
+
+            RUN_PID=$(jq -r '.pid // empty' <<<"$STATUS_BODY")
+            if [[ "$RUN_PID" != "$TRIGGER_PID" ]]; then
+              echo "[$i/$POLL_ATTEMPTS] status file doesn't reflect our run yet, retrying..."
+              continue
+            fi
+
+            RUN_STATUS=$(jq -r '.status // empty' <<<"$STATUS_BODY")
+            echo "[$i/$POLL_ATTEMPTS] status: $RUN_STATUS"
+
+            if [[ "$RUN_STATUS" == "success" ]]; then
+              echo "$MODE pipeline completed successfully."
+              echo "$STATUS_BODY"
+              exit 0
+            elif [[ "$RUN_STATUS" == "failed" ]]; then
+              echo "::error::$MODE pipeline failed."
+              echo "$STATUS_BODY"
+              exit 1
+            fi
+            # still "running" -- keep polling
+          done
+
+          # Distinct from a pipeline failure: the run is still going, we
+          # just stopped watching. Check Railway logs before assuming the
+          # data didn't land -- and if this recurs, the budget is wrong,
+          # not the pipeline.
+          echo "::error::$MODE pipeline still running after ${POLL_MINUTES}m; gave up watching (the run itself may still complete)."
+          exit 1

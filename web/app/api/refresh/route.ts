@@ -14,8 +14,9 @@
 // the child's exit handler writes, so callers (the GH Actions workflows)
 // can poll for real completion instead of trusting the trigger response.
 //
-// mode=weekly -> scripts/seed.py  (incremental ingest + rescore + publish)
-// mode=daily  -> scripts/daily.py (rescore + rebrief + publish)
+// mode=weekly -> scripts/seed.py   (incremental ingest + rescore + publish)
+// mode=daily  -> scripts/daily.py  (rescore + rebrief + publish)
+// mode=backup -> scripts/backup.py (DuckDB export -> R2)
 
 import { spawn } from "node:child_process";
 import fs from "node:fs";
@@ -26,6 +27,7 @@ import { NextRequest, NextResponse } from "next/server";
 const MODE_TO_SCRIPT: Record<string, string> = {
   weekly: "seed.py",
   daily: "daily.py",
+  backup: "backup.py",
 };
 
 const LOCK_PATH = path.join(os.tmpdir(), "fraudhound-refresh.lock");
@@ -80,6 +82,41 @@ function findRepoRoot(): string {
   );
 }
 
+// A lock can outlive the run it guards: the lock lives in tmpdir but the
+// pipeline is a detached child, so if this Next process dies mid-run (OOM,
+// redeploy, container restart) no exit/error handler fires to remove it.
+// Before that was handled, one such crash wedged every subsequent cron on
+// a permanent 409. Clearing on "the recorded pid is gone" narrows that to
+// the pid-reuse case, which needs a new process to land on the exact same
+// pid inside one container's lifetime.
+//
+// Returns true if it cleared a stale lock (i.e. the caller may proceed).
+function clearStaleLock(): boolean {
+  const statusPath = resolveStatusPath();
+  let pid: number | null = null;
+  try {
+    const status = JSON.parse(fs.readFileSync(statusPath, "utf-8")) as RefreshStatus;
+    if (status.status === "running") pid = status.pid;
+  } catch {
+    // No status file, or unreadable -- nothing claims to be running, so
+    // whatever wrote the lock is long gone.
+  }
+
+  if (pid !== null && pid > 0) {
+    try {
+      process.kill(pid, 0); // signal 0 = liveness probe, sends nothing
+      return false; // still alive: a real run holds this lock
+    } catch {
+      // ESRCH: no such process.
+    }
+  }
+
+  console.warn(`refresh: clearing stale lock (pid=${pid ?? "unknown"} is gone)`);
+  fs.rmSync(LOCK_PATH, { force: true });
+  return true;
+}
+
+
 export async function POST(request: NextRequest) {
   const authHeader = request.headers.get("Authorization");
   const secret = process.env.CRON_SECRET;
@@ -97,12 +134,11 @@ export async function POST(request: NextRequest) {
   const repoRoot = findRepoRoot();
   const scriptPath = path.join(repoRoot, "scripts", scriptName);
 
-  // A stale lock can only exist if the container was killed mid-run (no
-  // exit/error event fired to clean it up below) -- any normal completion
-  // or failure removes it. Treat "already running" as a 409, not something
-  // to force through: overlapping writers on the same DuckDB file is the
-  // failure mode we're avoiding.
-  if (fs.existsSync(LOCK_PATH)) {
+  // Treat "already running" as a 409, not something to force through:
+  // overlapping writers on the same DuckDB file is the failure mode we're
+  // avoiding. But only if a run really is still going -- see
+  // clearStaleLock for why the lock can outlive its process.
+  if (fs.existsSync(LOCK_PATH) && !clearStaleLock()) {
     return NextResponse.json(
       { error: "Refresh already in progress", mode },
       { status: 409 },

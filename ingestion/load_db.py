@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import duckdb
@@ -99,6 +100,18 @@ SCHEMA_STATEMENTS = [
     # detector state we sent to the LLM; identical hash → reuse the prior
     # brief verbatim instead of calling the API. prompt_version is bumped
     # whenever the system prompt changes, invalidating all prior caches.
+    # Ingest watermark: "we have pulled this agency through date X".
+    # Deliberately NOT derived from MAX(award_date) -- that stalls
+    # whenever an agency's recent awards are sparse, and a stalled
+    # watermark makes each weekly incremental window grow without bound
+    # (see pull_awards.pull_awards).
+    """
+    CREATE TABLE IF NOT EXISTS ingest_watermarks (
+        agency_name        VARCHAR PRIMARY KEY,
+        pulled_through     DATE,
+        updated_at         TIMESTAMP
+    )
+    """,
     """
     CREATE TABLE IF NOT EXISTS entity_briefs (
         uei                VARCHAR,
@@ -194,6 +207,46 @@ def init_schema(db_path: str | None = None) -> str:
         con.close()
 
     return db_path
+
+
+def get_watermark(db_path: str, agency_name: str) -> date | None:
+    """Return the date this agency has been pulled through, or None if we
+    have never recorded one (fresh DB, or a deployment predating the
+    `ingest_watermarks` table)."""
+    if not Path(db_path).exists():
+        return None
+
+    con = duckdb.connect(db_path, read_only=True)
+    try:
+        row = con.execute(
+            "SELECT pulled_through FROM ingest_watermarks WHERE agency_name = ?",
+            [agency_name],
+        ).fetchone()
+    except duckdb.CatalogException:
+        return None
+    finally:
+        con.close()
+    return row[0] if row and row[0] else None
+
+
+def set_watermark(db_path: str, agency_name: str, pulled_through: date) -> None:
+    """Record that `agency_name` is pulled through `pulled_through`.
+
+    Call this only once the pulled rows are durably in the DB: the Parquet
+    staging dir lives on the container filesystem, not the volume, so a
+    watermark advanced before `load_all_parquet` would skip a window that
+    a redeploy then erased.
+    """
+    init_schema(db_path)
+    con = duckdb.connect(db_path)
+    try:
+        con.execute(
+            "INSERT OR REPLACE INTO ingest_watermarks "
+            "(agency_name, pulled_through, updated_at) VALUES (?, ?, ?)",
+            [agency_name, pulled_through, datetime.now(timezone.utc).replace(tzinfo=None)],
+        )
+    finally:
+        con.close()
 
 
 def _load_parquet_files(

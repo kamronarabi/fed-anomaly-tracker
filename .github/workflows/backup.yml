@@ -1,0 +1,22 @@
+name: Weekly DuckDB Backup (export -> R2)
+
+# Split out of scripts/seed.py on 2026-08-24. Run inline as the weekly's
+# last step, a kill of the backup (it was killed by a signal, which its
+# try/except could not catch) failed a weekly run that had already
+# ingested, scored and published successfully. In its own process it can
+# fail on its own.
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Mondays at 7am UTC, after the weekly ingest
+  workflow_dispatch:
+
+jobs:
+  backup:
+    uses: ./.github/workflows/refresh.yml
+    secrets: inherit
+    with:
+      mode: backup
+      poll_minutes: 30
+      # Long enough to outlast a weekly that's still catching up.
+      busy_wait_minutes: 60
