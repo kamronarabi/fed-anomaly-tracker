@@ -39,6 +39,9 @@ RUN mkdir -p web/.next/standalone/.next/static \
     && cp -r web/.next/static/. web/.next/standalone/.next/static/
 
 ENV DB_PATH=/data/anomaly_radar.duckdb
+# Published JSON goes on the volume alongside the DB, NOT into the image's
+# web/public/data -- see scripts/docker-entrypoint.sh and export/publish.py.
+ENV PUBLISH_DIR=/data/public/data
 ENV NODE_ENV=production
 ENV PORT=3000
 # Next's standalone server binds to `localhost` unless told otherwise, which
@@ -47,4 +50,5 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 EXPOSE 3000
 
+ENTRYPOINT ["/bin/sh", "/app/scripts/docker-entrypoint.sh"]
 CMD ["node", "web/.next/standalone/server.js"]

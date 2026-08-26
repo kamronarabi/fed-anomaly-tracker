@@ -476,3 +476,46 @@ def test_publish_creates_out_dir_if_missing(tmp_path):
 
     assert out_dir.exists()
     assert (out_dir / "leaderboard.json").exists()
+
+
+# ── Publish location (2026-08-24) ─────────────────────────────────────────
+
+
+def test_default_out_dir_follows_publish_dir_env(tmp_path: Path, monkeypatch):
+    """Production publishes onto the persistent volume via $PUBLISH_DIR.
+
+    Regression guard for the four weeks the live site served a July
+    leaderboard: publish wrote into web/public/data, which lives in the
+    Docker image, so every refresh was discarded on the next container
+    restart. web/lib/data.ts reads the same env var -- if this default
+    stops honouring it, the two halves silently disagree and the site
+    goes stale again without anything failing.
+    """
+    import importlib
+
+    import export.publish as publish_mod
+
+    volume = tmp_path / "data" / "public" / "data"
+    monkeypatch.setenv("PUBLISH_DIR", str(volume))
+    try:
+        reloaded = importlib.reload(publish_mod)
+        assert reloaded.DEFAULT_OUT_DIR == volume
+        # The default must be what publish() actually writes to, not just
+        # a constant that happens to agree with it.
+        import inspect
+
+        assert inspect.signature(reloaded.publish).parameters["out_dir"].default == volume
+    finally:
+        monkeypatch.delenv("PUBLISH_DIR", raising=False)
+        importlib.reload(publish_mod)
+
+
+def test_default_out_dir_falls_back_to_repo_path(tmp_path: Path, monkeypatch):
+    """Unset (local dev, tests) keeps the in-repo path."""
+    import importlib
+
+    import export.publish as publish_mod
+
+    monkeypatch.delenv("PUBLISH_DIR", raising=False)
+    reloaded = importlib.reload(publish_mod)
+    assert reloaded.DEFAULT_OUT_DIR == Path("web/public/data")

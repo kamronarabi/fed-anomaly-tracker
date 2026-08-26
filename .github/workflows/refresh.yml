@@ -32,9 +32,13 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    # Generous margin over the poll budget: the job timeout is the
-    # backstop for a wedged runner, not the thing that decides a run.
-    timeout-minutes: ${{ inputs.poll_minutes + inputs.busy_wait_minutes + 10 }}
+    # Backstop for a wedged runner only -- the poll budget below is what
+    # actually decides a run. Must stay above the largest
+    # poll_minutes + busy_wait_minutes any caller sets (currently
+    # weekly's 90 + 15). A literal, not an expression: GitHub Actions
+    # expressions have no arithmetic operators, so `a + b` is a syntax
+    # error there, not a sum.
+    timeout-minutes: 180
     steps:
       - name: Trigger and wait for ${{ inputs.mode }} pipeline refresh
         shell: bash
@@ -65,7 +69,7 @@ jobs:
           # failure: wait it out rather than dropping this refresh.
           BUSY_DEADLINE=$(( SECONDS + BUSY_WAIT_MINUTES * 60 ))
           while :; do
-            RESPONSE=$(curl -sL -w "\n%{http_code}" -X POST \
+            RESPONSE=$(curl -sL --max-time 30 -w "\n%{http_code}" -X POST \
               -H "Authorization: Bearer $CRON_SECRET" \
               -H "Content-Type: application/json" \
               "$URL/api/refresh?mode=$MODE")
@@ -92,7 +96,7 @@ jobs:
           # -- Poll -----------------------------------------------------
           for i in $(seq 1 "$POLL_ATTEMPTS"); do
             sleep "$POLL_INTERVAL"
-            STATUS_RESPONSE=$(curl -sL -w "\n%{http_code}" \
+            STATUS_RESPONSE=$(curl -sL --max-time 30 -w "\n%{http_code}" \
               -H "Authorization: Bearer $CRON_SECRET" \
               "$URL/api/refresh")
             STATUS_HTTP_CODE=$(tail -n1 <<<"$STATUS_RESPONSE")

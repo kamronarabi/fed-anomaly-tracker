@@ -6,7 +6,14 @@ import fs from "node:fs";
 import path from "node:path";
 import type { EntityDetail, Leaderboard } from "./types";
 
-const DATA_DIR = path.join(process.cwd(), "public", "data");
+// Must match export/publish.py's output dir. In production this is the
+// persistent volume ($PUBLISH_DIR=/data/public/data), not public/data:
+// public/data ships inside the Docker image, so a container restart
+// throws away every refresh published since the last build and the site
+// silently falls back to the JSON committed at build time (it served a
+// July snapshot for four weeks that way). Local dev keeps public/data.
+const DATA_DIR =
+  process.env.PUBLISH_DIR || path.join(process.cwd(), "public", "data");
 
 export function loadLeaderboard(): Leaderboard {
   const raw = fs.readFileSync(path.join(DATA_DIR, "leaderboard.json"), "utf-8");

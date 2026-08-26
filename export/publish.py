@@ -4,7 +4,7 @@ Run after `briefs.main` in the nightly cron:
 
     python -m export.publish --score-date 2026-05-29 --top-n 50
 
-Writes (under `--out`, default `web/public/data`):
+Writes (under `--out`, default $PUBLISH_DIR or `web/public/data`):
 - `leaderboard.json` — one file describing the homepage's top-50 layer.
 - `entities/<uei>.json` — one file per top-N entity for the detail page.
 
@@ -31,7 +31,15 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 
 DEFAULT_TOP_N = 50
-DEFAULT_OUT_DIR = Path("web/public/data")
+# Where the frontend reads its JSON from. In production this MUST point
+# at the persistent volume ($PUBLISH_DIR=/data/public/data): the repo's
+# web/public/data lives in the Docker image, so anything published there
+# is discarded the moment the container restarts, silently reverting the
+# site to whatever JSON was committed at build time. That's exactly what
+# happened between 2026-07-29 and 2026-08-24 -- every weekly refresh
+# published fine and the live site kept serving the July snapshot.
+# Mirrors the DB_PATH convention in ingestion/load_db.resolve_db_path.
+DEFAULT_OUT_DIR = Path(os.environ.get("PUBLISH_DIR") or "web/public/data")
 BRIEF_EXCERPT_MAX_CHARS = 240
 
 # Same canonical order as scoring/composite.py and briefs/generator.py.
