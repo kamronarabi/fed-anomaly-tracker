@@ -298,10 +298,14 @@ def call_anthropic(
 ) -> str:
     """One sync Anthropic call. Returns the brief text."""
     system, messages = build_messages(brief_input)
+    # No sampling params: temperature/top_p/top_k were removed from the
+    # Messages API on current models and dropped from the SDK signature
+    # in anthropic 1.0.0, where passing one is a TypeError. Brief
+    # reproducibility comes from the input_hash cache (find_cached_brief),
+    # not from pinning temperature to 0.
     response = client.messages.create(
         model=model,
         max_tokens=max_tokens,
-        temperature=0,
         system=system,
         messages=messages,
     )

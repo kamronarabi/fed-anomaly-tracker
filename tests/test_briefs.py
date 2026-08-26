@@ -523,3 +523,47 @@ def _count_briefs(db_path: str, score_date: date) -> int:
         ).fetchone()[0]
     finally:
         con.close()
+
+
+# ── SDK parameter compatibility (2026-08-26) ──────────────────────────────
+
+
+def test_call_anthropic_sends_no_removed_sampling_params():
+    """Sampling params are gone from the current Messages API.
+
+    `temperature` (and `top_p`/`top_k`) were removed on current Claude
+    models and dropped from the SDK's `Messages.create` signature in
+    anthropic 1.0.0, so passing one is a TypeError, not a soft warning.
+    That's what took the daily pipeline down on 2026-08-26: requirements
+    .txt pinned nothing, a rebuild pulled 1.0.0, and every brief call
+    raised `Messages.create() got an unexpected keyword argument
+    'temperature'`.
+
+    FakeAnthropic accepts **kwargs, so it can't reproduce that on its own
+    -- assert on what we actually send instead.
+    """
+    from briefs.generator import BriefInput, call_anthropic
+
+    bi = BriefInput(
+        uei="ENT0001",
+        entity_name="Acme",
+        awarding_agency="DoD",
+        primary_naics="Eng",
+        total_obligated_lifetime=5e6,
+        award_count_lifetime=1,
+        composite_score=0.85,
+        composite_percentile_rank=0.99,
+        detectors_fired=[{"name": "benford", "score": 0.92, "details": {}}],
+    )
+    client = FakeAnthropic()
+    call_anthropic(bi, client=client)
+
+    assert len(client.calls) == 1
+    sent = client.calls[0]
+    for removed in ("temperature", "top_p", "top_k"):
+        assert removed not in sent, (
+            f"{removed} was removed from the Messages API -- sending it "
+            f"raises TypeError on anthropic>=1.0.0"
+        )
+    # The params we do rely on must still be the documented ones.
+    assert {"model", "max_tokens", "system", "messages"} <= set(sent)
