@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT))
 from briefs.generator import generate_briefs  # noqa: E402
 from export.publish import publish  # noqa: E402
 from ingestion.load_db import resolve_db_path  # noqa: E402
+from refresh_report import write_failure_report  # noqa: E402
 from scoring.composite import compute_composite_scores  # noqa: E402
 
 logger = logging.getLogger(__name__)
@@ -52,4 +53,5 @@ if __name__ == "__main__":
         main()
     except Exception:
         logger.exception("daily: failed")
+        write_failure_report("daily")
         sys.exit(1)

@@ -10,6 +10,7 @@ Tests use a fake Anthropic client so no network or API key is required.
 
 from __future__ import annotations
 
+import json
 from dataclasses import replace
 from datetime import date, datetime
 from pathlib import Path
@@ -567,3 +568,65 @@ def test_call_anthropic_sends_no_removed_sampling_params():
         )
     # The params we do rely on must still be the documented ones.
     assert {"model", "max_tokens", "system", "messages"} <= set(sent)
+
+
+class FlakyAnthropic(FakeAnthropic):
+    """Raises on the first call, succeeds afterwards."""
+
+    def __init__(self, response_text: str = "Recovered brief."):
+        super().__init__(response_text)
+        self.failures = 0
+
+    def create(self, **kwargs):
+        if not self.failures:
+            self.failures += 1
+            raise RuntimeError("Simulated Anthropic API error")
+        return super().create(**kwargs)
+
+
+def test_generate_briefs_survives_a_failed_api_call(tmp_path):
+    """One bad Anthropic call must not abandon the whole run.
+
+    call_anthropic was unguarded, so a single API error propagated out of
+    generate_briefs and killed the orchestrator before it reached
+    export.publish -- the site then kept whatever JSON was already on the
+    volume. That is how 2026-08-31's blanked briefs survived two daily
+    runs: each one died in step 2 and never republished. Skip the entity
+    that failed (publish carries its prior brief forward) and keep going.
+    """
+    from briefs.generator import generate_briefs
+
+    db_path = _fresh_db(tmp_path)
+    score_date = date(2026, 9, 2)
+    _seed_minimal(db_path, score_date)
+    con = duckdb.connect(db_path)
+    try:
+        _insert_award(
+            con, award_id="B1", recipient_uei="ENT0002",
+            recipient_name="Beta Systems", awarding_agency="Department of Defense",
+            naics_description="Engineering Services", total_obligation=2_000_000.0,
+        )
+        _insert_suspicion_score(
+            con, uei="ENT0002", score_date=score_date,
+            composite_score=0.70, composite_percentile_rank=0.90,
+            benford_score=0.75,
+            detector_details=json.dumps({"benford": {"n_transactions": 90, "max_z": 3.1}}),
+        )
+    finally:
+        con.close()
+
+    flaky = FlakyAnthropic()
+    n_calls = generate_briefs(
+        db_path, score_date=score_date, top_n=10, client=flaky, model="test-model"
+    )
+
+    # The run completed and the surviving entity got its brief.
+    assert n_calls == 1, "the successful call should still be counted"
+    con = duckdb.connect(db_path, read_only=True)
+    try:
+        written = con.execute(
+            "SELECT count(*) FROM entity_briefs WHERE score_date = ?", [score_date]
+        ).fetchone()[0]
+    finally:
+        con.close()
+    assert written == 1, "the entity whose call succeeded must be persisted"

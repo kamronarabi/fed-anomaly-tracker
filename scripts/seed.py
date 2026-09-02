@@ -28,6 +28,7 @@ from ingestion.load_db import (  # noqa: E402
     set_watermark,
 )
 from ingestion.pull_awards import pull_awards  # noqa: E402
+from refresh_report import write_failure_report  # noqa: E402
 from scoring.composite import compute_composite_scores  # noqa: E402
 
 logger = logging.getLogger(__name__)
@@ -80,4 +81,5 @@ if __name__ == "__main__":
         main()
     except Exception:
         logger.exception("seed: failed")
+        write_failure_report("weekly")
         sys.exit(1)

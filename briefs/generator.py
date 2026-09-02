@@ -380,6 +380,7 @@ def generate_briefs(
         return 0
 
     api_calls = 0
+    failures = 0
     for i, bi in enumerate(picks):
         if api_calls >= max_fresh_calls:
             logger.warning(
@@ -413,7 +414,19 @@ def generate_briefs(
             client = _default_client()
 
         logger.info("generating brief for %s (%s)", bi.uei, bi.entity_name)
-        brief_text = call_anthropic(bi, client=client, model=model)
+        try:
+            brief_text = call_anthropic(bi, client=client, model=model)
+        except Exception:
+            # One entity's brief is not worth the run. Unguarded, a single
+            # API error (auth, rate limit, a malformed response) propagated
+            # out of here and killed the orchestrator before it reached
+            # export.publish, so nothing was republished at all -- which is
+            # how 2026-08-31's blanked briefs survived subsequent daily
+            # runs. Skipping costs this entity a refresh; publish() carries
+            # its previous brief forward.
+            failures += 1
+            logger.exception("brief generation failed for %s; skipping", bi.uei)
+            continue
         api_calls += 1
         write_brief(
             db_path,
@@ -427,7 +440,15 @@ def generate_briefs(
         )
 
     logger.info(
-        "briefs for %s: %d total (%d new API calls, %d cached)",
-        score_date, len(picks), api_calls, len(picks) - api_calls,
+        "briefs for %s: %d total (%d new API calls, %d cached, %d failed)",
+        score_date, len(picks), api_calls, len(picks) - api_calls - failures,
+        failures,
     )
+    if failures:
+        # Loud enough to notice in the run log without failing the run.
+        logger.warning(
+            "%d of %d briefs failed to generate for %s; their previous text "
+            "is carried forward by export.publish",
+            failures, len(picks), score_date,
+        )
     return api_calls

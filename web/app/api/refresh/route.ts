@@ -41,6 +41,34 @@ function resolveStatusPath(): string {
   return fs.existsSync(dir) ? path.join(dir, "refresh_status.json") : path.join(os.tmpdir(), "refresh_status.json");
 }
 
+// Written by the Python orchestrator's except block (refresh_report.py),
+// not by this process -- so it survives the Next process dying mid-run,
+// which is exactly when stderr is hardest to recover.
+function resolveErrorReportPath(): string {
+  return path.join(path.dirname(resolveStatusPath()), "refresh_error.json");
+}
+
+type FailureReport = {
+  mode: string;
+  pid: number;
+  failed_at: string;
+  traceback: string;
+};
+
+// Only the report the *tracked* run wrote. A report from an earlier run
+// left on the volume would otherwise be pinned to an unrelated failure and
+// send whoever reads it chasing the wrong traceback.
+function readFailureReport(pid: number): FailureReport | null {
+  try {
+    const report = JSON.parse(
+      fs.readFileSync(resolveErrorReportPath(), "utf-8"),
+    ) as FailureReport;
+    return report.pid === pid ? report : null;
+  } catch {
+    return null;
+  }
+}
+
 type RefreshStatus = {
   mode: string;
   pid: number;
@@ -163,6 +191,9 @@ export async function POST(request: NextRequest) {
   }
 
   const startedAt = new Date().toISOString();
+  // This run has not failed yet; drop any prior run's report so GET can
+  // never pair a fresh failure with a stale traceback.
+  fs.rmSync(resolveErrorReportPath(), { force: true });
   console.log(`refresh: triggered pipeline (mode=${mode}, pid=${child.pid})`);
   writeStatus(statusPath, {
     mode,
@@ -222,5 +253,20 @@ export async function GET(request: NextRequest) {
   }
 
   const status = JSON.parse(fs.readFileSync(statusPath, "utf-8")) as RefreshStatus;
+
+  // exit_code alone can't tell you why a cron died, and the container's
+  // stderr may have aged out of log retention by the time anyone looks.
+  // The GH Actions poller echoes this body when it reports a failure, so
+  // attaching the traceback puts the reason in the workflow log itself.
+  if (status.status === "failed") {
+    const report = readFailureReport(status.pid);
+    if (report) {
+      return NextResponse.json({
+        ...status,
+        error: { failed_at: report.failed_at, traceback: report.traceback },
+      });
+    }
+  }
+
   return NextResponse.json(status);
 }

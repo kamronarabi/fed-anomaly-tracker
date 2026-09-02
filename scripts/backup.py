@@ -108,10 +108,12 @@ if __name__ == "__main__":
     ROOT = Path(__file__).resolve().parent.parent
     sys.path.insert(0, str(ROOT))
     from ingestion.load_db import resolve_db_path  # noqa: E402
+    from refresh_report import write_failure_report  # noqa: E402
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     try:
         run_backup(resolve_db_path())
     except Exception:
         logger.exception("backup: failed")
+        write_failure_report("backup")
         sys.exit(1)
