@@ -157,7 +157,17 @@ def _total_scored_for_date(con: duckdb.DuckDBPyConnection, score_date: date) -> 
 def _load_briefs(
     con: duckdb.DuckDBPyConnection, score_date: date, ueis: list[str]
 ) -> dict[str, str]:
-    """Return {uei: brief_text} for entities that have a brief on this date."""
+    """Return {uei: brief_text}, carrying forward the most recent prior brief.
+
+    Deliberately not an exact `score_date = ?` match. Only the daily
+    pipeline generates briefs; the weekly one (scripts/seed.py) rescores
+    and publishes without them, so on a date the daily run hasn't covered
+    there are no rows for `score_date` at all. Matching the exact date
+    published `brief_text: null` for every entity and blanked the briefs
+    off the live site -- which is what happened on 2026-08-31, when a long
+    weekly ingest held the pipeline lock through the daily run's window
+    and then published over it. A slightly stale brief beats no brief.
+    """
     if not ueis:
         return {}
     placeholders = ", ".join(["?"] * len(ueis))
@@ -165,7 +175,10 @@ def _load_briefs(
         f"""
         SELECT uei, brief_text
         FROM entity_briefs
-        WHERE score_date = ? AND uei IN ({placeholders})
+        WHERE score_date <= ? AND uei IN ({placeholders})
+        QUALIFY row_number() OVER (
+            PARTITION BY uei ORDER BY score_date DESC
+        ) = 1
         """,
         [score_date, *ueis],
     ).fetchall()

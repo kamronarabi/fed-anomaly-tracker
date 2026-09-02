@@ -20,6 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from briefs.generator import generate_briefs  # noqa: E402
 from export.publish import publish  # noqa: E402
 from ingestion.load_db import (  # noqa: E402
     load_all_parquet,
@@ -37,10 +38,10 @@ def main() -> None:
     db_path = resolve_db_path()
     score_date = date.today()
 
-    logger.info("seed: step 1/4 pull_awards (incremental)")
+    logger.info("seed: step 1/5 pull_awards (incremental)")
     pulled = asyncio.run(pull_awards(incremental=True, db_path=db_path))
 
-    logger.info("seed: step 2/4 load_db")
+    logger.info("seed: step 2/5 load_db")
     deltas = load_all_parquet(db_path=db_path)
     logger.info("seed:   loaded %s", deltas)
 
@@ -52,11 +53,22 @@ def main() -> None:
         set_watermark(db_path, agency_name, through)
         logger.info("seed:   watermark %s -> %s", agency_name, through)
 
-    logger.info("seed: step 3/4 composite scoring")
+    logger.info("seed: step 3/5 composite scoring")
     scores = compute_composite_scores(db_path, score_date=score_date)
     logger.info("seed:   scored %d entities", scores.height)
 
-    logger.info("seed: step 4/4 export.publish")
+    # Brief here rather than leaning on the daily run to have already
+    # covered this date. publish() carries forward the newest prior brief,
+    # so skipping this wouldn't blank the site -- but a weekly ingest is
+    # exactly when scores move most, and an unbriefed weekly would leave
+    # the top-N narrated by pre-ingest text until the next daily run.
+    # generate_briefs forward-carries by input hash, so entities whose
+    # signal didn't actually change cost nothing.
+    logger.info("seed: step 4/5 briefs")
+    api_calls = generate_briefs(db_path, score_date=score_date)
+    logger.info("seed:   %d fresh Anthropic calls", api_calls)
+
+    logger.info("seed: step 5/5 export.publish")
     counts = publish(db_path, score_date)
     logger.info("seed:   published %s", counts)
 

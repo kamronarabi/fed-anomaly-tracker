@@ -519,3 +519,42 @@ def test_default_out_dir_falls_back_to_repo_path(tmp_path: Path, monkeypatch):
     monkeypatch.delenv("PUBLISH_DIR", raising=False)
     reloaded = importlib.reload(publish_mod)
     assert reloaded.DEFAULT_OUT_DIR == Path("web/public/data")
+
+
+def test_entity_json_carries_forward_brief_from_earlier_score_date(tmp_path):
+    """A publish on a date with no briefs of its own must not blank the site.
+
+    The weekly pipeline (scripts/seed.py) rescores and publishes without
+    generating briefs, so on any date where the daily brief run hasn't
+    landed there are no `entity_briefs` rows for `score_date`. Matching
+    briefs on the exact date alone published `brief_text: null` for every
+    entity and wiped the briefs off the live site (observed 2026-08-31,
+    when a long weekly ingest held the pipeline lock and the daily run
+    that would have written that date's briefs never ran). Fall back to
+    the entity's most recent prior brief instead.
+    """
+    from export.publish import publish
+
+    db_path = _fresh_db(tmp_path)
+    out_dir = tmp_path / "out"
+    brief_date = date(2026, 8, 30)
+    publish_date = date(2026, 8, 31)
+
+    # Briefs exist only for the earlier date...
+    _seed_three_entities(db_path, brief_date)
+    # ...while scores (and therefore the publish) are for the later one.
+    con = duckdb.connect(db_path)
+    try:
+        _insert_suspicion_score(
+            con, uei="ENT0001", score_date=publish_date,
+            composite_score=0.90, composite_percentile_rank=0.99,
+            benford_score=0.80,
+            detector_details=json.dumps({"benford": {"max_z": 3.9}}),
+        )
+    finally:
+        con.close()
+
+    publish(db_path, publish_date, out_dir=out_dir)
+
+    payload = json.loads((out_dir / "entities" / "ENT0001.json").read_text())
+    assert "Four statistical detectors" in payload["brief_text"]
